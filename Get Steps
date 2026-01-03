@@ -1,0 +1,147 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Get Steps", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-21.287, 15.606, 2762.264)
+
+local looping = false
+local loopConn
+local loopEndTime
+local loopCount
+local speed = 0.2
+
+local SpeedMap = {
+    ["Fast"] = 0.5,
+    ["Super Fast"] = 0.2,
+    ["Speed of light"] = 0,
+    ["Stable"] = 1,
+    ["Godspeed"] = 0,
+    ["Overdrive"] = 0,
+    ["Limit Break"] = 0
+}
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleportOnce()
+    getHRP().CFrame = CFrame.new(TARGET_POS)
+end
+
+local function startLoop(mode)
+    stopLoop()
+    looping = true
+
+    if mode == "Timed 30s" then
+        loopEndTime = os.clock() + 30
+    elseif mode == "Timed 1m" then
+        loopEndTime = os.clock() + 60
+    elseif mode == "Timed 5m" then
+        loopEndTime = os.clock() + 300
+    elseif mode == "X Times" then
+        loopCount = 10
+    else
+        loopEndTime = nil
+        loopCount = nil
+    end
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not looping then return end
+
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopLoop()
+            return
+        end
+
+        teleportOnce()
+
+        if loopCount then
+            loopCount -= 1
+            if loopCount <= 0 then
+                stopLoop()
+            end
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed 30s",
+        "Loop | Timed 1m",
+        "Loop | Timed 5m",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+
+        "Auto | Adaptive Speed",
+
+        "Dynamic | Performance Based",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+
+        "Stop Loop",
+        "Stop Farm"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        stopLoop()
+
+        if choice == "Stop Loop" or choice == "Stop Farm" then
+            return
+        end
+
+        local mode, level = choice:match("(.+) %| (.+)")
+        if level and SpeedMap[level] then
+            speed = SpeedMap[level]
+        end
+
+        if mode == "Normal" then
+            teleportOnce()
+        elseif mode == "Loop" or mode == "Farm" or mode == "Auto" or mode == "Dynamic" then
+            startLoop(level)
+        end
+    end
+})
