@@ -1,0 +1,178 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Emang Gini Laser 2", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(0.685, 1280.440, -1140.633)
+
+local loopConn
+local looping = false
+local loopEndTime
+local loopCount
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function killAfter()
+    local char = getChar()
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function teleportOnce()
+    getHRP().CFrame = CFrame.new(TARGET_POS)
+    killAfter()
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function startLoop(mode)
+    stopLoop()
+    looping = true
+    loopEndTime = nil
+    loopCount = nil
+
+    if mode == "Timed 30s" then
+        loopEndTime = os.clock() + 30
+    elseif mode == "Timed 1m" then
+        loopEndTime = os.clock() + 60
+    elseif mode == "Timed 5m" then
+        loopEndTime = os.clock() + 300
+    elseif mode == "X Times" then
+        loopCount = 10
+    end
+
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not looping then return end
+
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopLoop()
+            return
+        end
+
+        teleportOnce()
+
+        if loopCount then
+            loopCount -= 1
+            if loopCount <= 0 then
+                stopLoop()
+            end
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed 30s",
+        "Loop | Timed 1m",
+        "Loop | Timed 5m",
+        "Loop | Until Condition Met",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Dynamic | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+
+        "Stop Loop",
+        "Stop Farm"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            stopLoop()
+            return
+        end
+
+        local main, sub = choice:match("(.+) %| (.+)")
+
+        if main == "Normal" then
+            teleportOnce()
+        elseif main == "Loop" or main == "Farm" or main == "Auto" or main == "Dynamic" or main == "Performance" then
+            startLoop(sub)
+        elseif main == "System" then
+            if sub == "Soft Reset" then
+                stopLoop()
+            elseif sub == "Hard Reset" then
+                stopLoop()
+                teleportOnce()
+            end
+        end
+    end
+})
