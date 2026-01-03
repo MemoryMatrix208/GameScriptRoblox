@@ -1,0 +1,146 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Rasa Ini Tower Akukuat", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+
+local TARGET_POS = Vector3.new(-3.789, 75.963, -458.991)
+
+local looping = false
+local currentSpeed = 60
+
+local SpeedMap = {
+    Fast = 60,
+    ["Super Fast"] = 150,
+    ["Speed of light"] = 1000
+}
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function killAfter()
+    local humanoid = getChar():FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function tweenTo(pos, speed)
+    local hrp = getHRP()
+    local dist = (hrp.Position - pos).Magnitude
+    local time = dist / speed
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        { CFrame = CFrame.new(pos) }
+    )
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function startLoop()
+    task.spawn(function()
+        while looping do
+            tweenTo(TARGET_POS, currentSpeed)
+            killAfter()
+            task.wait()
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        looping = false
+        task.wait()
+
+        if choice == "Stop Loop" then
+            return
+        end
+
+        local mode, speedKey = choice:match("^(.-)%s|%s(.+)$")
+        if not mode or not speedKey then return end
+
+        currentSpeed = SpeedMap[speedKey] or 60
+
+        if mode == "Normal" then
+            tweenTo(TARGET_POS, currentSpeed)
+            killAfter()
+        elseif mode == "Loop" then
+            looping = true
+            startLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Rasa Ini Tower Akukuat", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Locations = {
+    ["GravityCoil"] = Vector3.new(-411.100, -30.256, 106.021),
+    ["Acceleration Coil"] = Vector3.new(-411.100, -30.256, 106.021),
+    ["RainbowMagicCarpet"] = Vector3.new(-456.485, -30.256, 210.826),
+}
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Items",
+    Description = "",
+    Options = {
+        "GravityCoil",
+        "Acceleration Coil",
+        "RainbowMagicCarpet"
+    },
+    Default = "",
+    PlaceHolder = "Select Item",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Locations[choice]
+        if pos then
+            getHRP().CFrame = CFrame.new(pos)
+        end
+    end
+})
