@@ -1,0 +1,229 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Brainrot Morph Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local loopConn
+local running = false
+
+local function getChar()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char, char:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportToCouch()
+    local _, hrp = getChar()
+    local couch = workspace["FLoors Of the Map"].Floor10.End.Couch
+    local part = couch:FindFirstChildWhichIsA("BasePart", true)
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+    end
+end
+
+local function triggerCouch()
+    local _, hrp = getChar()
+    local couch = workspace["FLoors Of the Map"].Floor10.End.Couch
+
+    teleportToCouch()
+    task.wait(0.1)
+
+    for _, d in ipairs(couch:GetDescendants()) do
+        if d:IsA("ProximityPrompt") then
+            fireproximityprompt(d)
+        elseif d:IsA("BasePart") then
+            firetouchinterest(hrp, d, 0)
+            firetouchinterest(hrp, d, 1)
+        end
+    end
+end
+
+local function startLoop(delayTime)
+    if running then return end
+    running = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        triggerCouch()
+        task.wait(delayTime)
+    end)
+end
+
+local function stopLoop()
+    running = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Godspeed",
+        "Stop Loop",
+
+        "System | Emergency Stop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopLoop()
+
+        if mode:find("^Normal") then
+            triggerCouch()
+
+        elseif mode == "Loop | Fast" then
+            startLoop(0.3)
+        elseif mode == "Loop | Super Fast" then
+            startLoop(0.15)
+        elseif mode == "Loop | Speed of light" then
+            startLoop(0)
+        elseif mode == "Loop | Stable" or mode == "Loop | Safe Mode" then
+            startLoop(0.6)
+        elseif mode == "Loop | Godspeed" then
+            startLoop(0.05)
+        elseif mode == "Stop Loop" or mode == "System | Emergency Stop" then
+            stopLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Brainrots")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Brainrot Morph Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local locations = {
+    ["Tralalero Tralala"] = Vector3.new(-1443.859, 34.991, 198.941),
+    ["Tacorita Bicicleta"] = Vector3.new(-1353.919, 35.231, 200.656),
+    ["Tung Tung Tung Sahur"] = Vector3.new(-1524.057, 34.991, 194.102),
+    ["La Secret Combinasion"] = Vector3.new(-1145.491, 9.733, 20.809),
+    ["Chicleteira Noelteira"] = Vector3.new(-1122.901, 10.500, -86.357),
+    ["Job Job Job Sahur"] = Vector3.new(-1335.067, -39.352, -294.348),
+    ["Six Seven"] = Vector3.new(-1470.284, -36.447, -342.711),
+    ["Skibidi Toilet"] = Vector3.new(-1558.375, -30.280, -27.058),
+    ["Quesadilla Crocodila"] = Vector3.new(-1503.781, 8.000, -156.147),
+    ["Extinct Matteo"] = Vector3.new(-1763.827, 45.670, -154.131),
+    ["Dragon Cannelloni"] = Vector3.new(-1435.182, 509.182, 233.117),
+}
+
+local options = {}
+for name in pairs(locations) do
+    table.insert(options, name)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Character",
+    Description = "",
+    Options = options,
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        local char = player.Character
+        if char and locations[choice] then
+            char:PivotTo(CFrame.new(locations[choice]))
+        end
+    end
+})
+
+local Main = main:AddTab("Tools")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Brainrot Morph Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local locations = {
+    ["Time Slap"] = Vector3.new(-1485.599, 35.655, 683.224),
+    ["Gravity Coil"] = Vector3.new(-1397.113, 34.918, 808.593),
+    ["Trowel"] = Vector3.new(-1327.763, 35.004, 687.221),
+    ["Lava Slap"] = Vector3.new(-1146.309, 2.696, -368.609),
+}
+
+local options = {}
+for name in pairs(locations) do
+    table.insert(options, name)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = options,
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        local char = player.Character
+        if char and locations[choice] then
+            char:PivotTo(CFrame.new(locations[choice]))
+        end
+    end
+})
+
+local Main = main:AddTab("Playtime Rewards")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Brainrot Morph Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Playtime Doors",
+    Callback = function()
+        local function sd(p)
+            local o = game
+            local r = p
+            while r ~= '' do
+                local d = r:find('.', 1, true)
+                local n
+                if d then
+                    n = r:sub(1, d - 1)
+                    r = r:sub(d + 1)
+                else
+                    n = r
+                    r = ''
+                end
+                o = o:FindFirstChild(n)
+                if not o then return end
+            end
+            if o then o:Destroy() end
+        end
+
+        sd("Workspace.Playtime.PlaytimeModel.PlaytimeRewards.Doors.Door1")
+        sd("Workspace.Playtime.PlaytimeModel.PlaytimeRewards.Doors.Door2")
+        sd("Workspace.Playtime.PlaytimeModel.PlaytimeRewards.Doors.Door3")
+        sd("Workspace.Playtime.PlaytimeModel.PlaytimeRewards.Doors.Door4")
+        sd("Workspace.Playtime.PlaytimeModel.PlaytimeRewards.Doors.Door")
+    end,
+})
