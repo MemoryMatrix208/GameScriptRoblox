@@ -1,0 +1,309 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Money")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "SAMMY JUMP ROPE GIANT SAMMY MORPH", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local RunService = game:GetService("RunService")
+local Remote = game:GetService("ReplicatedStorage").Remotes.ClaimMoney
+local Prompt = workspace.Chest.Claim.ProximityPrompt
+
+local loopConn
+local running = false
+
+local function claim()
+    Remote:FireServer(Prompt)
+end
+
+local function startLoop(delayTime)
+    if running then return end
+    running = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        claim()
+        task.wait(delayTime)
+    end)
+end
+
+local function stopAll()
+    running = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Claim Money Mode",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopAll()
+
+        if mode:find("^Normal") then
+            claim()
+
+        elseif mode == "Loop | Fast" then
+            startLoop(0.3)
+        elseif mode == "Loop | Super Fast" then
+            startLoop(0.15)
+        elseif mode == "Loop | Speed of light" then
+            startLoop(0)
+        elseif mode == "Loop | Stable" or mode == "Loop | Safe Mode" then
+            startLoop(0.6)
+        elseif mode == "Loop | Smart Speed" then
+            startLoop(0.25)
+        elseif mode == "Loop | Godspeed" then
+            startLoop(0.05)
+        elseif mode == "Loop | Overdrive" then
+            startLoop(0.02)
+        elseif mode == "Loop | Limit Break" then
+            startLoop(0.01)
+
+        elseif mode == "Auto | Adaptive Speed" then
+            startLoop(0.2)
+
+        elseif mode == "Performance | Low CPU" then
+            startLoop(1)
+        elseif mode == "Performance | FPS Friendly" then
+            startLoop(0.8)
+
+        elseif mode == "Farm | Efficient" then
+            startLoop(0.4)
+        elseif mode == "Farm | Aggressive" then
+            startLoop(0.1)
+        elseif mode == "Farm | AFK Friendly" then
+            startLoop(1.5)
+
+        elseif mode == "Stop Loop"
+            or mode == "Stop Farm"
+            or mode == "System | Emergency Stop"
+            or mode == "System | Soft Reset" then
+            stopAll()
+        end
+    end
+})
+
+local Main = main:AddTab("Gears")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "SAMMY JUMP ROPE GIANT SAMMY MORPH", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local locations = {
+    ["ClassicSlingshot"] = Vector3.new(-216.812, -9.065, 142.581),
+    ["FusionCoilTEMP"] = Vector3.new(-216.812, -9.065, 142.581),
+    ["SuperBall"] = Vector3.new(-92.707, 164.314, -127.012),
+    ["Gravity Coil"] = Vector3.new(-92.707, 164.314, -127.012),
+}
+
+local function teleportTo(pos)
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = {
+        "ClassicSlingshot",
+        "FusionCoilTEMP",
+        "Gravity Coil",
+        "SuperBall",
+    },
+    Default = "",
+    PlaceHolder = "Select Item",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = locations[choice]
+        if pos then
+            teleportTo(pos)
+        end
+    end
+})
+
+local Main = main:AddTab("VIP")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "SAMMY JUMP ROPE GIANT SAMMY MORPH", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.VIP.VIPWALL")
+    end,
+  })
+  
+local Main = main:AddTab("Playtime Rewards")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "SAMMY JUMP ROPE GIANT SAMMY MORPH", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.PlaytimeWall.Walls.FiveMinuteWall.Signs")
+sd("Workspace.PlaytimeWall.Walls.FiveMinuteWall")
+sd("Workspace.PlaytimeWall.Walls.SevenMinuteWall.Signs")
+sd("Workspace.PlaytimeWall.Walls.SevenMinuteWall")
+sd("Workspace.PlaytimeWall.Walls.FifteenMinuteWall.Signs")
+sd("Workspace.PlaytimeWall.Walls.FifteenMinuteWall")
+    end,
+  })
+  
+local Main = main:AddTab("Group")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "SAMMY JUMP ROPE GIANT SAMMY MORPH", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.JoinGroupReward.Wall")
+    end,
+  })
+  
+local Main = main:AddTab("Morphs")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Morphs Time", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.PlaytimeWall.Walls.TwelveMinuteWall")
+sd("Workspace.Signs")
+sd("Workspace.PlaytimeWall.Walls.TwentyMinuteWall")
+    end,
+  })
+  
+local MainSection = Main:AddSection({Title = "Christmas Morphs", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.Soon.Part")
+sd("Workspace.Soon.Part")
+sd("Workspace.Soon.Part")
+sd("Workspace.Soon.Wall")
+    end,
+  })
+  
+local MainSection = Main:AddSection({Title = "Daily Reward", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.DailyRewardsFolder.Walls.1")
+sd("Workspace.Signs")
+sd("Workspace.DailyPlaytime.TwentyMinuteWall67")
+sd("Workspace.DailyRewardsFolder.Walls.2.Signs")
+sd("Workspace.DailyRewardsFolder.Walls.2.Sign1")
+sd("Workspace.DailyRewardsFolder.Walls.2")
+sd("Workspace.DailyPlaytime.TwelveMinuteWallHotspot")
+sd("Workspace.DailyRewardsFolder.Walls.3.Signs")
+sd("Workspace.DailyRewardsFolder.Walls.3.Sign1")
+sd("Workspace.DailyRewardsFolder.Walls.3")
+sd("Workspace.DailyPlaytime.TwelveMinuteWallSpaghetti")
+sd("Workspace.DailyRewardsFolder.Walls.4")
+sd("Workspace.DailyPlaytime.TwelveMinuteWallDragon")
+sd("Workspace.DailyRewardsFolder.Walls.5")
+sd("Workspace.DailyPlaytime.TwelveMinuteWallLaCasa")
+sd("Workspace.DailyRewardsFolder.Walls.6")
+sd("Workspace.DailyPlaytime.TwelveMinuteWallBurFri")
+sd("Workspace.DailyRewardsFolder.Walls.7")
+sd("Workspace.DailyPlaytime.TwentyMinuteWallSammy")
+    end,
+  })
+  
+local MainSection = Main:AddSection({Title = "Limited", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.MorphWall.Part")
+sd("Workspace.MorphWall.Part")
+sd("Workspace.MorphWall.Part")
+    end,
+  })
+  
+local MainSection = Main:AddSection({Title = "Secret", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.PlaytimeWall.KETUPATWALL")
+    end,
+  })
+  
+local MainSection = Main:AddSection({Title = "Limited Morphs", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.PlaytimeWall.ROBUXWALL")
+    end,
+  })
