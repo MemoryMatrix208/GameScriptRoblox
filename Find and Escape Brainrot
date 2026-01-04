@@ -1,0 +1,236 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Speed")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find and Escape Brainrot", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Event = game:GetService("ReplicatedStorage"):WaitForChild("SpeedBoost")
+
+MainSection:AddSlider("SpeedValue", {
+    Title = "Speed Value",
+    Description = "",
+    Default = 1,
+    Min = 0,
+    Max = 900000000000000000000,
+    Increment = 1,
+    Callback = function(value)
+        Event:FireServer("WalkingSpeedGain", value)
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Inf Speed",
+    Callback = function()
+    local Event = game:GetService("ReplicatedStorage").SpeedBoost
+Event:FireServer(
+    "WalkingSpeedGain",
+    math.huge
+)
+    end,
+  })
+  
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find and Escape Brainrot", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local TARGET_POS = Vector3.new(5664.072, 1054.184, -833.028)
+
+local loopFlag = false
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function execute()
+    local char = getChar()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+
+    if hrp then
+        hrp.CFrame = CFrame.new(TARGET_POS)
+    end
+
+    task.wait()
+
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function startLoop(delayTime)
+    loopFlag = true
+    task.spawn(function()
+        while loopFlag do
+            execute()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Money Mode",
+    Description = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Options = {
+
+        -- Just once
+        "Just Once | Normal",
+        "Just Once | Fast",
+        "Just Once | Super Fast",
+        "Just Once | Speed of light",
+        "Just Once | Stable",
+        "Just Once | Debug Mode",
+
+        -- Loop
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times (10)",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        -- Auto
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        -- Performance
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Mobile Friendly",
+
+        -- Farm
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Stop Farm",
+
+        -- System
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+
+    Callback = function(choice)
+
+        -- JUST ONCE
+        if choice:find("Just Once") then
+            execute()
+        end
+
+        -- LOOP SPEED
+        if choice == "Loop | Fast" then startLoop(1) end
+        if choice == "Loop | Super Fast" then startLoop(0.3) end
+        if choice == "Loop | Speed of light" then startLoop(0.05) end
+        if choice == "Loop | Stable" then startLoop(2) end
+        if choice == "Loop | Safe Mode" then startLoop(3) end
+        if choice == "Loop | Smart Speed" then startLoop(0.8) end
+        if choice == "Loop | Godspeed" then startLoop(0.01) end
+        if choice == "Loop | Overdrive" then startLoop(0.005) end
+        if choice == "Loop | Limit Break" then startLoop(0) end
+
+        -- LOOP SPECIAL
+        if choice == "Loop | X Times (10)" then
+            task.spawn(function()
+                for _ = 1,10 do execute() task.wait(0.3) end
+            end)
+        end
+
+        if choice == "Loop | Timed (30s)" then
+            loopFlag = true
+            task.delay(30, function() loopFlag = false end)
+            startLoop(0.5)
+        end
+
+        if choice == "Loop | Timed (1m)" then
+            loopFlag = true
+            task.delay(60, function() loopFlag = false end)
+            startLoop(0.5)
+        end
+
+        if choice == "Loop | Timed (5m)" then
+            loopFlag = true
+            task.delay(300, function() loopFlag = false end)
+            startLoop(0.5)
+        end
+
+        -- STOP
+        if choice == "Stop Loop"
+        or choice == "Stop Farm"
+        or choice == "System | Emergency Stop" then
+            loopFlag = false
+        end
+
+        -- RESET
+        if choice == "System | Soft Reset" then
+            execute()
+        end
+
+        if choice == "System | Hard Reset" then
+            loopFlag = false
+            execute()
+        end
+
+    end
+})
+
+local Main = main:AddTab("Find Brainrot Only 99")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find and Escape Brainrot", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Collect Artifact 1-99",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        for i = 1, 99 do
+            local artifact = workspace:FindFirstChild("Artifact"..i)
+            if artifact and artifact:IsA("Part") then
+                firetouchinterest(hrp, artifact, 0)
+                task.wait()
+                firetouchinterest(hrp, artifact, 1)
+                task.wait(0.05)
+            end
+        end
+    end,
+})
