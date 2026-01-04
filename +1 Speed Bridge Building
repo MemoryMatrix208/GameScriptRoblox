@@ -1,0 +1,410 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Money")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Bridge Building", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local lp = Players.LocalPlayer
+local char, hrp, hum
+local running, farming = false, false
+local conn
+
+local function refresh()
+    char = lp.Character or lp.CharacterAdded:Wait()
+    hrp = char:WaitForChild("HumanoidRootPart")
+    hum = char:WaitForChild("Humanoid")
+end
+
+refresh()
+lp.CharacterAdded:Connect(refresh)
+
+local target = workspace.Main.BridgeEnd.WinWall
+
+local function touch()
+    if not hrp then return end
+    for _,v in ipairs(target:GetDescendants()) do
+        if v:IsA("BasePart") then
+            firetouchinterest(hrp, v, 0)
+            firetouchinterest(hrp, v, 1)
+        end
+    end
+end
+
+local function stopAll()
+    running = false
+    farming = false
+    if conn then conn:Disconnect() conn = nil end
+end
+
+local function loop(delayTime)
+    stopAll()
+    running = true
+    conn = RunService.Heartbeat:Connect(function()
+        if not running then return end
+        touch()
+        task.wait(delayTime)
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s / 1m / 5m)",
+        "Loop | Until Condition Met",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause (On Lag / On Death)",
+
+        "Dynamic | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause (Inventory Full / Danger)",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(v)
+
+        if v == "Normal | Fast" then
+            touch()
+
+        elseif v == "Normal | Super Fast" then
+            for i=1,5 do touch() end
+
+        elseif v == "Normal | Speed of light" then
+            for i=1,15 do touch() end
+
+        elseif v == "Normal | Stable" then
+            touch()
+
+        elseif v == "Normal | Debug Mode" then
+            touch()
+            warn("WinWall touched")
+
+        elseif v == "Loop | Fast" then
+            loop(0.3)
+
+        elseif v == "Loop | Super Fast" then
+            loop(0.1)
+
+        elseif v == "Loop | Speed of light" then
+            loop(0)
+
+        elseif v == "Loop | Stable" then
+            loop(0.5)
+
+        elseif v == "Loop | Safe Mode" then
+            loop(1)
+
+        elseif v == "Loop | Smart Speed" then
+            loop(0.2)
+
+        elseif v == "Loop | X Times" then
+            for i=1,10 do touch() end
+
+        elseif v == "Loop | Timed (30s / 1m / 5m)" then
+            loop(0.2)
+            task.delay(30, stopAll)
+
+        elseif v == "Loop | Until Condition Met" then
+            loop(0.2)
+
+        elseif v == "Loop | Retry on Fail" then
+            loop(0.3)
+
+        elseif v == "Loop | Auto Recover" then
+            loop(0.3)
+
+        elseif v == "Loop | Pause on Error" then
+            loop(0.4)
+
+        elseif v == "Loop | Cooldown Mode" then
+            loop(1)
+
+        elseif v == "Loop | Burst Mode" then
+            loop(0)
+
+        elseif v == "Loop | Priority High" then
+            loop(0)
+
+        elseif v == "Loop | Priority Normal" then
+            loop(0.3)
+
+        elseif v == "Loop | Priority Low" then
+            loop(1)
+
+        elseif v == "Loop | Godspeed" then
+            loop(0)
+
+        elseif v == "Loop | Overdrive" then
+            loop(0)
+
+        elseif v == "Loop | Limit Break" then
+            loop(0)
+
+        elseif v == "Stop Loop" then
+            stopAll()
+
+        elseif v:find("Auto") then
+            loop(0.2)
+
+        elseif v:find("Performance") or v:find("Dynamic") then
+            loop(0.6)
+
+        elseif v:find("Farm") then
+            farming = true
+            loop(0.2)
+
+        elseif v == "Stop Farm" then
+            farming = false
+            stopAll()
+
+        elseif v == "System | Emergency Stop" then
+            stopAll()
+
+        elseif v == "System | Soft Reset" then
+            stopAll()
+            refresh()
+
+        elseif v == "System | Hard Reset" then
+            stopAll()
+            if hum then hum.Health = 0 end
+
+        elseif v == "System | Status Monitor" then
+            warn("Running:", running, "Farming:", farming)
+
+        elseif v == "System | Mode Indicator" then
+            warn("Mode Active")
+        end
+    end
+})
+
+local Main = main:AddTab("Bridge")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Bridge Building", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local lp = Players.LocalPlayer
+
+local looping = false
+local loopConn
+
+local function getTouchPart()
+    local c = lp.Character or lp.CharacterAdded:Wait()
+    return c:FindFirstChild("LeftFoot")
+        or c:FindFirstChild("RightFoot")
+        or c:FindFirstChild("HumanoidRootPart")
+end
+
+local function touchModel(model)
+    local part = getTouchPart()
+    if not part then return end
+    for _,v in ipairs(model:GetDescendants()) do
+        if v:IsA("BasePart") then
+            firetouchinterest(part, v, 0)
+            firetouchinterest(part, v, 1)
+        end
+    end
+end
+
+local function startLoop(model)
+    looping = true
+    if loopConn then loopConn:Disconnect() end
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not looping or not model.Parent then return end
+        touchModel(model)
+    end)
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local BridgeButton = workspace.Main.BridgeButton
+
+local Options = {}
+for _,v in ipairs(BridgeButton:GetChildren()) do
+    if v:IsA("Model") then
+        table.insert(Options, v.Name)
+    end
+end
+
+table.insert(Options, "Loop")
+table.insert(Options, "Stop Loop")
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Bridge",
+    Options = Options,
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" then
+            stopLoop()
+            return
+        end
+
+        if choice == "Loop" then
+            local last = BridgeButton:GetChildren()[1]
+            if last and last:IsA("Model") then
+                startLoop(last)
+            end
+            return
+        end
+
+        local model = BridgeButton:FindFirstChild(choice)
+        if model then
+            touchModel(model)
+        end
+    end
+})
+
+local Main = main:AddTab("Speed")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Bridge Building", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local lp = Players.LocalPlayer
+
+local looping = false
+local loopConn
+local lastModel
+
+local function getTouchPart()
+    local c = lp.Character or lp.CharacterAdded:Wait()
+    return c:FindFirstChild("LeftFoot")
+        or c:FindFirstChild("RightFoot")
+        or c:FindFirstChild("HumanoidRootPart")
+end
+
+local function touchModel(model)
+    local part = getTouchPart()
+    if not part then return end
+    for _,v in ipairs(model:GetDescendants()) do
+        if v:IsA("BasePart") then
+            firetouchinterest(part, v, 0)
+            firetouchinterest(part, v, 1)
+        end
+    end
+end
+
+local function startLoop()
+    if not lastModel then return end
+    looping = true
+    if loopConn then loopConn:Disconnect() end
+    loopConn = RunService.Heartbeat:Connect(function()
+        if looping and lastModel.Parent then
+            touchModel(lastModel)
+        end
+    end)
+end
+
+local function stopLoop()
+    looping = false
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local SpeedButtons = workspace.Main.SpeedButtons
+
+local Options = {}
+for _,v in ipairs(SpeedButtons:GetChildren()) do
+    if v:IsA("Model") then
+        table.insert(Options, v.Name)
+    end
+end
+
+table.insert(Options, "Loop")
+table.insert(Options, "Stop Loop")
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Speed",
+    Options = Options,
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" then
+            stopLoop()
+            return
+        end
+
+        if choice == "Loop" then
+            startLoop()
+            return
+        end
+
+        local model = SpeedButtons:FindFirstChild(choice)
+        if model then
+            lastModel = model
+            touchModel(model)
+        end
+    end
+})
