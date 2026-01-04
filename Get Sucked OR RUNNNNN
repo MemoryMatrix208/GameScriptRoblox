@@ -1,0 +1,405 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Get Sucked OR RUNNNNN", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-1407.415, -52.902, 30.118)
+
+local loopConn
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function teleportOnce()
+    local char = getChar()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function startLoop()
+    stopLoop()
+    loopConn = RunService.Heartbeat:Connect(function()
+        teleportOnce()
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode For Area 1",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s / 1m / 5m)",
+        "Loop | Until Condition Met",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause (On Lag / On Death)",
+
+        "Dynamic | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause (Inventory Full / Danger)",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            stopLoop()
+            return
+        end
+
+        local main = choice:match("^(.-) %|")
+        if main == "Normal" then
+            teleportOnce()
+        elseif main == "Loop" or main == "Farm" or main == "Auto" or main == "Dynamic" or main == "Performance" then
+            startLoop()
+        elseif main == "System" then
+            if choice:find("Hard Reset") then
+                stopLoop()
+                teleportOnce()
+            elseif choice:find("Soft Reset") then
+                stopLoop()
+            end
+        end
+    end
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-1443.253, -57.149, -641.729)
+
+local loopConn
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function teleportOnce()
+    local char = getChar()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function startLoop()
+    stopLoop()
+    loopConn = RunService.Heartbeat:Connect(function()
+        teleportOnce()
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode For Area 2",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s / 1m / 5m)",
+        "Loop | Until Condition Met",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause (On Lag / On Death)",
+
+        "Dynamic | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause (Inventory Full / Danger)",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            stopLoop()
+            return
+        end
+
+        local main = choice:match("^(.-) %|")
+        if main == "Normal" then
+            teleportOnce()
+        elseif main == "Loop" or main == "Farm" or main == "Auto" or main == "Dynamic" or main == "Performance" then
+            startLoop()
+        elseif main == "System" then
+            if choice:find("Hard Reset") then
+                stopLoop()
+                teleportOnce()
+            elseif choice:find("Soft Reset") then
+                stopLoop()
+            end
+        end
+    end
+})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-1837.144, -57.025, -1100.423)
+
+local loopConn
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function teleportOnce()
+    local char = getChar()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function startLoop()
+    stopLoop()
+    loopConn = RunService.Heartbeat:Connect(function()
+        teleportOnce()
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode For Area 3",
+    Description = "",
+    Options = {
+        "Normal | Fast",
+        "Normal | Super Fast",
+        "Normal | Speed of light",
+        "Normal | Stable",
+        "Normal | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s / 1m / 5m)",
+        "Loop | Until Condition Met",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause (On Lag / On Death)",
+
+        "Dynamic | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause (Inventory Full / Danger)",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            stopLoop()
+            return
+        end
+
+        local main = choice:match("^(.-) %|")
+        if main == "Normal" then
+            teleportOnce()
+        elseif main == "Loop" or main == "Farm" or main == "Auto" or main == "Dynamic" or main == "Performance" then
+            startLoop()
+        elseif main == "System" then
+            if choice:find("Hard Reset") then
+                stopLoop()
+                teleportOnce()
+            elseif choice:find("Soft Reset") then
+                stopLoop()
+            end
+        end
+    end
+})
+
+local Main = main:AddTab("Area")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Get Sucked OR RUNNNNN", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Areas = {
+    ["Area 1"] = Vector3.new(-1358.057, 3.197, 26.347),
+    ["Area 2"] = Vector3.new(-1392.535, 3.197, -643.881),
+    ["Area 3"] = Vector3.new(-1786.960, 3.197, -1100.930),
+}
+
+local function teleportTo(pos)
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Area",
+    Description = "",
+    Options = {
+        "Area 1",
+        "Area 2",
+        "Area 3",
+    },
+    Default = "",
+    PlaceHolder = "Search Name",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Areas[choice]
+        if pos then
+            teleportTo(pos)
+        end
+    end
+})
