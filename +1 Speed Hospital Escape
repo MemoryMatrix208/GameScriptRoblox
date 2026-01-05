@@ -1,0 +1,500 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Speed Mode In Hospital")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Hospital Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-747.586, 979.024, 3555.605)
+
+local loopActive = false
+local autoActive = false
+local farmActive = false
+
+local delayValue = 0.03
+local loopTimes = math.huge
+local loopEndTime = nil
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function teleportOnce()
+    getHRP().CFrame = CFrame.new(TARGET_POS)
+end
+
+local function startLoop()
+    task.spawn(function()
+        local count = 0
+        while loopActive do
+            if loopEndTime and os.clock() > loopEndTime then break end
+            teleportOnce()
+            count += 1
+            if count >= loopTimes then break end
+            task.wait(delayValue)
+        end
+        loopActive = false
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        loopActive = false
+        autoActive = false
+        farmActive = false
+        loopTimes = math.huge
+        loopEndTime = nil
+        task.wait()
+
+        if choice:find("Just once") then
+            teleportOnce()
+            return
+        end
+
+        if choice == "Stop Loop" then
+            return
+        end
+
+        if choice == "Stop Farm" then
+            return
+        end
+
+        if choice:find("Loop") then
+            loopActive = true
+
+            if choice:find("Fast") then delayValue = 0.1 end
+            if choice:find("Super Fast") then delayValue = 0.03 end
+            if choice:find("Speed of light") then delayValue = 0 end
+            if choice:find("Stable") then delayValue = 0.2 end
+            if choice:find("X Times") then loopTimes = 10 end
+            if choice:find("30s") then loopEndTime = os.clock() + 30 end
+            if choice:find("1m") then loopEndTime = os.clock() + 60 end
+            if choice:find("5m") then loopEndTime = os.clock() + 300 end
+
+            startLoop()
+            return
+        end
+
+        if choice:find("Auto") then
+            autoActive = true
+            loopActive = true
+            delayValue = 0.05
+            startLoop()
+            return
+        end
+
+        if choice:find("Farm") then
+            farmActive = true
+            loopActive = true
+            delayValue = 0.1
+            startLoop()
+            return
+        end
+
+        if choice:find("System | Emergency Stop") then
+            loopActive = false
+            autoActive = false
+            farmActive = false
+            return
+        end
+    end
+})
+
+local Main = main:AddTab("Speed Mode In City")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Hospital Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-1637.872, 518.470, 4589.452)
+
+local loopActive = false
+local autoActive = false
+local farmActive = false
+
+local delayValue = 0.03
+local loopTimes = math.huge
+local loopEndTime = nil
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function teleportOnce()
+    getHRP().CFrame = CFrame.new(TARGET_POS)
+end
+
+local function startLoop()
+    task.spawn(function()
+        local count = 0
+        while loopActive do
+            if loopEndTime and os.clock() > loopEndTime then break end
+            teleportOnce()
+            count += 1
+            if count >= loopTimes then break end
+            task.wait(delayValue)
+        end
+        loopActive = false
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        loopActive = false
+        autoActive = false
+        farmActive = false
+        loopTimes = math.huge
+        loopEndTime = nil
+        task.wait()
+
+        if choice:find("Just once") then
+            teleportOnce()
+            return
+        end
+
+        if choice == "Stop Loop" then
+            return
+        end
+
+        if choice == "Stop Farm" then
+            return
+        end
+
+        if choice:find("Loop") then
+            loopActive = true
+
+            if choice:find("Fast") then delayValue = 0.1 end
+            if choice:find("Super Fast") then delayValue = 0.03 end
+            if choice:find("Speed of light") then delayValue = 0 end
+            if choice:find("Stable") then delayValue = 0.2 end
+            if choice:find("X Times") then loopTimes = 10 end
+            if choice:find("30s") then loopEndTime = os.clock() + 30 end
+            if choice:find("1m") then loopEndTime = os.clock() + 60 end
+            if choice:find("5m") then loopEndTime = os.clock() + 300 end
+
+            startLoop()
+            return
+        end
+
+        if choice:find("Auto") then
+            autoActive = true
+            loopActive = true
+            delayValue = 0.05
+            startLoop()
+            return
+        end
+
+        if choice:find("Farm") then
+            farmActive = true
+            loopActive = true
+            delayValue = 0.1
+            startLoop()
+            return
+        end
+
+        if choice:find("System | Emergency Stop") then
+            loopActive = false
+            autoActive = false
+            farmActive = false
+            return
+        end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Hospital Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Event = ReplicatedStorage.Events.Rebirth.Rebirth
+
+local loopConn
+
+local function fireOnce()
+    Event:FireServer()
+end
+
+local function startLoop()
+    if loopConn then return end
+    loopConn = RunService.Heartbeat:Connect(function()
+        Event:FireServer()
+    end)
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Rebirth Mode",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop",
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        if mode == "Normal (Once)" then
+            stopLoop()
+            fireOnce()
+
+        elseif mode == "Loop" then
+            startLoop()
+
+        elseif mode == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Upgrade")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Hospital Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local StaminaEvent = ReplicatedStorage.Events.Upgrade.Stamina
+local staminaLoop
+
+local function stopStamina()
+    if staminaLoop then
+        staminaLoop:Disconnect()
+        staminaLoop = nil
+    end
+end
+
+MainSection:AddDropdown("StaminaUpgrade", {
+    Title = "Stamina Upgrade",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopStamina()
+
+        if mode == "Normal (Once)" then
+            StaminaEvent:FireServer()
+
+        elseif mode == "Loop" then
+            staminaLoop = RunService.Heartbeat:Connect(function()
+                StaminaEvent:FireServer()
+            end)
+
+        elseif mode == "Stop Loop" then
+            stopStamina()
+        end
+    end
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local SpeedEvent = ReplicatedStorage.Events.Upgrade.Speed
+local speedLoop
+
+local function stopSpeed()
+    if speedLoop then
+        speedLoop:Disconnect()
+        speedLoop = nil
+    end
+end
+
+MainSection:AddDropdown("SpeedUpgrade", {
+    Title = "Speed Upgrade",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopSpeed()
+
+        if mode == "Normal (Once)" then
+            SpeedEvent:FireServer()
+
+        elseif mode == "Loop" then
+            speedLoop = RunService.Heartbeat:Connect(function()
+                SpeedEvent:FireServer()
+            end)
+
+        elseif mode == "Stop Loop" then
+            stopSpeed()
+        end
+    end
+})
