@@ -1,0 +1,218 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Bike Escape V4", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local TARGETS = {
+    Vector3.new(-3397.960, 173.270, 25.753),
+    Vector3.new(4306.605, 278.809, 26.318),
+    Vector3.new(4922.694, 398.959, 1651.816),
+    Vector3.new(6366.729, 406.169, 3589.269),
+    Vector3.new(6369.876, 402.516, 3595.335),
+}
+
+local running = false
+local index = 1
+local delayTime = 1
+
+local Speed = {
+    Fast = 0.5,
+    SuperFast = 0.25,
+    Light = 0,
+    Stable = 1,
+    Safe = 1.2,
+    Godspeed = 0.05,
+    Overdrive = 0.02,
+    LimitBreak = 0
+}
+
+local function getHRP()
+    local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportOnce(d)
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGETS[index])
+    index = index % #TARGETS + 1
+    if d then task.wait(d) end
+end
+
+local function startLoop(d, duration)
+    running = true
+    task.spawn(function()
+        local start = os.clock()
+        while running do
+            teleportOnce()
+            if duration and os.clock() - start >= duration then
+                running = false
+                break
+            end
+            task.wait(d)
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport",
+    Description = "Multi Mode",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(mode)
+        running = false
+
+        if mode == "Stop Loop" or mode == "Stop Farm" or mode == "System | Emergency Stop" then
+            return
+        end
+
+        if mode:find("^Just once") then
+            if mode:find("Speed of light") then teleportOnce(0)
+            elseif mode:find("Super Fast") then teleportOnce(Speed.SuperFast)
+            elseif mode:find("Fast") then teleportOnce(Speed.Fast)
+            elseif mode:find("Stable") then teleportOnce(Speed.Stable)
+            else teleportOnce() end
+            return
+        end
+
+        if mode:find("^Loop") then
+            if mode:find("30s") then startLoop(Speed.Fast, 30)
+            elseif mode:find("1m") then startLoop(Speed.Fast, 60)
+            elseif mode:find("5m") then startLoop(Speed.Fast, 300)
+            elseif mode:find("Super Fast") then startLoop(Speed.SuperFast)
+            elseif mode:find("Speed of light") then startLoop(Speed.Light)
+            elseif mode:find("Godspeed") then startLoop(Speed.Godspeed)
+            elseif mode:find("Overdrive") then startLoop(Speed.Overdrive)
+            elseif mode:find("Limit Break") then startLoop(Speed.LimitBreak)
+            else startLoop(Speed.Stable) end
+            return
+        end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Bike Escape V4", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Event = game:GetService("ReplicatedStorage").Packages._Index["sleitnick_net@0.2.0"].net["RE/RequestRebirthRE"]
+
+local rebirthLoop = false
+
+local function fireOnce()
+    Event:FireServer()
+end
+
+local function startLoop()
+    task.spawn(function()
+        while rebirthLoop do
+            Event:FireServer()
+            task.wait()
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Rebirth",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Normal (Once)" then
+            rebirthLoop = false
+            fireOnce()
+            return
+        end
+
+        if choice == "Loop" then
+            rebirthLoop = true
+            startLoop()
+            return
+        end
+
+        if choice == "Stop Loop" then
+            rebirthLoop = false
+            return
+        end
+    end
+})
