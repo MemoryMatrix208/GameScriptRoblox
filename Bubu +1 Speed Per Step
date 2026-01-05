@@ -1,0 +1,140 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Bubu +1 Speed Per Step", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(2140.056, 122.805, 1114.512)
+
+local looping = false
+local delayTime = 0.3
+local loopTask
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function teleport()
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function startLoop(d)
+    looping = true
+    delayTime = d
+    loopTask = task.spawn(function()
+        while looping do
+            teleport()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+local function stopLoop()
+    looping = false
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopLoop()
+
+        if mode:find("^Just once") then
+            teleport()
+
+        elseif mode == "Loop | Fast" then
+            startLoop(0.5)
+        elseif mode == "Loop | Super Fast" then
+            startLoop(0.2)
+        elseif mode == "Loop | Speed of light" then
+            startLoop(0)
+        elseif mode == "Loop | Stable" or mode == "Loop | Safe Mode" then
+            startLoop(1)
+        elseif mode == "Loop | Godspeed" then
+            startLoop(0.05)
+        elseif mode == "Stop Loop"
+            or mode == "Stop Farm"
+            or mode == "System | Emergency Stop" then
+            stopLoop()
+        else
+            startLoop(0.4)
+        end
+    end
+})
