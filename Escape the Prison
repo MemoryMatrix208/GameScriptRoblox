@@ -1,0 +1,292 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Key")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape the Prison", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Teleport",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+        hrp.CFrame = CFrame.new(Vector3.new(1900.745, 261.937, 57.052))
+    end,
+})
+
+local Main = main:AddTab("Money")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape the Prison", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local OrbsFolder = workspace:WaitForChild("DynamicObjects"):WaitForChild("Orbs")
+
+local loop = false
+local useRender = false
+local delayTime = 0.2
+local loopCount = math.huge
+local RENDER_NAME = "OrbsSpeedOfLight"
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function touchOnce()
+    local hrp = getHRP()
+    for _, v in ipairs(OrbsFolder:GetChildren()) do
+        if v:IsA("BasePart") then
+            firetouchinterest(hrp, v, 0)
+            firetouchinterest(hrp, v, 1)
+        end
+    end
+end
+
+local function stopAll()
+    loop = false
+    useRender = false
+    loopCount = math.huge
+    RunService:UnbindFromRenderStep(RENDER_NAME)
+end
+
+local function startRenderLoop()
+    RunService:BindToRenderStep(RENDER_NAME, Enum.RenderPriority.Character.Value, function()
+        if not loop then
+            RunService:UnbindFromRenderStep(RENDER_NAME)
+            return
+        end
+        touchOnce()
+    end)
+end
+
+local function startLoop()
+    if useRender then
+        startRenderLoop()
+        return
+    end
+
+    task.spawn(function()
+        local count = 0
+        while loop and count < loopCount do
+            count += 1
+            touchOnce()
+            task.wait(delayTime)
+        end
+        stopAll()
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Money Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+    },
+    Default = "",
+    PlaceHolder = "Search Mode",
+    Multiple = false,
+    Callback = function(choice)
+        stopAll()
+        task.wait()
+
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            return
+        end
+
+        if choice:find("Just once") then
+            if choice:find("Speed of light") then
+                loop = true
+                useRender = true
+                loopCount = 1
+                startLoop()
+            else
+                touchOnce()
+            end
+            return
+        end
+
+        if choice:find("Loop") or choice:find("Farm") or choice:find("Auto") or choice:find("Performance") then
+            loop = true
+
+            if choice:find("Speed of light") or choice:find("Godspeed") or choice:find("Overdrive") then
+                useRender = true
+            elseif choice:find("Super Fast") then
+                delayTime = 0.05
+            elseif choice:find("Fast") then
+                delayTime = 0.15
+            elseif choice:find("Low CPU") or choice:find("FPS Friendly") then
+                delayTime = 0.5
+            else
+                delayTime = 0.25
+            end
+
+            if choice:find("Timed %(30s%)") then
+                loopCount = math.floor(30 / delayTime)
+            elseif choice:find("Timed %(1m%)") then
+                loopCount = math.floor(60 / delayTime)
+            elseif choice:find("Timed %(5m%)") then
+                loopCount = math.floor(300 / delayTime)
+            elseif choice:find("X Times") then
+                loopCount = 10
+            end
+
+            startLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Eggs")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape the Prison", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Event = ReplicatedStorage.CommonModules.Systems.NetworkSystem.Network.RemoteFunction
+
+local selectedEgg
+local mode
+local looping = false
+local LOOP_NAME = "EggLoop"
+
+local function openEgg()
+    if not selectedEgg then return end
+    Event:InvokeServer(
+        "EggService.open",
+        {
+            {
+                name = selectedEgg,
+                type = "Egg"
+            }
+        }
+    )
+end
+
+local function stopLoop()
+    looping = false
+    RunService:UnbindFromRenderStep(LOOP_NAME)
+end
+
+local function startLoop()
+    looping = true
+    RunService:BindToRenderStep(LOOP_NAME, Enum.RenderPriority.Last.Value, function()
+        if not looping then
+            RunService:UnbindFromRenderStep(LOOP_NAME)
+            return
+        end
+        openEgg()
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Egg",
+    Description = "",
+    Options = {
+        "Egg1",
+        "Egg2",
+        "Egg3",
+        "Egg4",
+        "Egg5",
+        "Egg6",
+        "Egg7"
+    },
+    Default = "",
+    PlaceHolder = "Select Egg",
+    Multiple = false,
+    Callback = function(v)
+        selectedEgg = v
+    end
+})
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Mode",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(v)
+        stopLoop()
+        if v == "Normal (Once)" then
+            openEgg()
+        elseif v == "Loop" then
+            startLoop()
+        end
+    end
+})
