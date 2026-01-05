@@ -1,0 +1,198 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("CheckPoints")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ice Skate Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Checkpoints = workspace:WaitForChild("Checkpoints")
+
+local Options = {}
+for i = 1, 16 do
+	table.insert(Options, "Checkpoint "..i)
+end
+
+local function getHRP()
+	local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	return char:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportToCheckpoint(index)
+	local checkpoint = Checkpoints:FindFirstChild(tostring(index))
+	if not checkpoint then return end
+
+	local part =
+		checkpoint:IsA("Model") and checkpoint.PrimaryPart
+		or checkpoint:FindFirstChildWhichIsA("BasePart", true)
+
+	if part then
+		getHRP().CFrame = part.CFrame + Vector3.new(0, 3, 0)
+	end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+	Title = "Checkpoints",
+	Description = "",
+	Options = Options,
+	Default = "",
+	PlaceHolder = "Select Checkpoint",
+	Multiple = false,
+	Callback = function(choice)
+		local num = choice:match("%d+")
+		if num then
+			teleportToCheckpoint(tonumber(num))
+		end
+	end
+})
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ice Skate Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(-258.568, 812.945, 1090.534)
+
+local loop = false
+local delayTime = 0.3
+local loopThread
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportAndKill()
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+
+    if hrp then
+        hrp.CFrame = CFrame.new(TARGET_POS)
+    end
+
+    task.wait(0.1)
+
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function startLoop(d)
+    loop = true
+    delayTime = d
+    loopThread = task.spawn(function()
+        while loop do
+            teleportAndKill()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+local function stopLoop()
+    loop = false
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+        stopLoop()
+
+        if mode:find("^Just once") then
+            teleportAndKill()
+
+        elseif mode == "Loop | Fast" then
+            startLoop(0.5)
+        elseif mode == "Loop | Super Fast" then
+            startLoop(0.2)
+        elseif mode == "Loop | Speed of light" then
+            startLoop(0)
+        elseif mode == "Loop | Stable" or mode == "Loop | Safe Mode" then
+            startLoop(1)
+        elseif mode == "Loop | Godspeed" then
+            startLoop(0.05)
+        elseif mode == "Stop Loop" or mode == "System | Emergency Stop" or mode == "Stop Farm" then
+            stopLoop()
+        else
+            startLoop(0.4)
+        end
+    end
+})
