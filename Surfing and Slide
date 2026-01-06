@@ -1,0 +1,86 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Money")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Surfing and Slide", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Inf Money - Here",
+    Callback = function()
+    local Event = game:GetService("ReplicatedStorage").Remote.Race
+Event:FireServer(
+    "ToQuit",
+    math.huge
+)
+    end,
+  })
+  
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Surfing and Slide", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RaceEvent = ReplicatedStorage.Remote.Race
+
+local selectedWorld
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Select World",
+    Description = "",
+    Options = {
+        "1",
+        "2",
+        "3",
+        "4"
+    },
+    Default = "",
+    PlaceHolder = "Select World",
+    Multiple = false,
+    Callback = function(v)
+        selectedWorld = v
+
+        local folder = workspace.InitedWorld:FindFirstChild(v)
+        if not folder then return end
+
+        local ended = folder:FindFirstChild("Ended")
+        if ended and ended:IsA("Model") then
+            local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                hrp.CFrame = ended:GetPivot()
+            end
+        end
+
+        local win = folder:FindFirstChild("WIN", true)
+        if win and win:IsA("Model") then
+            local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                hrp.CFrame = win:GetPivot()
+            end
+        end
+    end
+})
+
+GroupButtons:AddButton({
+    Title = "Click StartRace First",
+    Callback = function()
+        RaceEvent:FireServer("StartRace")
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Then Click ToQuit",
+    Callback = function()
+        RaceEvent:FireServer("ToQuit", 142.81674194336)
+    end,
+})
