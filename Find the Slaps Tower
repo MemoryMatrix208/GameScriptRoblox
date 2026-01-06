@@ -1,0 +1,281 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Coin")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find the Slaps Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Coin",
+    Description = "",
+    Options = {
+        "+500",
+        "+750",
+        "+1000",
+        "+1250",
+        "+1500"
+    },
+    Default = "",
+    PlaceHolder = "Search Coin",
+    Multiple = false,
+    Callback = function(balls)
+        local map = {
+            ["+500"]  = Vector3.new(-294.331, 5.000, -3.570),
+            ["+750"]  = Vector3.new(-75.246, 66.301, -245.000),
+            ["+1000"] = Vector3.new(-49.283, 6.521, -372.372),
+            ["+1250"] = Vector3.new(49.449, 225.000, -53.704),
+            ["+1500"] = Vector3.new(132.968, 288.000, 21.895)
+        }
+
+        local pos = map[balls]
+        if pos then
+            game.Players.LocalPlayer.Character:PivotTo(CFrame.new(pos))
+        end
+    end
+})
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find the Slaps Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+local char = lp.Character or lp.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart")
+
+local target = workspace:WaitForChild("WinnersPart")
+
+local looping = false
+local loopDelay = 0.1
+
+local function touchOnce()
+    firetouchinterest(hrp, target, 0)
+    firetouchinterest(hrp, target, 1)
+end
+
+local function startLoop()
+    if looping then return end
+    looping = true
+    task.spawn(function()
+        while looping do
+            touchOnce()
+            task.wait(loopDelay)
+        end
+    end)
+end
+
+local function stopLoop()
+    looping = false
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+        "Just once | Lightning",
+        "Just once | Hyper Speed",
+        "Just once | Quantum",
+        "Just once | Instant",
+        "Just once | Immediate",
+        "Just once | Rapid",
+        "Just once | Swift",
+        "Just once | Quick",
+        "Just once | Express",
+        "Just once | Blitz",
+        "Just once | Flash",
+        "Just once | Sonic",
+        "Just once | Turbo",
+        "Just once | Extreme",
+        "Just once | Ultimate",
+        "Just once | Maximum",
+        "Just once | Optimal",
+        "Just once | Balanced",
+        "Just once | Conservative",
+        "Just once | Minimal",
+        "Just once | Lite",
+        "Just once | Standard",
+        "Just once | Premium",
+        "Just once | Professional",
+        "Just once | Enterprise",
+        "Just once | Pro Precision",
+        "Just once | Pro Optimized",
+        "Just once | Extreme Burst",
+        "Just once | Extreme No Delay",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Loop | Infinite",
+        "Loop | Pro Mode",
+        "Loop | Extreme Mode",
+        "Loop | Pro Balanced",
+        "Loop | Pro Efficient",
+        "Loop | Pro Persistent",
+        "Loop | Pro Controlled",
+        "Loop | Extreme Speed",
+        "Loop | Extreme Pressure",
+        "Loop | Extreme Continuous",
+        "Loop | Extreme Unrestricted",
+        "Loop | Extreme Risk",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+        "Auto | Pro Automation",
+        "Auto | Extreme Automation",
+        "Auto | Extreme Autonomous",
+        "Auto | Extreme Self Running",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+        "Performance | Pro Balance",
+        "Performance | Extreme Performance",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Farm | Pro Farming",
+        "Farm | Extreme Farming",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+        "System | Pro Control",
+        "System | Extreme Control"
+    },
+    Default = "",
+    PlaceHolder = "Search Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if string.find(choice, "Just once") then
+            stopLoop()
+            touchOnce()
+
+        elseif string.find(choice, "Loop") then
+            if string.find(choice, "Super Fast") then
+                loopDelay = 0.03
+            elseif string.find(choice, "Speed of light") then
+                loopDelay = 0
+            else
+                loopDelay = 0.1
+            end
+            startLoop()
+
+        elseif choice == "Stop Loop" or choice == "System | Emergency Stop" or choice == "Stop Farm" then
+            stopLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Slash")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find the Slaps Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getEvent()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("Slap"):WaitForChild("Event")
+end
+
+local loopAttack = false
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Slap All Players",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(mode)
+
+        local Event = getEvent()
+
+        if mode == "Normal (Once)" then
+            for _, plr in ipairs(Players:GetPlayers()) do
+                if plr ~= LocalPlayer and plr.Character then
+                    Event:FireServer(
+                        "slash",
+                        plr.Character,
+                        Vector3.new(999, 999, 999)
+                    )
+                end
+            end
+
+        elseif mode == "Loop" then
+            loopAttack = true
+            task.spawn(function()
+                while loopAttack do
+                    for _, plr in ipairs(Players:GetPlayers()) do
+                        if plr ~= LocalPlayer and plr.Character then
+                            Event:FireServer(
+                                "slash",
+                                plr.Character,
+                                Vector3.new(999, 999, 999)
+                            )
+                        end
+                    end
+                    task.wait(0.1)
+                end
+            end)
+
+        elseif mode == "Stop Loop" then
+            loopAttack = false
+        end
+    end
+})
