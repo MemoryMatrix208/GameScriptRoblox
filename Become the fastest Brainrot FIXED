@@ -1,0 +1,177 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Speed Mode")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Become the fastest Brainrot", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TARGET_POS = Vector3.new(2138.950, 119.125, 1113.309)
+
+local teleportLoop = false
+local currentDelay = 0.3
+local useLight = false
+local loopCount = math.huge
+
+local SpeedMap = {
+    ["Normal"] = 0.6,
+    ["Fast"] = 0.3,
+    ["Super Fast"] = 0.1,
+    ["Stable"] = 0.7,
+    ["Safe Mode"] = 1,
+    ["Smart Speed"] = 0.25,
+    ["Godspeed"] = 0.05,
+    ["Overdrive"] = 0.03,
+    ["Limit Break"] = 0.01,
+    ["Low CPU"] = 1.2,
+    ["FPS Friendly"] = 0.9,
+    ["Throttled Mode"] = 1.5,
+    ["Mobile Friendly"] = 1.1
+}
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function teleportOnce()
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGET_POS)
+end
+
+local function stopAll()
+    teleportLoop = false
+    useLight = false
+    loopCount = math.huge
+end
+
+local function startLoop()
+    task.spawn(function()
+        local count = 0
+        while teleportLoop and count < loopCount do
+            teleportOnce()
+            count += 1
+
+            if useLight then
+                RunService.Heartbeat:Wait()
+            else
+                task.wait(currentDelay)
+            end
+        end
+        teleportLoop = false
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Options = {
+
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+
+    Callback = function(choice)
+        stopAll()
+        task.wait()
+
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice == "System | Emergency Stop" then
+            return
+        end
+
+        local mode, speed = choice:match("(.+) %| (.+)")
+
+        if speed == "Speed of light" then
+            useLight = true
+        elseif SpeedMap[speed] then
+            currentDelay = SpeedMap[speed]
+        end
+
+        if choice:find("Timed %(30s%)") then
+            loopCount = math.floor(30 / currentDelay)
+        elseif choice:find("Timed %(1m%)") then
+            loopCount = math.floor(60 / currentDelay)
+        elseif choice:find("Timed %(5m%)") then
+            loopCount = math.floor(300 / currentDelay)
+        end
+
+        if choice:find("Just once") then
+            teleportOnce()
+        elseif choice:find("Loop") or choice:find("Auto") or choice:find("Performance") or choice:find("Farm") then
+            teleportLoop = true
+            startLoop()
+        end
+    end
+})
