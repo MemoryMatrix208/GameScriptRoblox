@@ -1,0 +1,500 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Horse Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+
+local TARGETS = {
+    Vector3.new(-110.838, 72.908, -183.854),
+    Vector3.new(-123.601, 72.033, -807.893),
+    Vector3.new(-120.086, 70.001, -1330.786),
+    Vector3.new(-123.628, 72.244, -1868.973),
+    Vector3.new(-122.195, 83.674, -2359.810),
+    Vector3.new(-139.391, 225.466, -2958.728),
+    Vector3.new(-129.486, 265.388, -4255.517),
+    Vector3.new(-290.994, 264.823, -5918.092),
+    Vector3.new(-283.774, 256.263, -7110.969),
+    Vector3.new(-283.086, 258.544, -8389.920),
+    Vector3.new(-257.072, 455.364, -9946.141),
+    Vector3.new(-261.359, 464.822, -11765.235),
+    Vector3.new(-248.265, 458.431, -13139.758),
+    Vector3.new(-251.396, 460.560, -14742.417),
+    Vector3.new(-234.401, 446.783, -14740.756)
+}
+
+local loop = false
+local useLight = false
+local delayTime = 0.25
+local index = 1
+local taskLoop
+
+local SpeedMap = {
+    ["Normal"] = 0.5,
+    ["Fast"] = 0.25,
+    ["Super Fast"] = 0.1,
+    ["Stable"] = 0.35,
+    ["Safe Mode"] = 0.6,
+    ["Low CPU"] = 0.8,
+    ["FPS Friendly"] = 0.7
+}
+
+local function hrp()
+    local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function teleportNext()
+    hrp().CFrame = CFrame.new(TARGETS[index])
+    index += 1
+    if index > #TARGETS then
+        index = 1
+    end
+end
+
+local function stopAll()
+    loop = false
+    useLight = false
+end
+
+local function startLoop()
+    if taskLoop then return end
+    loop = true
+    taskLoop = task.spawn(function()
+        while loop do
+            teleportNext()
+            if useLight then
+                RunService.Heartbeat:Wait()
+            else
+                task.wait(delayTime)
+            end
+        end
+        taskLoop = nil
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal","Just once | Fast","Just once | Super Fast","Just once | Speed of light","Just once | Stable",
+        "Just once | Debug Mode","Just once | Lightning","Just once | Hyper Speed","Just once | Quantum",
+        "Just once | Instant","Just once | Immediate","Just once | Rapid","Just once | Swift","Just once | Quick",
+        "Just once | Express","Just once | Blitz","Just once | Flash","Just once | Sonic","Just once | Turbo",
+        "Just once | Extreme","Just once | Ultimate","Just once | Maximum","Just once | Optimal",
+        "Just once | Balanced","Just once | Conservative","Just once | Minimal","Just once | Lite",
+        "Just once | Standard","Just once | Premium","Just once | Professional","Just once | Enterprise",
+        "Just once | Pro Precision","Just once | Pro Optimized","Just once | Extreme Burst",
+        "Just once | Extreme No Delay",
+
+        "Loop | Fast","Loop | Super Fast","Loop | Speed of light","Loop | Stable","Loop | Safe Mode",
+        "Loop | Smart Speed","Loop | X Times","Loop | Timed (30s)","Loop | Timed (1m)","Loop | Timed (5m)",
+        "Loop | Retry on Fail","Loop | Auto Recover","Loop | Pause on Error","Loop | Cooldown Mode",
+        "Loop | Burst Mode","Loop | Priority High","Loop | Priority Normal","Loop | Priority Low",
+        "Loop | Godspeed","Loop | Overdrive","Loop | Limit Break","Loop | Infinite",
+        "Loop | Pro Mode","Loop | Extreme Mode","Loop | Pro Balanced","Loop | Pro Efficient",
+        "Loop | Pro Persistent","Loop | Pro Controlled","Loop | Extreme Speed",
+        "Loop | Extreme Pressure","Loop | Extreme Continuous","Loop | Extreme Unrestricted",
+        "Loop | Extreme Risk","Stop Loop",
+
+        "Auto | Adaptive Speed","Auto | Smart Mode","Auto | Context Aware","Auto | Auto Pause",
+        "Auto | Pro Automation","Auto | Extreme Automation","Auto | Extreme Autonomous",
+        "Auto | Extreme Self Running",
+
+        "Performance | Performance Based","Performance | Low CPU","Performance | FPS Friendly",
+        "Performance | Throttled Mode","Performance | Auto Optimize","Performance | Mobile Friendly",
+        "Performance | Pro Balance","Performance | Extreme Performance",
+
+        "Farm | Efficient","Farm | Aggressive","Farm | AFK Friendly","Farm | Background Mode",
+        "Farm | Safe Farm","Farm | Auto Resume","Farm | Auto Pause","Farm | Smart Targeting",
+        "Farm | Pro Farming","Farm | Extreme Farming","Stop Farm",
+
+        "System | Emergency Stop","System | Soft Reset","System | Hard Reset",
+        "System | Status Monitor","System | Mode Indicator",
+        "System | Pro Control","System | Extreme Control"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        stopAll()
+        task.wait()
+
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice:find("Emergency Stop") then
+            return
+        end
+
+        local mode, speed = choice:match("(.+) %| (.+)")
+        if not mode then return end
+
+        if speed == "Speed of light" or speed == "Extreme No Delay" then
+            useLight = true
+        else
+            useLight = false
+            delayTime = SpeedMap[speed] or 0.25
+        end
+
+        if mode == "Just once" then
+            teleportNext()
+        else
+            startLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("DailyReward")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Horse Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage:WaitForChild("DailyRewardRF")
+
+local looping = false
+local loopThread
+
+local function claim()
+    pcall(function()
+        Event:InvokeServer("Claim")
+    end)
+end
+
+local function startLoop()
+    if looping then return end
+    looping = true
+    loopThread = task.spawn(function()
+        while looping do
+            claim()
+            task.wait(1)
+        end
+    end)
+end
+
+local function stopLoop()
+    looping = false
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Daily Reward",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Normal (Once)" then
+            claim()
+        elseif choice == "Loop" then
+            startLoop()
+        elseif choice == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("AddSteps")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Horse Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local RunService = game:GetService("RunService")
+local Event = game:GetService("ReplicatedStorage").Remotes.AddSteps
+
+local looping = false
+local useLight = false
+local delayTime = 0.3
+local RENDER_NAME = "AddSteps_Light"
+
+local SpeedPreset = {
+    ["Normal"] = 0.5,
+    ["Fast"] = 0.3,
+    ["Super Fast"] = 0.1,
+    ["Stable"] = 0.6,
+    ["Lightning"] = 0.08,
+    ["Hyper Speed"] = 0.06,
+    ["Quantum"] = 0.04,
+    ["Instant"] = 0,
+    ["Immediate"] = 0,
+    ["Rapid"] = 0.12,
+    ["Swift"] = 0.15,
+    ["Quick"] = 0.18,
+    ["Express"] = 0.2,
+    ["Blitz"] = 0.07,
+    ["Flash"] = 0.05,
+    ["Sonic"] = 0.09,
+    ["Turbo"] = 0.11,
+    ["Extreme"] = 0.03,
+    ["Ultimate"] = 0.02,
+    ["Maximum"] = 0.015,
+    ["Optimal"] = 0.25,
+    ["Balanced"] = 0.35,
+    ["Conservative"] = 0.8,
+    ["Minimal"] = 1,
+    ["Lite"] = 0.9,
+    ["Standard"] = 0.5,
+    ["Premium"] = 0.2,
+    ["Professional"] = 0.18,
+    ["Enterprise"] = 0.16,
+    ["Pro Precision"] = 0.14,
+    ["Pro Optimized"] = 0.12,
+    ["Extreme Burst"] = 0.01,
+    ["Extreme No Delay"] = 0
+}
+
+local function fire()
+    pcall(function()
+        Event:FireServer()
+    end)
+end
+
+local function stopAll()
+    looping = false
+    useLight = false
+    RunService:UnbindFromRenderStep(RENDER_NAME)
+end
+
+local function lightLoop()
+    RunService:BindToRenderStep(RENDER_NAME, Enum.RenderPriority.Last.Value, function()
+        if not looping then
+            RunService:UnbindFromRenderStep(RENDER_NAME)
+            return
+        end
+        fire()
+    end)
+end
+
+local function startLoop()
+    if useLight then
+        lightLoop()
+        return
+    end
+
+    task.spawn(function()
+        while looping do
+            fire()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Add Steps Mode",
+    Description = "",
+    Options = {
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+        "Just once | Lightning",
+        "Just once | Hyper Speed",
+        "Just once | Quantum",
+        "Just once | Instant",
+        "Just once | Immediate",
+        "Just once | Rapid",
+        "Just once | Swift",
+        "Just once | Quick",
+        "Just once | Express",
+        "Just once | Blitz",
+        "Just once | Flash",
+        "Just once | Sonic",
+        "Just once | Turbo",
+        "Just once | Extreme",
+        "Just once | Ultimate",
+        "Just once | Maximum",
+        "Just once | Optimal",
+        "Just once | Balanced",
+        "Just once | Conservative",
+        "Just once | Minimal",
+        "Just once | Lite",
+        "Just once | Standard",
+        "Just once | Premium",
+        "Just once | Professional",
+        "Just once | Enterprise",
+        "Just once | Pro Precision",
+        "Just once | Pro Optimized",
+        "Just once | Extreme Burst",
+        "Just once | Extreme No Delay",
+
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Loop | Infinite",
+        "Loop | Pro Mode",
+        "Loop | Extreme Mode",
+        "Loop | Pro Balanced",
+        "Loop | Pro Efficient",
+        "Loop | Pro Persistent",
+        "Loop | Pro Controlled",
+        "Loop | Extreme Speed",
+        "Loop | Extreme Pressure",
+        "Loop | Extreme Continuous",
+        "Loop | Extreme Unrestricted",
+        "Loop | Extreme Risk",
+        "Stop Loop",
+
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+        "Auto | Pro Automation",
+        "Auto | Extreme Automation",
+        "Auto | Extreme Autonomous",
+        "Auto | Extreme Self Running",
+
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+        "Performance | Pro Balance",
+        "Performance | Extreme Performance",
+
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Farm | Pro Farming",
+        "Farm | Extreme Farming",
+        "Stop Farm",
+
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+        "System | Pro Control",
+        "System | Extreme Control"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        stopAll()
+        task.wait()
+
+        if choice == "Stop Loop" or choice == "Stop Farm" or choice:find("Emergency Stop") then
+            return
+        end
+
+        local mode, speed = choice:match("(.+) %| (.+)")
+        if not mode then return end
+
+        if speed == "Speed of light" or speed == "Extreme No Delay" then
+            useLight = true
+        else
+            useLight = false
+            delayTime = SpeedPreset[speed] or 0.3
+        end
+
+        if mode == "Just once" then
+            fire()
+        elseif mode == "Loop" or mode == "Auto" or mode == "Farm" or mode == "Performance" then
+            looping = true
+            startLoop()
+        end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Horse Speed Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local RunService = game:GetService("RunService")
+local Event = game:GetService("ReplicatedStorage").Remotes.Rebirth
+
+local looping = false
+local delayTime = 0.5
+
+local function fire()
+    pcall(function()
+        Event:FireServer()
+    end)
+end
+
+local function stopLoop()
+    looping = false
+end
+
+local function startLoop()
+    if looping then return end
+    looping = true
+    task.spawn(function()
+        while looping do
+            fire()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Rebirth Mode",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        if choice == "Normal (Once)" then
+            fire()
+
+        elseif choice == "Loop" then
+            startLoop()
+
+        elseif choice == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
