@@ -1,0 +1,488 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Basa Worlds")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "[UPD] +1 Power Per Jump", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Worlds = workspace.Map.Worlds
+local BaseWorld = Worlds:WaitForChild("Base World")
+local WinsFolder = BaseWorld:WaitForChild("Wins")
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local options = {}
+for _, v in ipairs(WinsFolder:GetChildren()) do
+    if v:IsA("Model") then
+        table.insert(options, v.Name)
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Wins",
+    Description = "",
+    Options = options,
+    Default = "",
+    PlaceHolder = "Search Win",
+    Multiple = false,
+
+    Callback = function(choice)
+        local model = WinsFolder:FindFirstChild(choice)
+        if not model then return end
+
+        local hrp = getHRP()
+        hrp.CFrame = model:GetPivot()
+    end
+})
+
+local Main = main:AddTab("Basa Worlds For 10 Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "[UPD] +1 Power Per Jump", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TouchPart =
+    workspace.Map.Worlds
+    :WaitForChild("Base World")
+    :WaitForChild("Wins")
+    :WaitForChild("10")
+    :WaitForChild("Touch")
+
+local loopRunning = false
+local loopDelay = 0.2
+local loopTask
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function action()
+    getHRP().CFrame = TouchPart.CFrame
+    local prompt = TouchPart:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+end
+
+local function stopAll()
+    loopRunning = false
+    if loopTask then
+        task.cancel(loopTask)
+        loopTask = nil
+    end
+end
+
+local SpeedPreset = {
+    Normal = 0.3,
+    Fast = 0.15,
+    ["Super Fast"] = 0.05,
+    ["Speed of light"] = 0,
+    Stable = 0.4,
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+
+        -- JUST ONCE
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        -- LOOP
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+
+        "Stop Loop",
+
+        -- AUTO
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        -- PERFORMANCE
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        -- FARM
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+
+        "Stop Farm",
+
+        -- SYSTEM
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(mode)
+        stopAll()
+
+        if mode == "Stop Loop" or mode == "Stop Farm" or mode == "System | Emergency Stop" then
+            return
+        end
+
+        if mode:find("Just once") then
+            action()
+            return
+        end
+
+        if mode:find("Loop") or mode:find("Auto") or mode:find("Farm") or mode:find("Performance") then
+            if mode:find("Speed of light") or mode:find("Godspeed") or mode:find("Overdrive") then
+                loopDelay = 0
+            elseif mode:find("Super Fast") then
+                loopDelay = SpeedPreset["Super Fast"]
+            elseif mode:find("Fast") then
+                loopDelay = SpeedPreset.Fast
+            elseif mode:find("Stable") then
+                loopDelay = SpeedPreset.Stable
+            else
+                loopDelay = SpeedPreset.Normal
+            end
+
+            loopRunning = true
+            loopTask = task.spawn(function()
+                while loopRunning do
+                    action()
+                    if loopDelay == 0 then
+                        RunService.Heartbeat:Wait()
+                    else
+                        task.wait(loopDelay)
+                    end
+                end
+            end)
+        end
+    end
+})
+
+local Main = main:AddTab("Cyber World")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "[UPD] +1 Power Per Jump", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Worlds = workspace.Map.Worlds
+local BaseWorld = Worlds:WaitForChild("Cyber World")
+local WinsFolder = BaseWorld:WaitForChild("Wins")
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local options = {}
+for _, v in ipairs(WinsFolder:GetChildren()) do
+    if v:IsA("Model") then
+        table.insert(options, v.Name)
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Wins",
+    Description = "",
+    Options = options,
+    Default = "",
+    PlaceHolder = "Search Win",
+    Multiple = false,
+
+    Callback = function(choice)
+        local model = WinsFolder:FindFirstChild(choice)
+        if not model then return end
+
+        local hrp = getHRP()
+        hrp.CFrame = model:GetPivot()
+    end
+})
+
+local Main = main:AddTab("Cyber World For 10 Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "[UPD] +1 Power Per Jump", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local TouchPart =
+    workspace.Map.Worlds
+    :WaitForChild("Cyber World")
+    :WaitForChild("Wins")
+    :WaitForChild("10")
+    :WaitForChild("Touch")
+
+local loopRunning = false
+local loopDelay = 0.2
+local loopTask
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function action()
+    getHRP().CFrame = TouchPart.CFrame
+    local prompt = TouchPart:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+end
+
+local function stopAll()
+    loopRunning = false
+    if loopTask then
+        task.cancel(loopTask)
+        loopTask = nil
+    end
+end
+
+local SpeedPreset = {
+    Normal = 0.3,
+    Fast = 0.15,
+    ["Super Fast"] = 0.05,
+    ["Speed of light"] = 0,
+    Stable = 0.4,
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Teleport Mode",
+    Description = "",
+    Options = {
+
+        -- JUST ONCE
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+
+        -- LOOP
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+
+        "Stop Loop",
+
+        -- AUTO
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+
+        -- PERFORMANCE
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+
+        -- FARM
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+
+        "Stop Farm",
+
+        -- SYSTEM
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator"
+    },
+
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(mode)
+        stopAll()
+
+        if mode == "Stop Loop" or mode == "Stop Farm" or mode == "System | Emergency Stop" then
+            return
+        end
+
+        if mode:find("Just once") then
+            action()
+            return
+        end
+
+        if mode:find("Loop") or mode:find("Auto") or mode:find("Farm") or mode:find("Performance") then
+            if mode:find("Speed of light") or mode:find("Godspeed") or mode:find("Overdrive") then
+                loopDelay = 0
+            elseif mode:find("Super Fast") then
+                loopDelay = SpeedPreset["Super Fast"]
+            elseif mode:find("Fast") then
+                loopDelay = SpeedPreset.Fast
+            elseif mode:find("Stable") then
+                loopDelay = SpeedPreset.Stable
+            else
+                loopDelay = SpeedPreset.Normal
+            end
+
+            loopRunning = true
+            loopTask = task.spawn(function()
+                while loopRunning do
+                    action()
+                    if loopDelay == 0 then
+                        RunService.Heartbeat:Wait()
+                    else
+                        task.wait(loopDelay)
+                    end
+                end
+            end)
+        end
+    end
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "[UPD] +1 Power Per Jump", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Event = ReplicatedStorage
+    .Modules.Packages._Index["sleitnick_net@0.2.0"]
+    .net["RF/Rebirth"]
+
+local rebirthLoop = false
+local loopTask
+
+local function rebirthOnce()
+    Event:InvokeServer()
+end
+
+local function startLoop()
+    if rebirthLoop then return end
+    rebirthLoop = true
+
+    loopTask = task.spawn(function()
+        while rebirthLoop do
+            Event:InvokeServer()
+            task.wait()
+        end
+    end)
+end
+
+local function stopLoop()
+    rebirthLoop = false
+    if loopTask then
+        task.cancel(loopTask)
+        loopTask = nil
+    end
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Rebirth Mode",
+    Description = "",
+    Options = {
+        "Normal (Once)",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(mode)
+        if mode == "Normal (Once)" then
+            rebirthOnce()
+
+        elseif mode == "Loop" then
+            startLoop()
+
+        elseif mode == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
