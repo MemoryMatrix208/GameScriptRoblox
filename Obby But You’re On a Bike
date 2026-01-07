@@ -1,0 +1,241 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Worlds")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Obby But You’re On a Bike", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local Checkpoints = workspace.WorldMap.Checkpoints
+
+local looping = false
+local loopThread
+
+local speedDelay = {
+    Normal = 0.4,
+    Fast = 0.25,
+    ["Super Fast"] = 0.1,
+    ["Speed of light"] = 0,
+    Stable = 0.5,
+    ["Debug Mode"] = 1,
+
+    Lightning = 0,
+    ["Hyper Speed"] = 0,
+    Quantum = 0,
+    Instant = 0,
+    Immediate = 0,
+    Rapid = 0.05,
+    Swift = 0.1,
+    Quick = 0.15,
+    Express = 0.08,
+    Blitz = 0,
+    Flash = 0,
+    Sonic = 0,
+    Turbo = 0,
+    Extreme = 0,
+    Ultimate = 0,
+    Maximum = 0,
+    Optimal = 0.2,
+    Balanced = 0.3,
+    Conservative = 0.6,
+    Minimal = 0.8,
+    Lite = 0.7,
+    Standard = 0.4,
+    Premium = 0.2,
+    Professional = 0.15,
+    Enterprise = 0.1,
+    ["Pro Precision"] = 0.05,
+    ["Pro Optimized"] = 0.05,
+    ["Extreme Burst"] = 0,
+    ["Extreme No Delay"] = 0,
+}
+
+local function HRP()
+    local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function runOnce(mode)
+    for i = 1, 99 do
+        local cp = Checkpoints:FindFirstChild(tostring(i))
+        if cp and cp:IsA("Model") then
+            HRP().CFrame = cp:GetPivot()
+            local d = speedDelay[mode]
+            if d == 0 then
+                RunService.Heartbeat:Wait()
+            else
+                task.wait(d or 0.3)
+            end
+        end
+    end
+end
+
+local function startLoop(mode)
+    looping = true
+    loopThread = task.spawn(function()
+        while looping do
+            runOnce(mode)
+        end
+    end)
+end
+
+local function stopAll()
+    looping = false
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Checkpoint",
+    Description = "",
+    Options = {
+
+        -- JUST ONCE
+        "Just once | Normal",
+        "Just once | Fast",
+        "Just once | Super Fast",
+        "Just once | Speed of light",
+        "Just once | Stable",
+        "Just once | Debug Mode",
+        "Just once | Lightning",
+        "Just once | Hyper Speed",
+        "Just once | Quantum",
+        "Just once | Instant",
+        "Just once | Immediate",
+        "Just once | Rapid",
+        "Just once | Swift",
+        "Just once | Quick",
+        "Just once | Express",
+        "Just once | Blitz",
+        "Just once | Flash",
+        "Just once | Sonic",
+        "Just once | Turbo",
+        "Just once | Extreme",
+        "Just once | Ultimate",
+        "Just once | Maximum",
+        "Just once | Optimal",
+        "Just once | Balanced",
+        "Just once | Conservative",
+        "Just once | Minimal",
+        "Just once | Lite",
+        "Just once | Standard",
+        "Just once | Premium",
+        "Just once | Professional",
+        "Just once | Enterprise",
+        "Just once | Pro Precision",
+        "Just once | Pro Optimized",
+        "Just once | Extreme Burst",
+        "Just once | Extreme No Delay",
+
+        -- LOOP
+        "Loop | Fast",
+        "Loop | Super Fast",
+        "Loop | Speed of light",
+        "Loop | Stable",
+        "Loop | Safe Mode",
+        "Loop | Smart Speed",
+        "Loop | X Times",
+        "Loop | Timed (30s)",
+        "Loop | Timed (1m)",
+        "Loop | Timed (5m)",
+        "Loop | Retry on Fail",
+        "Loop | Auto Recover",
+        "Loop | Pause on Error",
+        "Loop | Cooldown Mode",
+        "Loop | Burst Mode",
+        "Loop | Priority High",
+        "Loop | Priority Normal",
+        "Loop | Priority Low",
+        "Loop | Godspeed",
+        "Loop | Overdrive",
+        "Loop | Limit Break",
+        "Loop | Infinite",
+        "Loop | Pro Mode",
+        "Loop | Extreme Mode",
+        "Loop | Pro Balanced",
+        "Loop | Pro Efficient",
+        "Loop | Pro Persistent",
+        "Loop | Pro Controlled",
+        "Loop | Extreme Speed",
+        "Loop | Extreme Pressure",
+        "Loop | Extreme Continuous",
+        "Loop | Extreme Unrestricted",
+        "Loop | Extreme Risk",
+        "Stop Loop",
+
+        -- AUTO
+        "Auto | Adaptive Speed",
+        "Auto | Smart Mode",
+        "Auto | Context Aware",
+        "Auto | Auto Pause",
+        "Auto | Pro Automation",
+        "Auto | Extreme Automation",
+        "Auto | Extreme Autonomous",
+        "Auto | Extreme Self Running",
+
+        -- PERFORMANCE
+        "Performance | Performance Based",
+        "Performance | Low CPU",
+        "Performance | FPS Friendly",
+        "Performance | Throttled Mode",
+        "Performance | Auto Optimize",
+        "Performance | Mobile Friendly",
+        "Performance | Pro Balance",
+        "Performance | Extreme Performance",
+
+        -- FARM
+        "Farm | Efficient",
+        "Farm | Aggressive",
+        "Farm | AFK Friendly",
+        "Farm | Background Mode",
+        "Farm | Safe Farm",
+        "Farm | Auto Resume",
+        "Farm | Auto Pause",
+        "Farm | Smart Targeting",
+        "Farm | Pro Farming",
+        "Farm | Extreme Farming",
+        "Stop Farm",
+
+        -- SYSTEM
+        "System | Emergency Stop",
+        "System | Soft Reset",
+        "System | Hard Reset",
+        "System | Status Monitor",
+        "System | Mode Indicator",
+        "System | Pro Control",
+        "System | Extreme Control",
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+
+    Callback = function(choice)
+        stopAll()
+
+        if choice == "Stop Loop"
+        or choice == "Stop Farm"
+        or choice == "System | Emergency Stop" then
+            return
+        end
+
+        local category, mode = choice:match("^(.-)%s|%s(.+)$")
+        if not category or not mode then return end
+
+        if category == "Just once" then
+            runOnce(mode)
+        elseif category == "Loop" then
+            startLoop(mode)
+        else
+            startLoop("Balanced")
+        end
+    end
+})
