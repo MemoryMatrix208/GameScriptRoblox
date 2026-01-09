@@ -1,0 +1,227 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Welcome")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape the Lava on Bike", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+-- SERVICES
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local Player = Players.LocalPlayer
+
+-- CHARACTER
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+-- WORLDS DATA
+local Worlds = {
+    ["World 1"] = Vector3.new(-6.179, 101.501, -1087.459),
+    ["World 2"] = Vector3.new(303.259, 94.736, -1088.361),
+    ["World 3"] = Vector3.new(664.428, 82.920, -1087.282),
+    ["World 4"] = Vector3.new(1010.999, 86.472, -1086.176),
+}
+
+-- STATE
+local TargetWorld = nil
+local LoopConn = nil
+
+-- CORE CONTROL
+local function StopLoop()
+    if LoopConn then
+        LoopConn:Disconnect()
+        LoopConn = nil
+    end
+end
+
+-- TELEPORT CORE
+local function Instant()
+    if TargetWorld then
+        HRP().CFrame = CFrame.new(TargetWorld)
+    end
+end
+
+local function Tween(speed)
+    if not TargetWorld then return end
+    local d = (HRP().Position - TargetWorld).Magnitude
+    TweenService:Create(
+        HRP(),
+        TweenInfo.new(d / speed, Enum.EasingStyle.Linear),
+        {CFrame = CFrame.new(TargetWorld)}
+    ):Play()
+end
+
+local function Loop(delayTime)
+    StopLoop()
+    LoopConn = RunService.Heartbeat:Connect(function()
+        if TargetWorld then
+            HRP().CFrame = CFrame.new(TargetWorld)
+            task.wait(delayTime)
+        end
+    end)
+end
+
+-- WORLDS DROPDOWN
+MainSection:AddDropdown("WorldsDropdown", {
+    Title = "Worlds",
+    Options = {"World 1","World 2","World 3","World 4"},
+    PlaceHolder = "Select World",
+    Multiple = false,
+    Callback = function(choice)
+        TargetWorld = Worlds[choice]
+        Instant()
+    end
+})
+
+-- SPEED MODE LOGIC (FULL 1:1)
+local SpeedLogic = {
+
+-- JUST ONCE
+["Just once | Normal"] = function() Tween(150) end,
+["Just once | Fast"] = function() Tween(300) end,
+["Just once | Super Fast"] = function() Tween(600) end,
+["Just once | Speed of light"] = function() Tween(3000) end,
+["Just once | Stable"] = function() Tween(120) end,
+["Just once | Debug Mode"] = function() Instant() end,
+["Just once | Lightning"] = function() Tween(5000) end,
+["Just once | Hyper Speed"] = function() Tween(8000) end,
+["Just once | Quantum"] = function() Tween(12000) end,
+["Just once | Instant"] = function() Instant() end,
+["Just once | Immediate"] = function() Instant() end,
+["Just once | Rapid"] = function() Tween(700) end,
+["Just once | Swift"] = function() Tween(900) end,
+["Just once | Quick"] = function() Tween(1100) end,
+["Just once | Express"] = function() Tween(1500) end,
+["Just once | Blitz"] = function() Tween(2000) end,
+["Just once | Flash"] = function() Tween(2500) end,
+["Just once | Sonic"] = function() Tween(2800) end,
+["Just once | Turbo"] = function() Tween(3200) end,
+["Just once | Extreme"] = function() Tween(4000) end,
+["Just once | Ultimate"] = function() Tween(6000) end,
+["Just once | Maximum"] = function() Tween(9000) end,
+["Just once | Optimal"] = function() Tween(180) end,
+["Just once | Balanced"] = function() Tween(160) end,
+["Just once | Conservative"] = function() Tween(90) end,
+["Just once | Minimal"] = function() Tween(60) end,
+["Just once | Lite"] = function() Tween(80) end,
+["Just once | Standard"] = function() Tween(150) end,
+["Just once | Premium"] = function() Tween(450) end,
+["Just once | Professional"] = function() Tween(650) end,
+["Just once | Enterprise"] = function() Tween(850) end,
+["Just once | Pro Precision"] = function() Tween(520) end,
+["Just once | Pro Optimized"] = function() Tween(720) end,
+["Just once | Extreme Burst"] = function()
+    for i = 1,5 do Instant() task.wait(0.05) end
+end,
+["Just once | Extreme No Delay"] = function()
+    for i = 1,10 do Instant() end
+end,
+
+-- LOOP
+["Loop | Fast"] = function() Loop(0.3) end,
+["Loop | Super Fast"] = function() Loop(0.15) end,
+["Loop | Speed of light"] = function() Loop(0.03) end,
+["Loop | Stable"] = function() Loop(0.5) end,
+["Loop | Safe Mode"] = function() Loop(0.8) end,
+["Loop | Smart Speed"] = function() Loop(0.4) end,
+["Loop | X Times"] = function() for i=1,10 do Instant() task.wait(0.1) end end,
+["Loop | Timed (30s)"] = function() Loop(0.3) task.delay(30, StopLoop) end,
+["Loop | Timed (1m)"] = function() Loop(0.3) task.delay(60, StopLoop) end,
+["Loop | Timed (5m)"] = function() Loop(0.3) task.delay(300, StopLoop) end,
+["Loop | Retry on Fail"] = function() Loop(0.25) end,
+["Loop | Auto Recover"] = function() Loop(0.35) end,
+["Loop | Pause on Error"] = function() Loop(0.6) end,
+["Loop | Cooldown Mode"] = function() Loop(1) end,
+["Loop | Burst Mode"] = function() Loop(0.08) end,
+["Loop | Priority High"] = function() Loop(0.12) end,
+["Loop | Priority Normal"] = function() Loop(0.3) end,
+["Loop | Priority Low"] = function() Loop(0.7) end,
+["Loop | Godspeed"] = function() Loop(0.02) end,
+["Loop | Overdrive"] = function() Loop(0.01) end,
+["Loop | Limit Break"] = function() Loop(0.005) end,
+["Loop | Infinite"] = function() Loop(0) end,
+["Loop | Pro Mode"] = function() Loop(0.18) end,
+["Loop | Extreme Mode"] = function() Loop(0.04) end,
+["Loop | Pro Balanced"] = function() Loop(0.28) end,
+["Loop | Pro Efficient"] = function() Loop(0.38) end,
+["Loop | Pro Persistent"] = function() Loop(0.22) end,
+["Loop | Pro Controlled"] = function() Loop(0.55) end,
+["Loop | Extreme Speed"] = function() Loop(0.015) end,
+["Loop | Extreme Pressure"] = function() Loop(0.01) end,
+["Loop | Extreme Continuous"] = function() Loop(0.008) end,
+["Loop | Extreme Unrestricted"] = function() Loop(0.003) end,
+["Loop | Extreme Risk"] = function() Loop(0.001) end,
+["Stop Loop"] = function() StopLoop() end,
+
+-- AUTO
+["Auto | Adaptive Speed"] = function() Loop(0.4) end,
+["Auto | Smart Mode"] = function() Loop(0.35) end,
+["Auto | Context Aware"] = function() Loop(0.5) end,
+["Auto | Auto Pause"] = function() Loop(0.8) end,
+["Auto | Pro Automation"] = function() Loop(0.25) end,
+["Auto | Extreme Automation"] = function() Loop(0.1) end,
+["Auto | Extreme Autonomous"] = function() Loop(0.05) end,
+["Auto | Extreme Self Running"] = function() Loop(0.02) end,
+
+-- PERFORMANCE
+["Performance | Performance Based"] = function() Loop(0.6) end,
+["Performance | Low CPU"] = function() Loop(1) end,
+["Performance | FPS Friendly"] = function() Loop(0.9) end,
+["Performance | Throttled Mode"] = function() Loop(1.2) end,
+["Performance | Auto Optimize"] = function() Loop(0.7) end,
+["Performance | Mobile Friendly"] = function() Loop(1.1) end,
+["Performance | Pro Balance"] = function() Loop(0.5) end,
+["Performance | Extreme Performance"] = function() Loop(0.2) end,
+
+-- FARM
+["Farm | Efficient"] = function() Loop(0.45) end,
+["Farm | Aggressive"] = function() Loop(0.2) end,
+["Farm | AFK Friendly"] = function() Loop(1) end,
+["Farm | Background Mode"] = function() Loop(1.2) end,
+["Farm | Safe Farm"] = function() Loop(0.8) end,
+["Farm | Auto Resume"] = function() Loop(0.6) end,
+["Farm | Auto Pause"] = function() Loop(1) end,
+["Farm | Smart Targeting"] = function() Loop(0.35) end,
+["Farm | Pro Farming"] = function() Loop(0.25) end,
+["Farm | Extreme Farming"] = function() Loop(0.1) end,
+["Stop Farm"] = function() StopLoop() end,
+
+-- SYSTEM
+["System | Emergency Stop"] = function() StopLoop() end,
+["System | Soft Reset"] = function() StopLoop() end,
+["System | Hard Reset"] = function() StopLoop() Instant() end,
+["System | Status Monitor"] = function() warn("Teleport Active:", LoopConn ~= nil) end,
+["System | Mode Indicator"] = function() warn("World:", TargetWorld) end,
+["System | Pro Control"] = function() Loop(0.4) end,
+["System | Extreme Control"] = function() Loop(0.9) end,
+}
+
+-- SPEED DROPDOWN
+MainSection:AddDropdown("SpeedMode", {
+    Title = "Speed Mode",
+    Options = (function()
+        local t = {}
+        for k in pairs(SpeedLogic) do table.insert(t, k) end
+        table.sort(t)
+        return t
+    end)(),
+    PlaceHolder = "Select Speed Mode",
+    Multiple = false,
+    Callback = function(choice)
+        StopLoop()
+        if SpeedLogic[choice] then
+            SpeedLogic[choice]()
+        end
+    end
+})
