@@ -1,0 +1,119 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find Sammy Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Locations = {
+    ["FusionCoil"]        = Vector3.new(64.741, -42.719, 326.072),
+    ["Thunder Glove"]     = Vector3.new(199.896, -102.015, 16.002),
+    ["Burning Glove"]     = Vector3.new(74.994, -65.956, 3.360),
+    ["Vampire Glove"]     = Vector3.new(74.004, -65.956, -21.267),
+    ["Red Matter Glove"]  = Vector3.new(-195.317, 713.946, -0.603),
+    ["Blade Glove"]       = Vector3.new(-131.031, 713.946, -36.378),
+}
+
+local function TeleportTo(pos)
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Glove Teleport",
+    Description = "",
+    Options = {
+        "FusionCoil",
+        "Thunder Glove",
+        "Burning Glove",
+        "Vampire Glove",
+        "Red Matter Glove",
+        "Blade Glove",
+    },
+    Default = "",
+    PlaceHolder = "Select Glove",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Locations[choice]
+        if pos then
+            TeleportTo(pos)
+        end
+    end
+})
+
+local Main = main:AddTab("Coin")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find Sammy Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Points = {
+    ["1k"]   = Vector3.new(52.564, -48.924, 329.925),
+    ["500"]  = Vector3.new(39.091, -62.918, -191.508),
+    ["1.2k"] = Vector3.new(203.704, -99.387, 37.608),
+}
+
+local function TeleportTo(pos)
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+MainSection:AddDropdown("EpicDropDownName_Points", {
+    Title = "Coin",
+    Description = "",
+    Options = {
+        "1k",
+        "500",
+        "1.2k",
+    },
+    Default = "",
+    PlaceHolder = "Select Coin",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Points[choice]
+        if pos then
+            TeleportTo(pos)
+        end
+    end
+})
+
+local Main = main:AddTab("Amount Coin")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Find Sammy Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Event = game:GetService("ReplicatedStorage").Events.Main
+
+MainSection:AddSlider("CoinsSlider", {
+    Title = "Coins Amount",
+    Description = "",
+    Default = 1127,
+    Min = 0,
+    Max = 9999999999999999,
+    Increment = 1,
+    Callback = function(value)
+        Event:FireServer(
+            "Notification",
+            "Coins",
+            5,
+            value
+        )
+    end,
+})
