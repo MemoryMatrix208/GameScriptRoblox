@@ -1,0 +1,274 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Gear Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local TargetCFrame = CFrame.new(0.048, 320.000, 131.200)
+
+local State = {
+    Loop = false,
+    Farm = false,
+    Auto = false,
+    Cooldown = false,
+    Pause = false,
+}
+
+local function teleport()
+    getHRP().CFrame = TargetCFrame
+end
+
+local function teleportDelay(d)
+    task.wait(d)
+    teleport()
+end
+
+local function teleportLoop(d)
+    State.Loop = true
+    task.spawn(function()
+        while State.Loop do
+            teleport()
+            task.wait(d)
+        end
+    end)
+end
+
+local function teleportTimed(t, d)
+    State.Loop = true
+    task.spawn(function()
+        local s = tick()
+        while State.Loop and tick() - s < t do
+            teleport()
+            task.wait(d)
+        end
+        State.Loop = false
+    end)
+end
+
+local SpeedLogic = {
+
+["Just once | Normal"] = function() teleport() end,
+["Just once | Fast"] = function() teleportDelay(0.2) end,
+["Just once | Super Fast"] = function() teleportDelay(0.1) end,
+["Just once | Speed of light"] = function() teleportDelay(0) end,
+["Just once | Stable"] = function() teleportDelay(0.3) end,
+["Just once | Debug Mode"] = function() teleport() print("DEBUG") end,
+["Just once | Lightning"] = function() teleportDelay(0.05) end,
+["Just once | Hyper Speed"] = function() teleportDelay(0.03) end,
+["Just once | Quantum"] = function() teleportDelay(0.01) end,
+["Just once | Instant"] = function() teleport() end,
+["Just once | Immediate"] = function() teleport() end,
+["Just once | Rapid"] = function() teleportDelay(0.15) end,
+["Just once | Swift"] = function() teleportDelay(0.12) end,
+["Just once | Quick"] = function() teleportDelay(0.18) end,
+["Just once | Express"] = function() teleportDelay(0.08) end,
+["Just once | Blitz"] = function() teleportDelay(0.04) end,
+["Just once | Flash"] = function() teleportDelay(0.02) end,
+["Just once | Sonic"] = function() teleportDelay(0.06) end,
+["Just once | Turbo"] = function() teleportDelay(0.09) end,
+["Just once | Extreme"] = function() teleportDelay(0) end,
+["Just once | Ultimate"] = function() teleportDelay(0) end,
+["Just once | Maximum"] = function() teleportDelay(0) end,
+["Just once | Optimal"] = function() teleportDelay(0.1) end,
+["Just once | Balanced"] = function() teleportDelay(0.2) end,
+["Just once | Conservative"] = function() teleportDelay(0.4) end,
+["Just once | Minimal"] = function() teleportDelay(0.5) end,
+["Just once | Lite"] = function() teleportDelay(0.35) end,
+["Just once | Standard"] = function() teleportDelay(0.25) end,
+["Just once | Premium"] = function() teleportDelay(0.07) end,
+["Just once | Professional"] = function() teleportDelay(0.05) end,
+["Just once | Enterprise"] = function() teleportDelay(0.03) end,
+["Just once | Pro Precision"] = function() teleport() end,
+["Just once | Pro Optimized"] = function() teleportDelay(0.01) end,
+["Just once | Extreme Burst"] = function() for i=1,5 do teleport() end end,
+["Just once | Extreme No Delay"] = function() teleport() end,
+
+["Loop | Fast"] = function() teleportLoop(0.2) end,
+["Loop | Super Fast"] = function() teleportLoop(0.1) end,
+["Loop | Speed of light"] = function() teleportLoop(0) end,
+["Loop | Stable"] = function() teleportLoop(0.3) end,
+["Loop | Safe Mode"] = function() teleportLoop(0.5) end,
+["Loop | Smart Speed"] = function() teleportLoop(0.15) end,
+["Loop | X Times"] = function() for i=1,10 do teleport() task.wait(0.1) end end,
+["Loop | Timed (30s)"] = function() teleportTimed(30,0.2) end,
+["Loop | Timed (1m)"] = function() teleportTimed(60,0.2) end,
+["Loop | Timed (5m)"] = function() teleportTimed(300,0.25) end,
+["Loop | Retry on Fail"] = function() teleportLoop(0.3) end,
+["Loop | Auto Recover"] = function() teleportLoop(0.2) end,
+["Loop | Pause on Error"] = function() teleportLoop(0.4) end,
+["Loop | Cooldown Mode"] = function() teleportLoop(1) end,
+["Loop | Burst Mode"] = function() teleportLoop(0.05) end,
+["Loop | Priority High"] = function() teleportLoop(0) end,
+["Loop | Priority Normal"] = function() teleportLoop(0.2) end,
+["Loop | Priority Low"] = function() teleportLoop(0.5) end,
+["Loop | Godspeed"] = function() teleportLoop(0) end,
+["Loop | Overdrive"] = function() teleportLoop(0.01) end,
+["Loop | Limit Break"] = function() teleportLoop(0) end,
+["Loop | Infinite"] = function() teleportLoop(0.15) end,
+["Loop | Pro Mode"] = function() teleportLoop(0.05) end,
+["Loop | Extreme Mode"] = function() teleportLoop(0) end,
+["Loop | Pro Balanced"] = function() teleportLoop(0.1) end,
+["Loop | Pro Efficient"] = function() teleportLoop(0.2) end,
+["Loop | Pro Persistent"] = function() teleportLoop(0.12) end,
+["Loop | Pro Controlled"] = function() teleportLoop(0.25) end,
+["Loop | Extreme Speed"] = function() teleportLoop(0) end,
+["Loop | Extreme Pressure"] = function() teleportLoop(0.03) end,
+["Loop | Extreme Continuous"] = function() teleportLoop(0) end,
+["Loop | Extreme Unrestricted"] = function() teleportLoop(0) end,
+["Loop | Extreme Risk"] = function() teleportLoop(0) end,
+["Stop Loop"] = function() State.Loop = false end,
+
+["Auto | Adaptive Speed"] = function() teleportLoop(0.12) end,
+["Auto | Smart Mode"] = function() teleportLoop(0.15) end,
+["Auto | Context Aware"] = function() teleportLoop(0.2) end,
+["Auto | Auto Pause"] = function() State.Pause = true end,
+["Auto | Pro Automation"] = function() teleportLoop(0.1) end,
+["Auto | Extreme Automation"] = function() teleportLoop(0) end,
+["Auto | Extreme Autonomous"] = function() teleportLoop(0) end,
+["Auto | Extreme Self Running"] = function() teleportLoop(0) end,
+
+["Performance | Performance Based"] = function() teleportLoop(0.2) end,
+["Performance | Low CPU"] = function() teleportLoop(0.6) end,
+["Performance | FPS Friendly"] = function() teleportLoop(0.4) end,
+["Performance | Throttled Mode"] = function() teleportLoop(1) end,
+["Performance | Auto Optimize"] = function() teleportLoop(0.3) end,
+["Performance | Mobile Friendly"] = function() teleportLoop(0.7) end,
+["Performance | Pro Balance"] = function() teleportLoop(0.25) end,
+["Performance | Extreme Performance"] = function() teleportLoop(0) end,
+
+["Farm | Efficient"] = function() State.Farm=true teleportLoop(0.2) end,
+["Farm | Aggressive"] = function() State.Farm=true teleportLoop(0) end,
+["Farm | AFK Friendly"] = function() State.Farm=true teleportLoop(0.6) end,
+["Farm | Background Mode"] = function() State.Farm=true teleportLoop(0.8) end,
+["Farm | Safe Farm"] = function() State.Farm=true teleportLoop(0.5) end,
+["Farm | Auto Resume"] = function() State.Farm=true teleportLoop(0.3) end,
+["Farm | Auto Pause"] = function() State.Farm=false State.Loop=false end,
+["Farm | Smart Targeting"] = function() State.Farm=true teleportLoop(0.25) end,
+["Farm | Pro Farming"] = function() State.Farm=true teleportLoop(0.1) end,
+["Farm | Extreme Farming"] = function() State.Farm=true teleportLoop(0) end,
+["Stop Farm"] = function() State.Farm=false State.Loop=false end,
+
+["System | Emergency Stop"] = function() State.Loop=false State.Farm=false end,
+["System | Soft Reset"] = function() teleport() end,
+["System | Hard Reset"] = function() State.Loop=false teleport() end,
+["System | Status Monitor"] = function() print(State) end,
+["System | Mode Indicator"] = function() print("ACTIVE") end,
+["System | Pro Control"] = function() State.Loop=false teleportLoop(0.1) end,
+["System | Extreme Control"] = function() State.Loop=false teleportLoop(0) end,
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Speed Mode",
+    Description = "",
+    Options = table.keys(SpeedLogic),
+    Default = "",
+    PlaceHolder = "Search Mode",
+    Multiple = false,
+    Callback = function(v)
+        local f = SpeedLogic[v]
+        if f then f() end
+    end
+})
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Gear Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local Items = {
+    ["ClassicTimebomb"] = Vector3.new(179.161, 103.000, -17.029),
+    ["FusionCoil"] = Vector3.new(-1.184, 4.036, -235.998),
+    ["FireSlap"] = Vector3.new(-250.563, 4.000, -41.894),
+    ["Banana Peel"] = Vector3.new(-159.191, 4.036, 25.179),
+    ["RedSlap"] = Vector3.new(53.334, 3.964, -43.833),
+}
+
+local Options = {
+    "ClassicTimebomb",
+    "FusionCoil",
+    "FireSlap",
+    "Banana Peel",
+    "RedSlap",
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Select Item",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Items[choice]
+        if pos then
+            getHRP().CFrame = CFrame.new(pos + Vector3.new(0, 3, 0))
+        end
+    end
+})
+
+local Main = main:AddTab("Playtime Rewards")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Gear Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+    local Doors = workspace:FindFirstChild("Doors")
+
+if Doors then
+    for _, obj in ipairs(Doors:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            obj:Destroy()
+        end
+    end
+end
+    end,
+  })
+  
+local Main = main:AddTab("Coin")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Gear Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Teleport to 1.5k Coin",
+    Callback = function()
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+local char = lp.Character or lp.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart")
+
+hrp.CFrame = CFrame.new(-161.938, 8.898, 8.700)
+    end,
+  })
