@@ -1,0 +1,139 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Money")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ability Slap Tower 3", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local Teleports = {
+    ["250"] = Vector3.new(184.784, -424.496, -52.449),
+    ["400"] = Vector3.new(-151.904, -424.496, -2.862),
+    ["500"] = Vector3.new(-235.678, -264.496, -49.937),
+    ["550"] = Vector3.new(301.475, -423.926, -51.562),
+    ["1.1k"] = Vector3.new(457.263, -422.753, -48.828),
+    ["2k"] = Vector3.new(604.174, -424.496, -54.732),
+    ["3.5k"] = Vector3.new(766.211, -311.496, -50.930),
+    ["3k And Win"] = Vector3.new(16.744, -21.978, -119.461),
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Money",
+    Description = "",
+    Options = {
+        "250",
+        "400",
+        "500",
+        "550",
+        "1.1k",
+        "2k",
+        "3.5k",
+        "3k And Win",
+    },
+    Default = "",
+    PlaceHolder = "Select Target",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Teleports[choice]
+        if pos then
+            getHRP().CFrame = CFrame.new(pos)
+        end
+    end
+})
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ability Slap Tower 3", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local Teleports = {
+    ["DiamondGlove"] = Vector3.new(-29.066, -424.500, 203.673),
+    ["FusionCoil"] = Vector3.new(-237.046, -264.496, -60.355),
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = {
+        "DiamondGlove",
+        "FusionCoil",
+    },
+    Default = "",
+    PlaceHolder = "Select Target",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Teleports[choice]
+        if pos then
+            getHRP().CFrame = CFrame.new(pos)
+        end
+    end
+})
+
+local Main = main:AddTab("Door Code")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ability Slap Tower 3", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.Code door.Door")
+sd("Workspace.Code door.KeyPad.B8")
+sd("Workspace.Code door.KeyPad.B0")
+sd("Workspace.Code door.Open")
+    end,
+  })
+  
+local Main = main:AddTab("PlayTime")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ability Slap Tower 3", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.Door3")
+    end,
+  })
+  
+local Main = main:AddTab("Group")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Ability Slap Tower 3", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove Door",
+    Callback = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.GroupDoor")
+    end,
+  })
