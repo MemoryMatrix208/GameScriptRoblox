@@ -1,0 +1,29 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "99 Nights +1 Size Per Click", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.RemoteEvents.CashCollect
+
+MainSection:AddSlider("EpixSlider", {
+    Title = "Cash Amount",
+    Description = "",
+    Default = 1,
+    Min = 1,
+    Max = 999999999999,
+    Increment = 1,
+    Callback = function(value)
+        Event:FireServer(value)
+    end,
+})
