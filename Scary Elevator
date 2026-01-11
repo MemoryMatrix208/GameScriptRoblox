@@ -1,0 +1,85 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Room")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Scary Elevator", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local Locations = {
+    ["VIP"] = Vector3.new(-225.028, 76.025, -483.544),
+    ["MEGA VIP"] = Vector3.new(-154.307, 76.025, -505.967),
+    ["RED ROOM"] = Vector3.new(-160.038, 75.957, -556.080),
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Room",
+    Description = "",
+    Options = {
+        "VIP",
+        "MEGA VIP",
+        "RED ROOM",
+    },
+    Default = "",
+    PlaceHolder = "Select Room",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Locations[choice]
+        if pos then
+            getHRP().CFrame = CFrame.new(pos + Vector3.new(0, 3, 0))
+        end
+    end
+})
+
+local Main = main:AddTab("Coin")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Scary Elevator", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getHRP()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function touchAllCoins(model)
+    for _, v in ipairs(model:GetDescendants()) do
+        if v:IsA("BasePart") or v:IsA("MeshPart") then
+            firetouchinterest(getHRP(), v, 0)
+            firetouchinterest(getHRP(), v, 1)
+        end
+    end
+end
+
+GroupButtons:AddButton({
+    Title = "Collect",
+    Callback = function()
+        local imposter = workspace:FindFirstChild("IMPOSTER!")
+        if imposter and imposter:FindFirstChild("EARNINGS") then
+            touchAllCoins(imposter.EARNINGS)
+        end
+
+        local imscared = workspace:FindFirstChild("IMSCARED!")
+        if imscared and imscared:FindFirstChild("EARNINGS") then
+            touchAllCoins(imscared.EARNINGS)
+        end
+    end,
+})
