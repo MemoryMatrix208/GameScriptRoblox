@@ -1,0 +1,251 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Win")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+
+local function getPrompt()
+    for _, v in ipairs(workspace.Button:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            return v
+        end
+    end
+end
+
+local Prompt = getPrompt()
+local LoopConn
+local AutoTask
+local FarmConn
+
+local function stopAll()
+    if LoopConn then LoopConn:Disconnect() LoopConn = nil end
+    if FarmConn then FarmConn:Disconnect() FarmConn = nil end
+    if AutoTask then task.cancel(AutoTask) AutoTask = nil end
+end
+
+local function fireOnce(delayTime)
+    task.wait(delayTime)
+    if Prompt then fireproximityprompt(Prompt) end
+end
+
+local function fireLoop(delayTime)
+    stopAll()
+    LoopConn = RunService.Heartbeat:Connect(function()
+        if Prompt then fireproximityprompt(Prompt) end
+        task.wait(delayTime)
+    end)
+end
+
+local function fireAuto(delayTime)
+    stopAll()
+    AutoTask = task.spawn(function()
+        while true do
+            if Prompt then fireproximityprompt(Prompt) end
+            task.wait(delayTime)
+        end
+    end)
+end
+
+local function fireFarm(delayTime)
+    stopAll()
+    FarmConn = RunService.Heartbeat:Connect(function()
+        if Prompt then fireproximityprompt(Prompt) end
+        task.wait(delayTime)
+    end)
+end
+
+local Modes = {
+    ["Just once | Normal"] = function() fireOnce(0.5) end,
+    ["Just once | Fast"] = function() fireOnce(0.25) end,
+    ["Just once | Super Fast"] = function() fireOnce(0.1) end,
+    ["Just once | Speed of light"] = function() fireOnce(0) end,
+    ["Just once | Stable"] = function() fireOnce(0.4) end,
+    ["Just once | Debug Mode"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+    ["Just once | Lightning"] = function() fireOnce(0.05) end,
+    ["Just once | Hyper Speed"] = function() fireOnce(0.03) end,
+    ["Just once | Quantum"] = function() fireOnce(0.01) end,
+    ["Just once | Instant"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+    ["Just once | Immediate"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+    ["Just once | Rapid"] = function() fireOnce(0.08) end,
+    ["Just once | Swift"] = function() fireOnce(0.12) end,
+    ["Just once | Quick"] = function() fireOnce(0.18) end,
+    ["Just once | Express"] = function() fireOnce(0.15) end,
+    ["Just once | Blitz"] = function() fireOnce(0.04) end,
+    ["Just once | Flash"] = function() fireOnce(0.02) end,
+    ["Just once | Sonic"] = function() fireOnce(0.06) end,
+    ["Just once | Turbo"] = function() fireOnce(0.07) end,
+    ["Just once | Extreme"] = function() fireOnce(0.02) end,
+    ["Just once | Ultimate"] = function() fireOnce(0) end,
+    ["Just once | Maximum"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+    ["Just once | Optimal"] = function() fireOnce(0.2) end,
+    ["Just once | Balanced"] = function() fireOnce(0.3) end,
+    ["Just once | Conservative"] = function() fireOnce(0.6) end,
+    ["Just once | Minimal"] = function() fireOnce(0.8) end,
+    ["Just once | Lite"] = function() fireOnce(1) end,
+    ["Just once | Standard"] = function() fireOnce(0.5) end,
+    ["Just once | Premium"] = function() fireOnce(0.1) end,
+    ["Just once | Professional"] = function() fireOnce(0.05) end,
+    ["Just once | Enterprise"] = function() fireOnce(0) end,
+    ["Just once | Pro Precision"] = function() fireOnce(0.03) end,
+    ["Just once | Pro Optimized"] = function() fireOnce(0.04) end,
+    ["Just once | Extreme Burst"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+    ["Just once | Extreme No Delay"] = function() if Prompt then fireproximityprompt(Prompt) end end,
+
+    ["Loop | Fast"] = function() fireLoop(0.3) end,
+    ["Loop | Super Fast"] = function() fireLoop(0.15) end,
+    ["Loop | Speed of light"] = function() fireLoop(0) end,
+    ["Loop | Stable"] = function() fireLoop(0.5) end,
+    ["Loop | Safe Mode"] = function() fireLoop(1) end,
+    ["Loop | Smart Speed"] = function() fireLoop(0.25) end,
+    ["Loop | X Times"] = function() fireLoop(0.2) end,
+    ["Loop | Timed (30s)"] = function() fireLoop(30) end,
+    ["Loop | Timed (1m)"] = function() fireLoop(60) end,
+    ["Loop | Timed (5m)"] = function() fireLoop(300) end,
+    ["Loop | Retry on Fail"] = function() fireLoop(0.4) end,
+    ["Loop | Auto Recover"] = function() fireLoop(0.35) end,
+    ["Loop | Pause on Error"] = function() fireLoop(0.6) end,
+    ["Loop | Cooldown Mode"] = function() fireLoop(1.2) end,
+    ["Loop | Burst Mode"] = function() fireLoop(0.05) end,
+    ["Loop | Priority High"] = function() fireLoop(0.1) end,
+    ["Loop | Priority Normal"] = function() fireLoop(0.3) end,
+    ["Loop | Priority Low"] = function() fireLoop(0.8) end,
+    ["Loop | Godspeed"] = function() fireLoop(0) end,
+    ["Loop | Overdrive"] = function() fireLoop(0.02) end,
+    ["Loop | Limit Break"] = function() fireLoop(0.01) end,
+    ["Loop | Infinite"] = function() fireLoop(0) end,
+    ["Loop | Pro Mode"] = function() fireLoop(0.05) end,
+    ["Loop | Extreme Mode"] = function() fireLoop(0.01) end,
+    ["Loop | Pro Balanced"] = function() fireLoop(0.25) end,
+    ["Loop | Pro Efficient"] = function() fireLoop(0.15) end,
+    ["Loop | Pro Persistent"] = function() fireLoop(0.4) end,
+    ["Loop | Pro Controlled"] = function() fireLoop(0.6) end,
+    ["Loop | Extreme Speed"] = function() fireLoop(0) end,
+    ["Loop | Extreme Pressure"] = function() fireLoop(0.02) end,
+    ["Loop | Extreme Continuous"] = function() fireLoop(0) end,
+    ["Loop | Extreme Unrestricted"] = function() fireLoop(0) end,
+    ["Loop | Extreme Risk"] = function() fireLoop(0.01) end,
+    ["Stop Loop"] = function() stopAll() end,
+
+    ["Auto | Adaptive Speed"] = function() fireAuto(0.3) end,
+    ["Auto | Smart Mode"] = function() fireAuto(0.2) end,
+    ["Auto | Context Aware"] = function() fireAuto(0.4) end,
+    ["Auto | Auto Pause"] = function() fireAuto(1) end,
+    ["Auto | Pro Automation"] = function() fireAuto(0.15) end,
+    ["Auto | Extreme Automation"] = function() fireAuto(0.05) end,
+    ["Auto | Extreme Autonomous"] = function() fireAuto(0) end,
+    ["Auto | Extreme Self Running"] = function() fireAuto(0) end,
+
+    ["Performance | Performance Based"] = function() fireLoop(0.25) end,
+    ["Performance | Low CPU"] = function() fireLoop(1) end,
+    ["Performance | FPS Friendly"] = function() fireLoop(0.8) end,
+    ["Performance | Throttled Mode"] = function() fireLoop(1.5) end,
+    ["Performance | Auto Optimize"] = function() fireLoop(0.5) end,
+    ["Performance | Mobile Friendly"] = function() fireLoop(1) end,
+    ["Performance | Pro Balance"] = function() fireLoop(0.35) end,
+    ["Performance | Extreme Performance"] = function() fireLoop(0) end,
+
+    ["Farm | Efficient"] = function() fireFarm(0.4) end,
+    ["Farm | Aggressive"] = function() fireFarm(0.1) end,
+    ["Farm | AFK Friendly"] = function() fireFarm(1) end,
+    ["Farm | Background Mode"] = function() fireFarm(0.8) end,
+    ["Farm | Safe Farm"] = function() fireFarm(1.2) end,
+    ["Farm | Auto Resume"] = function() fireFarm(0.5) end,
+    ["Farm | Auto Pause"] = function() fireFarm(1.5) end,
+    ["Farm | Smart Targeting"] = function() fireFarm(0.3) end,
+    ["Farm | Pro Farming"] = function() fireFarm(0.2) end,
+    ["Farm | Extreme Farming"] = function() fireFarm(0) end,
+    ["Stop Farm"] = function() stopAll() end,
+
+    ["System | Emergency Stop"] = function() stopAll() end,
+    ["System | Soft Reset"] = function() stopAll() end,
+    ["System | Hard Reset"] = function() stopAll() end,
+    ["System | Status Monitor"] = function() if Prompt then Prompt.Enabled = Prompt.Enabled end end,
+    ["System | Mode Indicator"] = function() if Prompt then Prompt.Enabled = Prompt.Enabled end end,
+    ["System | Pro Control"] = function() fireLoop(0.25) end,
+    ["System | Extreme Control"] = function() fireLoop(0) end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    table.insert(Options, k)
+end
+table.sort(Options)
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Auto Win Mode",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Search Mode",
+    Multiple = false,
+    Callback = function(choice)
+        local action = Modes[choice]
+        if action then
+            action()
+        end
+    end
+})
+
+local Main = main:AddTab("Aura")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "+50 Aura",
+    Callback = function()
+        local plr = game:GetService("Players").LocalPlayer
+        local char = plr.Character or plr.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+        hrp.CFrame = CFrame.new(Vector3.new(438.836, 5.899, 237.585))
+    end,
+})
+
+local Main = main:AddTab("Item")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Aura Troll Slap Tower", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local Points = {
+    ["UltraCoil"] = Vector3.new(61.074, 19.564, -146.283),
+    ["MedusaHead"] = Vector3.new(433.740, 4.864, 251.126),
+}
+
+MainSection:AddDropdown("EpicDropDownName", {
+    Title = "Item",
+    Description = "",
+    Options = {"UltraCoil", "MedusaHead"},
+    Default = "",
+    PlaceHolder = "Search",
+    Multiple = false,
+    Callback = function(choice)
+        local pos = Points[choice]
+        if pos then
+            HRP().CFrame = CFrame.new(pos)
+        end
+    end
+})
