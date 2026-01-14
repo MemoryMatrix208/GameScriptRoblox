@@ -1,0 +1,82 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Tp to Back")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape Logs for Brainrots", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Teleport",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local HRP = Character:WaitForChild("HumanoidRootPart")
+
+        HRP.CFrame = CFrame.new(52.353, 1.867, -31.604)
+    end,
+})
+
+local Main = main:AddTab("Collect All")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape Logs for Brainrots", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Collect Cash",
+    Callback = function()
+        local Event = game:GetService("ReplicatedStorage").Remotes.Plot.CollectCash
+
+        for i = 1, 10 do
+            Event:FireServer(i)
+        end
+    end,
+})
+
+local Main = main:AddTab("VIP Zones")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape Logs for Brainrots", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Remove VIP Zones",
+    Callback = function()
+        local vipZones = workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("VIPZones")
+        if vipZones then
+            vipZones:Destroy()
+        end
+    end,
+})
+
+local Main = main:AddTab("Players")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "Escape Logs for Brainrots", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+MainSection:AddSlider("SpeedSlider", {
+    Title = "Speed",
+    Description = "",
+    Default = 15,
+    Min = 0,
+    Max = 255,
+    Increment = 1,
+    Callback = function(value)
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local Humanoid = Character:WaitForChild("Humanoid")
+
+        Humanoid.WalkSpeed = value
+    end,
+})
