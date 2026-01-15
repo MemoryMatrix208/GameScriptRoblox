@@ -1,0 +1,69 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Neko.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/SaveManager.lua"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Footer = "Find a Meme | YouTube: ArchiveXNova",
+    Icon = 85025739024001,
+    NotifySide = "Right",
+    ShowCustomCursor = true,
+    Center = true,
+    AutoShow = true,
+})
+
+local Tabs = {
+    Main = Window:AddTab("Main"),
+    ["UI Settings"] = Window:AddTab("Settings")
+}
+
+local Group = Tabs.Main:AddLeftGroupbox("Auto Find Until to Max")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Player = Players.LocalPlayer
+
+local function getHRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local running = false
+local conn
+
+Group:AddButton({
+    Text = "Click",
+    Func = function()
+        running = not running
+
+        if conn then
+            conn:Disconnect()
+            conn = nil
+        end
+
+        if not running then return end
+
+        conn = RunService.Heartbeat:Connect(function()
+            local hrp = getHRP()
+            local folder = workspace:FindFirstChild("Brainrots")
+            if not folder then return end
+
+            for _, obj in ipairs(folder:GetDescendants()) do
+                if obj:IsA("BasePart") and obj:IsDescendantOf(workspace) then
+                    firetouchinterest(hrp, obj, 0)
+                    firetouchinterest(hrp, obj, 1)
+                end
+            end
+        end)
+    end
+})
+
+local UIGroup = Tabs["UI Settings"]
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("ArchiveXNova")
+SaveManager:BuildConfigSection(Tabs["UI Settings"])
+ThemeManager:ApplyToTab(Tabs["UI Settings"])
