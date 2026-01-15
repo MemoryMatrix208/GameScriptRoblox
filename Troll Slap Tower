@@ -1,0 +1,102 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Neko.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/SaveManager.lua"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Footer = "Troll Slap Tower | YouTube: ArchiveXNova",
+    Icon = 85025739024001,
+    NotifySide = "Right",
+    ShowCustomCursor = true,
+    Center = true,
+    AutoShow = true,
+})
+
+local Tabs = {
+    Main = Window:AddTab("Main"),
+    ["UI Settings"] = Window:AddTab("Settings")
+}
+
+local Group = Tabs.Main:AddLeftGroupbox("Item And Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local Points = {
+    ["Galaxy Slap"] = Vector3.new(46.616, -340.800, -356.607),
+    ["Gravity Coil"] = Vector3.new(315.418, -331.500, 18.953),
+    ["Ultra Coil"] = Vector3.new(-21.719, -312.500, 337.116)
+}
+
+local function teleport(pos)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "Galaxy Slap",
+        "Gravity Coil",
+        "Ultra Coil"
+    },
+    Default = 1,
+    Multi = false,
+    Text = "Select Item",
+    Callback = function(Value)
+        local pos = Points[Value]
+        if pos then
+            teleport(pos)
+        end
+    end
+})
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local MoneyPoints = {
+    ["1.2k"] = Vector3.new(59.296, -339.800, -355.876),
+    ["1k"]   = Vector3.new(315.689, -330.500, 28.518),
+    ["2k"]   = Vector3.new(-32.520, -311.500, 334.853),
+    ["1.5k"] = Vector3.new(-324.751, -91.500, -33.431),
+}
+
+local function getHRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+Group:AddDropdown("MoneyDropdown", {
+    Values = {"1.2k","1k","2k","1.5k"},
+    Default = 1,
+    Multi = false,
+    Text = "Money",
+    Callback = function(Value)
+        local hrp = getHRP()
+        hrp.CFrame = CFrame.new(MoneyPoints[Value])
+    end
+})
+
+local Group = Tabs.Main:AddLeftGroupbox("Win And Money")
+
+Group:AddButton({
+    Text = "Teleport",
+    Func = function()
+        local Players = game:GetService("Players")
+        local Player = Players.LocalPlayer
+        local Character = Player.Character or Player.CharacterAdded:Wait()
+        local HRP = Character:WaitForChild("HumanoidRootPart")
+
+        HRP.CFrame = CFrame.new(-1.421, 103.510, -95.273)
+    end
+})
+
+local UIGroup = Tabs["UI Settings"]
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("ArchiveXNova")
+SaveManager:BuildConfigSection(Tabs["UI Settings"])
+ThemeManager:ApplyToTab(Tabs["UI Settings"])
