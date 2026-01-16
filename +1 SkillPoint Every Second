@@ -1,0 +1,180 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Neko.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/SaveManager.lua"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Footer = "+1 SkillPoint Every Second | YouTube: ArchiveXNova",
+    Icon = 85025739024001,
+    NotifySide = "Right",
+    ShowCustomCursor = true,
+    Center = true,
+    AutoShow = true,
+})
+
+local Tabs = {
+    Main = Window:AddTab("Main"),
+    ["UI Settings"] = Window:AddTab("Settings")
+}
+
+local Group = Tabs.Main:AddLeftGroupbox("Mele")
+
+local RunService = game:GetService("RunService")
+local Event = workspace.__THINGS.__REMOTES.dealdamage
+local EntitiesFolder = workspace.__THINGS.Entity
+
+local loopConn
+local stopAll = false
+
+local delayMap = {
+    ["Normal"] = 0.3,
+    ["Fast"] = 0.15,
+    ["Super Fast"] = 0,
+    ["Normal Loop"] = 0.3,
+    ["Fast Loop"] = 0.1,
+    ["Safe Loop"] = 0.5,
+    ["Safe Mode (higher delay)"] = 0.6,
+    ["Light Mode"] = 0.25,
+    ["Normal Mode"] = 0.15,
+    ["AFK Mode"] = 0.8,
+}
+
+local function fireAll()
+    for _, entity in ipairs(EntitiesFolder:GetChildren()) do
+        Event:FireServer({
+            "Melee",
+            entity:GetPivot().Position,
+            entity
+        })
+    end
+end
+
+local function startLoop(delayTime)
+    stopAll = false
+    loopConn = RunService.Heartbeat:Connect(function()
+        if stopAll then return end
+        fireAll()
+        task.wait(delayTime)
+    end)
+end
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "Normal",
+        "Fast",
+        "Super Fast",
+
+        "Normal Loop",
+        "Fast Loop",
+        "Safe Loop",
+        "Stop Loop",
+
+        "Run for 30 seconds",
+        "Run for 1 minute",
+
+        "Safe Mode (higher delay)",
+
+        "Light Mode",
+        "Normal Mode",
+
+        "AFK Mode",
+
+        "Stop All"
+    },
+    Default = 1,
+    Multi = false,
+    Text = "Mode",
+    Callback = function(Value)
+        if loopConn then
+            loopConn:Disconnect()
+            loopConn = nil
+        end
+
+        if Value == "Stop Loop" or Value == "Stop All" then
+            stopAll = true
+            return
+        end
+
+        if Value == "Run for 30 seconds" then
+            stopAll = false
+            task.spawn(function()
+                local t = os.clock()
+                while os.clock() - t < 30 and not stopAll do
+                    fireAll()
+                    task.wait(0.2)
+                end
+            end)
+            return
+        end
+
+        if Value == "Run for 1 minute" then
+            stopAll = false
+            task.spawn(function()
+                local t = os.clock()
+                while os.clock() - t < 60 and not stopAll do
+                    fireAll()
+                    task.wait(0.2)
+                end
+            end)
+            return
+        end
+
+        local delayTime = delayMap[Value] or 0.3
+
+        if Value == "Normal" or Value == "Fast" or Value == "Super Fast" then
+            fireAll()
+            if delayTime > 0 then
+                task.wait(delayTime)
+            end
+        else
+            startLoop(delayTime)
+        end
+    end
+})
+
+local Group = Tabs.Main:AddLeftGroupbox("Rebirth")
+
+local RunService = game:GetService("RunService")
+local Event = workspace.__THINGS.__REMOTES.rebirth
+
+local loopConn
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "Once",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = 1,
+    Multi = false,
+    Text = "Mode",
+    Callback = function(Value)
+        if loopConn then
+            loopConn:Disconnect()
+            loopConn = nil
+        end
+
+        if Value == "Once" then
+            Event:FireServer()
+
+        elseif Value == "Loop" then
+            loopConn = RunService.Heartbeat:Connect(function()
+                Event:FireServer()
+                task.wait(0.2)
+            end)
+
+        elseif Value == "Stop Loop" then
+            return
+        end
+    end
+})
+
+local UIGroup = Tabs["UI Settings"]
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("ArchiveXNova")
+SaveManager:BuildConfigSection(Tabs["UI Settings"])
+ThemeManager:ApplyToTab(Tabs["UI Settings"])
