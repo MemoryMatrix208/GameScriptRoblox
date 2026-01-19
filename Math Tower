@@ -1,0 +1,136 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Neko.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/SaveManager.lua"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Footer = "Math Tower | YouTube: ArchiveXNova",
+    Icon = 85025739024001,
+    NotifySide = "Right",
+    ShowCustomCursor = true,
+    Center = true,
+    AutoShow = true,
+})
+
+local Tabs = {
+    Main = Window:AddTab("Main"),
+    ["UI Settings"] = Window:AddTab("Settings")
+}
+
+local Group = Tabs.Main:AddLeftGroupbox("Win")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+Group:AddButton({
+    Text = "Click",
+    Func = function()
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        hrp.CFrame = CFrame.new(65.032, 429.905, 95.764)
+    end
+})
+
+local Group = Tabs.Main:AddLeftGroupbox("Slap")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "VoidSlap",
+        "White Slap",
+    },
+    Default = 1,
+    Multi = false,
+    Text = "Mode",
+    Callback = function(Value)
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:WaitForChild("HumanoidRootPart")
+
+        if Value == "VoidSlap" then
+            hrp.CFrame = CFrame.new(92.471, -121.500, -15.288)
+
+        elseif Value == "White Slap" then
+            hrp.CFrame = CFrame.new(22.923, -121.500, -296.163)
+        end
+    end
+})
+
+local Group = Tabs.Main:AddLeftGroupbox("Slash")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local LoopActive = false
+
+local function FireVoidSlap()
+    local char = LocalPlayer.Character
+    if not char then return end
+
+    local tool = char:FindFirstChild("VoidSlap")
+    if not tool then return end
+
+    local event = tool:FindFirstChild("Event")
+    if not event then return end
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer and plr.Character then
+            event:FireServer(
+                "slash",
+                plr.Character,
+                Vector3.new(999,999,999,999)
+            )
+        end
+    end
+end
+
+local function StartLoop()
+    if LoopActive then return end
+    LoopActive = true
+
+    task.spawn(function()
+        while LoopActive do
+            FireVoidSlap()
+            task.wait(0.2)
+        end
+    end)
+end
+
+local function StopLoop()
+    LoopActive = false
+end
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "Once",
+        "Loop",
+        "Stop"
+    },
+    Default = 1,
+    Multi = false,
+    Text = "VoidSlap Mode",
+    Callback = function(Value)
+        if Value == "Once" then
+            StopLoop()
+            FireVoidSlap()
+
+        elseif Value == "Loop" then
+            StartLoop()
+
+        elseif Value == "Stop" then
+            StopLoop()
+        end
+    end
+})
+
+local UIGroup = Tabs["UI Settings"]
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("ArchiveXNova")
+SaveManager:BuildConfigSection(Tabs["UI Settings"])
+ThemeManager:ApplyToTab(Tabs["UI Settings"])
