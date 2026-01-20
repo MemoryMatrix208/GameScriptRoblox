@@ -1,0 +1,63 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E3%82%A2%E3%83%83%E3%83%A9%E3%83%BC%E4%BB%A5%E5%A4%96%E3%81%AB%E7%A5%9E%E3%81%AF%E3%81%84%E3%81%AA%E3%81%84"))()
+
+local Window = Library:CreateWindow('ArchiveXNova') -- :CreateWindow(Title)
+
+local Section = Window:Section('Fear Elevator') -- :Section(Title)
+
+local function sd(p)
+    local o = game
+    local r = p
+    while r ~= "" do
+        local d = r:find(".", 1, true)
+        local n
+        if d then
+            n = r:sub(1, d - 1)
+            r = r:sub(d + 1)
+        else
+            n = r
+            r = ""
+        end
+        o = o:FindFirstChild(n)
+        if not o then
+            return
+        end
+    end
+    if o then
+        o:Destroy()
+    end
+end
+
+Section:Button("REMOVE DOOR", function()
+    sd("Workspace.Lobby.Lobby.UVTeleport.Part")
+    sd("Workspace.Lobby.Lobby.UVTeleport.TeleportNor")
+    sd("Workspace.Lobby.Lobby.VIPTeleport.Part")
+    sd("Workspace.Lobby.Lobby.VIPTeleport.TeleportNor")
+    sd("Workspace.Lobby.Lobby.VIPTeleport.TeleportNorSal")
+    sd("Workspace.Lobby.Lobby.UVTeleport.TeleportNorSal")
+end)
+
+local Section = Window:Section('Fear Elevator') -- :Section(Title)
+
+local function fireAllMonedas()
+    local monedas = workspace:FindFirstChild("Floor")
+    monedas = monedas and monedas:FindFirstChild("Monedas")
+    if not monedas then return end
+
+    local plr = game:GetService("Players").LocalPlayer
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    for _, part in ipairs(monedas:GetDescendants()) do
+        if part:IsA("BasePart") then
+            firetouchinterest(hrp, part, 0)
+            task.wait()
+            firetouchinterest(hrp, part, 1)
+        end
+    end
+end
+
+Section:Button("COLLECT ALL COIN", function()
+    fireAllMonedas()
+end)
+
+Section:Label('Subscribe') -- :Label(Text)
