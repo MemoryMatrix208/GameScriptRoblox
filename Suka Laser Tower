@@ -1,0 +1,120 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Neko.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/SaveManager.lua"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Footer = "Suka Laser Tower | YouTube: ArchiveXNova",
+    Icon = 85025739024001,
+    NotifySide = "Right",
+    ShowCustomCursor = true,
+    Center = true,
+    AutoShow = true,
+})
+
+local Tabs = {
+    Main = Window:AddTab("Main"),
+    ["UI Settings"] = Window:AddTab("Settings")
+}
+
+local Group = Tabs.Main:AddLeftGroupbox("Win")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local TARGET_POS = Vector3.new(721.633, 208.991, -105.431)
+
+local looping = false
+local loopThread
+
+local function getChar()
+    return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+end
+
+local function getHRP()
+    return getChar():WaitForChild("HumanoidRootPart")
+end
+
+local function killIfArrived()
+    local char = LocalPlayer.Character
+    if not char then return end
+
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+
+    if humanoid and hrp then
+        if (hrp.Position - TARGET_POS).Magnitude < 5 then
+            humanoid.Health = 0
+        end
+    end
+end
+
+local function teleportOnce()
+    local hrp = getHRP()
+    hrp.CFrame = CFrame.new(TARGET_POS)
+    task.wait()
+    killIfArrived()
+end
+
+local function startLoop(delayTime)
+    looping = true
+
+    loopThread = task.spawn(function()
+        while looping do
+            teleportOnce()
+            task.wait(delayTime)
+        end
+    end)
+end
+
+local function stopLoop()
+    looping = false
+    if loopThread then
+        task.cancel(loopThread)
+        loopThread = nil
+    end
+end
+
+Group:AddDropdown("ModeDropdown", {
+    Values = {
+        "Once",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = 1,
+    Multi = false,
+    Text = "Mode",
+    Callback = function(Value)
+        stopLoop()
+
+        if Value == "Once" then
+            teleportOnce()
+
+        elseif Value == "Loop" then
+            startLoop(0.5)
+
+        elseif Value == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
+
+local Group = Tabs.Main:AddLeftGroupbox("VIP")
+
+Group:AddButton({
+    Text = "Remove Door",
+    Func = function()
+local function sd(p)local o=game local r=p while r~='' do local d=r:find('.',1,true) local n if d then n=r:sub(1,d-1) r=r:sub(d+1) else n=r r='' end o=o:FindFirstChild(n) if not o then return end end if o then o:Destroy() end end
+sd("Workspace.GamepassDoor")
+    end
+})
+
+local UIGroup = Tabs["UI Settings"]
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("ArchiveXNova")
+SaveManager:BuildConfigSection(Tabs["UI Settings"])
+ThemeManager:ApplyToTab(Tabs["UI Settings"])
