@@ -1,0 +1,175 @@
+local UI = loadstring(game:HttpGet("https://xan.bar/init.lua"))()
+
+if UI.IsMobile then
+    UI.Loading({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2 })
+    task.wait(2.2)
+else
+    UI.Splash({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2.5 })
+    task.wait(2.7)
+end
+
+local Window = UI.New({
+    Title = "ArchiveXNova",
+    Subtitle = "Coil Troll Tower",
+    Theme = "Default",
+    Size = UDim2.new(0, 300, 0, 300),
+    ShowUserInfo = false,
+    ShowSettings = true
+})
+
+local Main = Window:AddTab("Main", UI.Icons.Home)
+
+Main:AddSection("Item")
+
+local Players = game:GetService("Players")
+
+local Player = Players.LocalPlayer
+
+local Locations = {
+    ["RedGlove"] = Vector3.new(219.433, 16.293, 9.409),
+    ["GravityCoil"] = Vector3.new(212.482, 11.078, 76.868),
+    ["FusionCoil"] = Vector3.new(-1.569, 11.078, 277.372),
+    ["SpeedCoil"] = Vector3.new(-214.880, 11.078, 74.064),
+}
+
+local function HRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+Main:AddDropdown("RedGlove", {
+    "RedGlove",
+    "GravityCoil",
+    "FusionCoil",
+    "SpeedCoil"
+}, function(v)
+    local pos = Locations[v]
+    if pos then
+        HRP().CFrame = CFrame.new(pos)
+    end
+end)
+
+Main:AddSection("Win")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+
+local TargetPart = workspace
+    :WaitForChild("WinCashGive")
+    :WaitForChild("Model")
+    :WaitForChild("Part")
+
+local loopConn
+
+local function HRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function touchPart()
+    local hrp = HRP()
+    hrp.CFrame = TargetPart.CFrame
+    firetouchinterest(hrp, TargetPart, 0)
+    firetouchinterest(hrp, TargetPart, 1)
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:AddDropdown("Win", {
+    "Once",
+    "Loop",
+    "Stop Loop"
+}, function(v)
+    if v == "Once" then
+        stopLoop()
+        touchPart()
+
+    elseif v == "Loop" then
+        stopLoop()
+        loopConn = RunService.Heartbeat:Connect(function()
+            touchPart()
+            task.wait(0)
+        end)
+
+    elseif v == "Stop Loop" then
+        stopLoop()
+    end
+end)
+
+Main:AddSection("Slash Use Red Slap")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+
+local function getEvent()
+    local backpack = LocalPlayer:WaitForChild("Backpack")
+    local tool = backpack:FindFirstChild("RedGlove") or (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("RedGlove"))
+    if not tool then return nil end
+    return tool:FindFirstChild("Event")
+end
+
+local loopConn
+local busy = false
+
+local function fireAllPlayers()
+    if busy then return end
+    busy = true
+
+    local Event = getEvent()
+    if not Event then
+        busy = false
+        return
+    end
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer then
+            local char = plr.Character
+            if char then
+                Event:FireServer(
+                    "slash",
+                    char,
+                    Vector3.new(999,999,999,999)
+                )
+            end
+        end
+    end
+
+    busy = false
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:AddDropdown("Slash", {
+    "Once",
+    "Loop",
+    "Stop Loop"
+}, function(v)
+    if v == "Once" then
+        stopLoop()
+        fireAllPlayers()
+
+    elseif v == "Loop" then
+        stopLoop()
+        loopConn = RunService.Heartbeat:Connect(function()
+            fireAllPlayers()
+            task.wait(0.4)
+        end)
+
+    elseif v == "Stop Loop" then
+        stopLoop()
+    end
+end)
