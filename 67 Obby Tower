@@ -1,0 +1,68 @@
+local UI = loadstring(game:HttpGet("https://xan.bar/init.lua"))()
+
+if UI.IsMobile then
+    UI.Loading({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2 })
+    task.wait(2.2)
+else
+    UI.Splash({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2.5 })
+    task.wait(2.7)
+end
+
+local Window = UI.New({
+    Title = "ArchiveXNova",
+    Subtitle = "67 Obby Tower",
+    Theme = "Default",
+    Size = UDim2.new(0, 300, 0, 300),
+    ShowUserInfo = false,
+    ShowSettings = true
+})
+
+local Main = Window:AddTab("Main", UI.Icons.Home)
+
+Main:AddSection("Coin")
+
+Main:AddDropdown("Coin", {
+    "500 Coin",
+    "1000 Coin",
+    "1250 Coin"
+}, function(v)
+    local plr = game.Players.LocalPlayer
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if v == "500 Coin" then
+        hrp.CFrame = CFrame.new(39.401, -48.161, -195.872)
+
+    elseif v == "1000 Coin" then
+        hrp.CFrame = CFrame.new(340.415, -49.559, 8.397)
+
+    elseif v == "1250 Coin" then
+        hrp.CFrame = CFrame.new(26.153, -95.339, 143.665)
+    end
+end)
+
+Main:AddSection("Item")
+
+Main:AddDropdown("Item", {
+    "Red Glove",
+    "Black Glove",
+    "Electric Glove",
+    "FusionCoil"
+}, function(v)
+    local plr = game.Players.LocalPlayer
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if v == "Red Glove" then
+        hrp.CFrame = CFrame.new(25.081, -65.956, 47.906)
+
+    elseif v == "Black Glove" then
+        hrp.CFrame = CFrame.new(48.380, -65.956, 45.666)
+
+    elseif v == "Electric Glove" then
+        hrp.CFrame = CFrame.new(44.297, -102.015, 144.711)
+
+    elseif v == "FusionCoil" then
+        hrp.CFrame = CFrame.new(337.247, -51.620, -4.284)
+    end
+end)
