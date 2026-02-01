@@ -1,0 +1,300 @@
+local UI = loadstring(game:HttpGet("https://xan.bar/init.lua"))()
+
+if UI.IsMobile then
+    UI.Loading({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2 })
+    task.wait(2.2)
+else
+    UI.Splash({ Title = "ArchiveXNova", Subtitle = "Loading...", Duration = 2.5 })
+    task.wait(2.7)
+end
+
+local Window = UI.New({
+    Title = "ArchiveXNova",
+    Subtitle = "Boxing Gear Troll Tower",
+    Theme = "Default",
+    Size = UDim2.new(0, 300, 0, 300),
+    ShowUserInfo = false,
+    ShowSettings = true
+})
+
+local Main = Window:AddTab("Main", UI.Icons.Home)
+
+Main:AddSection("Money")
+
+Main:AddDropdown("Money", {
+    "Money 1k",
+    "Money 1.5k"
+}, function(v)
+    local plr = game.Players.LocalPlayer
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if v == "Money 1k" then
+        hrp.CFrame = CFrame.new(94.296, 13.547, 66.519)
+
+    elseif v == "Money 1.5k" then
+        hrp.CFrame = CFrame.new(35.877, 44.069, 135.115)
+    end
+end)
+
+Main:AddSection("Item")
+
+Main:AddDropdown("Items", {
+    "BananaPeel",
+    "LavaGlove",
+    "Bomb",
+    "FusionCoil"
+}, function(v)
+    local plr = game.Players.LocalPlayer
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if v == "BananaPeel" then
+        hrp.CFrame = CFrame.new(111.422, 4.500, 68.776)
+
+    elseif v == "LavaGlove" then
+        hrp.CFrame = CFrame.new(50.608, 39.500, 146.113)
+
+    elseif v == "Bomb" then
+        hrp.CFrame = CFrame.new(68.332, 99.250, -310.022)
+
+    elseif v == "FusionCoil" then
+        hrp.CFrame = CFrame.new(-160.085, 4.500, -117.326)
+    end
+end)
+
+Main:AddSection("Win (Move Your Avatar)")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local TARGET = CFrame.new(207.925, 363.233, -124.691)
+local plr = Players.LocalPlayer
+
+local loopConn
+local loopEndTime
+local delayValue = 0.3
+local loopActive = false
+
+local function getHRP()
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleport()
+    getHRP().CFrame = TARGET
+end
+
+local function teleportOnce(d)
+    stopAll()
+    if d and d > 0 then task.wait(d) end
+    teleport()
+end
+
+local function startLoop()
+    stopAll()
+    loopActive = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loopActive then return end
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopAll()
+            return
+        end
+        teleport()
+        if delayValue > 0 then task.wait(delayValue) end
+    end)
+end
+
+Main:AddDropdown("Win", {
+    "One-Time | Normal",
+    "One-Time | Fast",
+    "One-Time | Super Fast",
+
+    "Loop | Normal Loop",
+    "Loop | Fast Loop",
+    "Loop | Safe Loop",
+    "Stop Loop",
+
+    "Time | Run 30 Seconds",
+    "Time | Run 1 Minute",
+
+    "Stability | Safe Mode",
+    "Performance | Light Mode",
+    "Performance | Normal Mode",
+    "AFK | AFK Mode",
+
+    "System | Stop All",
+}, function(v)
+
+    if v == "One-Time | Normal" then
+        teleportOnce(0.4)
+
+    elseif v == "One-Time | Fast" then
+        teleportOnce(0.15)
+
+    elseif v == "One-Time | Super Fast" then
+        teleportOnce(0)
+
+    elseif v == "Loop | Normal Loop" then
+        delayValue = 0.4
+        startLoop()
+
+    elseif v == "Loop | Fast Loop" then
+        delayValue = 0.15
+        startLoop()
+
+    elseif v == "Loop | Safe Loop" then
+        delayValue = 1
+        startLoop()
+
+    elseif v == "Stop Loop" then
+        stopAll()
+
+    elseif v == "Time | Run 30 Seconds" then
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+
+    elseif v == "Time | Run 1 Minute" then
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+
+    elseif v == "Stability | Safe Mode" then
+        delayValue = 1.2
+        startLoop()
+
+    elseif v == "Performance | Light Mode" then
+        delayValue = 0.6
+        startLoop()
+
+    elseif v == "Performance | Normal Mode" then
+        delayValue = 0.3
+        startLoop()
+
+    elseif v == "AFK | AFK Mode" then
+        delayValue = 0
+        startLoop()
+
+    elseif v == "System | Stop All" then
+        stopAll()
+    end
+end)
+
+Main:AddSection("VIP")
+
+Main:AddButton("Remove VIP Door", function()
+
+    local function sd(p)
+        local o = game
+        local r = p
+
+        while r ~= "" do
+            local d = r:find(".", 1, true)
+            local n
+
+            if d then
+                n = r:sub(1, d - 1)
+                r = r:sub(d + 1)
+            else
+                n = r
+                r = ""
+            end
+
+            o = o:FindFirstChild(n)
+            if not o then return end
+        end
+
+        if o then
+            o:Destroy()
+        end
+    end
+
+    sd("Workspace.Boxing Tower.TowerLevel1.VIPDoor")
+
+end)
+
+Main:AddSection("PlayTimeReward")
+
+Main:AddButton("Remove Playtime Rewards", function()
+    local obj = workspace:FindFirstChild("Boxing Tower")
+    if not obj then return end
+
+    local rewards = obj:FindFirstChild("PlaytimeRewards")
+    if rewards then
+        rewards:Destroy()
+    end
+end)
+
+Main:AddSection("Auto Hit Use LavaGlove")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local loopConn
+
+local HIT_VECTOR = Vector3.new(
+    0.92820912599564,
+    0,
+   -0.37205892801285
+)
+
+local function getRemote()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local glove = char:FindFirstChild("LavaGlove")
+    if not glove then return end
+    return glove:FindFirstChild("Remote")
+end
+
+local function hitAllPlayers()
+    local remote = getRemote()
+    if not remote then return end
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer then
+            remote:FireServer("Hit", plr, HIT_VECTOR)
+        end
+    end
+end
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+Main:AddDropdown("LavaGloveHit", {
+    Title = "LavaGlove",
+    Description = "",
+    Options = { "Once", "Loop", "Stop" },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(v)
+        if v == "Once" then
+            stopLoop()
+            hitAllPlayers()
+
+        elseif v == "Loop" then
+            stopLoop()
+            loopConn = RunService.Heartbeat:Connect(function()
+                hitAllPlayers()
+                task.wait(0.3)
+            end)
+
+        elseif v == "Stop" then
+            stopLoop()
+        end
+    end
+})
