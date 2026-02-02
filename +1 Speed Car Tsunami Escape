@@ -1,0 +1,472 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/%E4%BA%BA%E7%94%9F%E3%81%AE%E6%84%8F%E5%91%B3%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"))() 
+local FlagsManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/Configure"))()
+
+local main = lib:Load({
+      Title = 'ArchiveXNova',
+      ToggleButton = "rbxassetid://85025739024001",
+	  BindGui = Enum.KeyCode.RightControl,
+  })
+
+local Main = main:AddTab("Worlds 1")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Car Tsunami Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local TARGET = CFrame.new(10901.903, 22.227, -85.598)
+
+local loopActive = false
+local loopConn
+local loopEndTime
+local delayValue = 0.3
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleportOnce(d)
+    stopAll()
+    if d > 0 then task.wait(d) end
+    HRP().CFrame = TARGET
+end
+
+local function startLoop()
+    stopAll()
+    loopActive = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loopActive then return end
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopAll()
+            return
+        end
+        HRP().CFrame = TARGET
+        if delayValue > 0 then task.wait(delayValue) end
+    end)
+end
+
+local Modes = {
+    ["One-Time | Normal"] = function() teleportOnce(0.4) end,
+    ["One-Time | Fast"] = function() teleportOnce(0.15) end,
+    ["One-Time | Super Fast"] = function() teleportOnce(0) end,
+
+    ["Loop | Normal Loop"] = function() delayValue = 0.4 startLoop() end,
+    ["Loop | Fast Loop"] = function() delayValue = 0.15 startLoop() end,
+    ["Loop | Safe Loop"] = function() delayValue = 1 startLoop() end,
+    ["Stop Loop"] = function() stopAll() end,
+
+    ["Time | Run 30 Seconds"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+    end,
+
+    ["Time | Run 1 Minute"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+    end,
+
+    ["Stability | Safe Mode"] = function()
+        delayValue = 1.2
+        startLoop()
+    end,
+
+    ["Performance | Light Mode"] = function()
+        delayValue = 0.6
+        startLoop()
+    end,
+
+    ["Performance | Normal Mode"] = function()
+        delayValue = 0.3
+        startLoop()
+    end,
+
+    ["AFK | AFK Mode"] = function()
+        delayValue = 0
+        startLoop()
+    end,
+
+    ["System | Stop All"] = function()
+        stopAll()
+    end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    Options[#Options + 1] = k
+end
+table.sort(Options)
+
+MainSection:AddDropdown("TeleportController", {
+    Title = "Teleport",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        local f = Modes[choice]
+        if f then f() end
+    end
+})
+
+local Main = main:AddTab("Worlds 2")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Car Tsunami Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local TARGET = CFrame.new(10886.248, 26.905, 5168.334)
+
+local loopActive = false
+local loopConn
+local loopEndTime
+local delayValue = 0.3
+
+local function HRP()
+    local c = Player.Character or Player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function stopAll()
+    loopActive = false
+    loopEndTime = nil
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+local function teleportOnce(d)
+    stopAll()
+    if d > 0 then task.wait(d) end
+    HRP().CFrame = TARGET
+end
+
+local function startLoop()
+    stopAll()
+    loopActive = true
+    loopConn = RunService.Heartbeat:Connect(function()
+        if not loopActive then return end
+        if loopEndTime and os.clock() >= loopEndTime then
+            stopAll()
+            return
+        end
+        HRP().CFrame = TARGET
+        if delayValue > 0 then task.wait(delayValue) end
+    end)
+end
+
+local Modes = {
+    ["One-Time | Normal"] = function() teleportOnce(0.4) end,
+    ["One-Time | Fast"] = function() teleportOnce(0.15) end,
+    ["One-Time | Super Fast"] = function() teleportOnce(0) end,
+
+    ["Loop | Normal Loop"] = function() delayValue = 0.4 startLoop() end,
+    ["Loop | Fast Loop"] = function() delayValue = 0.15 startLoop() end,
+    ["Loop | Safe Loop"] = function() delayValue = 1 startLoop() end,
+    ["Stop Loop"] = function() stopAll() end,
+
+    ["Time | Run 30 Seconds"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 30
+        startLoop()
+    end,
+
+    ["Time | Run 1 Minute"] = function()
+        delayValue = 0.25
+        loopEndTime = os.clock() + 60
+        startLoop()
+    end,
+
+    ["Stability | Safe Mode"] = function()
+        delayValue = 1.2
+        startLoop()
+    end,
+
+    ["Performance | Light Mode"] = function()
+        delayValue = 0.6
+        startLoop()
+    end,
+
+    ["Performance | Normal Mode"] = function()
+        delayValue = 0.3
+        startLoop()
+    end,
+
+    ["AFK | AFK Mode"] = function()
+        delayValue = 0
+        startLoop()
+    end,
+
+    ["System | Stop All"] = function()
+        stopAll()
+    end,
+}
+
+local Options = {}
+for k in pairs(Modes) do
+    Options[#Options + 1] = k
+end
+table.sort(Options)
+
+MainSection:AddDropdown("TeleportController", {
+    Title = "Teleport",
+    Description = "",
+    Options = Options,
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        local f = Modes[choice]
+        if f then f() end
+    end
+})
+
+local Main = main:AddTab("AddSpeed")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "AddSpeed V1", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+
+local MAX_T = 100_000_000_000_000
+
+MainSection:AddSlider("EpixSlider", {
+    Title = "Add Speed",
+    Description = "0 to 100T",
+    Default = 15,
+    Min = 0,
+    Max = 255,
+    Increment = 1,
+    Callback = function(value)
+        local speed = (value / 255) * MAX_T
+        Event:FireServer(speed)
+    end,
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Event = ReplicatedStorage.Events.AddSpeed
+
+local MAX_QD = 100 * 80^17
+
+local currentValue = 0
+local loopConn
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+MainSection:AddSlider("EpixSlider", {
+    Title = "Add Speed",
+    Description = "0 to 100 qd",
+    Default = 0,
+    Min = 0,
+    Max = 255,
+    Increment = 1,
+    Callback = function(value)
+        currentValue = value
+    end,
+})
+
+MainSection:AddDropdown("AddSpeedControl", {
+    Title = "Add Speed Mode",
+    Description = "",
+    Options = {
+        "Once",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Once" then
+            stopLoop()
+            local speed = (currentValue / 255) * MAX_QD
+            Event:FireServer(speed)
+
+        elseif choice == "Loop" then
+            stopLoop()
+            loopConn = RunService.Heartbeat:Connect(function()
+                local speed = (currentValue / 255) * MAX_QD
+                Event:FireServer(speed)
+                task.wait(0.25)
+            end)
+
+        elseif choice == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Event = ReplicatedStorage.Events.AddSpeed
+
+local MAX_QN = 1e18
+
+local currentValue = 0
+local loopConn
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+MainSection:AddSlider("AddSpeedSlider", {
+    Title = "Add Speed",
+    Description = "0 → 1 Qn",
+    Default = 0,
+    Min = 0,
+    Max = 255,
+    Increment = 1,
+    Callback = function(value)
+        currentValue = value
+    end,
+})
+
+MainSection:AddDropdown("AddSpeedControl", {
+    Title = "Add Speed Mode",
+    Description = "",
+    Options = {
+        "Once",
+        "Loop",
+        "Stop Loop"
+    },
+    Default = "",
+    PlaceHolder = "Select Mode",
+    Multiple = false,
+    Callback = function(choice)
+        if choice == "Once" then
+            stopLoop()
+            local speed = (currentValue / 255) * MAX_QN
+            Event:FireServer(speed)
+
+        elseif choice == "Loop" then
+            stopLoop()
+            loopConn = RunService.Heartbeat:Connect(function()
+                local speed = (currentValue / 255) * MAX_QN
+                Event:FireServer(speed)
+                task.wait(0.25)
+            end)
+
+        elseif choice == "Stop Loop" then
+            stopLoop()
+        end
+    end
+})
+
+local MainSection = Main:AddSection({Title = "AddSpeed V2", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Add Speed 9.2 Qn (Exact)",
+    Callback = function()
+        local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+        Event:FireServer(9200000000000000000)
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Add Speed 9.0 Qn (Exact)",
+    Callback = function()
+        local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+        Event:FireServer(9000000000000000000)
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Add Speed 1 Qn (Exact)",
+    Callback = function()
+        local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+        Event:FireServer(1000000000000000000)
+    end,
+})
+
+local Main = main:AddTab("Rebirth")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Car Tsunami Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+local RunService = game:GetService("RunService")
+local Event = game:GetService("ReplicatedStorage").Events.RequestRebirth
+
+local loopConn
+
+local function stopLoop()
+    if loopConn then
+        loopConn:Disconnect()
+        loopConn = nil
+    end
+end
+
+GroupButtons:AddButton({
+    Title = "Rebirth | Once",
+    Callback = function()
+        stopLoop()
+        Event:InvokeServer()
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Rebirth | Loop",
+    Callback = function()
+        stopLoop()
+        loopConn = RunService.Heartbeat:Connect(function()
+            Event:InvokeServer()
+            task.wait(0.3)
+        end)
+    end,
+})
+
+GroupButtons:AddButton({
+    Title = "Rebirth | Stop Loop",
+    Callback = function()
+        stopLoop()
+    end,
+})
+
+local Main = main:AddTab("Door")
+main:SelectTab()
+
+local MainSection = Main:AddSection({Title = "+1 Speed Car Tsunami Escape", Description = "Description", Defualt = false , Locked = false})
+local GroupButtons =   MainSection:AddGroupButton()
+
+GroupButtons:AddButton({
+    Title = "Delete VIP Doors",
+    Callback = function()
+        local obj = workspace:FindFirstChild("vipDoors")
+        if obj then
+            obj:Destroy()
+        end
+    end,
+})
