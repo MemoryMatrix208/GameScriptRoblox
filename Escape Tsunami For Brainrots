@@ -1,0 +1,91 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%201%20Open%20And%20Close"))()
+
+local window = Library:CreateWindow({
+    Title = "Escape Tsunami For Brainrots"
+})
+
+local main = window:Section("Collect")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local FINAL_POS = CFrame.new(75.834, 53.322, 1.443)
+
+local function getHRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function getEntityFolder(rarity)
+    local root = workspace:WaitForChild("EntitiesFolder")
+
+    
+    for _, obj in ipairs(root:GetDescendants()) do
+        if obj:IsA("Model") and obj.Name == rarity then
+            return obj
+        end
+    end
+
+    return nil
+end
+
+local function getAnyPartCF(model)
+    for _, obj in ipairs(model:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            return obj.CFrame
+        end
+    end
+end
+
+local function firePrompts(model)
+    for _, obj in ipairs(model:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            pcall(function()
+                fireproximityprompt(obj)
+            end)
+        end
+    end
+end
+
+local function collectRarity(rarity)
+    local model = getEntityFolder(rarity)
+    if not model then return end
+
+    local hrp = getHRP()
+
+    
+    local cf = getAnyPartCF(model)
+    if cf then
+        hrp.CFrame = cf * CFrame.new(0, 0, -3)
+    end
+
+    task.wait(0.25)
+
+    
+    firePrompts(model)
+
+    task.wait(0.25)
+
+    
+    hrp.CFrame = FINAL_POS
+end
+
+main:Button("Collect Normal", function()
+    collectRarity("Normal")
+end)
+
+main:Button("Collect Gold", function()
+    collectRarity("Gold")
+end)
+
+main:Button("Collect Diamond", function()
+    collectRarity("Diamond")
+end)
+
+main:Button("Collect Rainbow", function()
+    collectRarity("Rainbow")
+end)
+
+main:Button("Collect Secret", function()
+    collectRarity("Secret")
+end)
