@@ -1,0 +1,117 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%201%20Open%20And%20Close"))()
+
+local window = Library:CreateWindow({
+    Title = "Escape Obbies For Brainrots"
+})
+
+local main = window:Section("Brainrot")
+
+main:Button("Auto Pick Up Secret", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local TARGET_POS = CFrame.new(28.397, -2.374, -41.519)
+
+    local NPC_NAMES = {
+        "Tralalero Tralala",
+        "Esok Sekolah",
+        "Te Te Te Sahuro",
+        "67",
+        "Los Bros",
+        "La Vacca Saturno Saturnita",
+        "LosTralaleritos",
+        "LosMateos",
+    }
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+    for _, npcName in ipairs(NPC_NAMES) do
+        local npc = npcFolder:FindFirstChild(npcName)
+        if npc then
+            local part = npc:FindFirstChildWhichIsA("BasePart", true)
+            if part then
+                
+                HRP().CFrame = part.CFrame
+                task.wait(0.4)
+
+                
+                local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait()
+
+                
+                HRP().CFrame = TARGET_POS
+                task.wait(0.4)
+            end
+        end
+    end
+end)
+
+local main = window:Section("Money")
+
+main:Button("Auto Collect", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local world = workspace:WaitForChild("World")
+    local bases = world:WaitForChild("Bases")
+
+    for _, base in ipairs(bases:GetChildren()) do
+        local npcFolder = base:FindFirstChild("NPC")
+        if npcFolder then
+            for _, npc in ipairs(npcFolder:GetChildren()) do
+                local collectButton = npc:FindFirstChild("CollectButton")
+                if collectButton then
+                    local collectPart = collectButton:FindFirstChild("Collect")
+                    if collectPart and collectPart:IsA("BasePart") then
+                        firetouchinterest(HRP(), collectPart, 0)
+                        task.wait()
+                        firetouchinterest(HRP(), collectPart, 1)
+                        task.wait(0.2)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local main = window:Section("Sell All Brainrot")
+
+main:Button("Sell All", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Packages
+        .Knit
+        .Services
+        .SellService
+        .RE
+        .SellAllBrainrot
+
+    Event:FireServer()
+end)
+
+local main = window:Section("Buy Speed")
+
+main:Button("Buy Speed", function()
+    local Event = game:GetService("ReplicatedStorage")
+        .Packages
+        .Knit
+        .Services
+        .SpeedService
+        .RE
+        .BuySpeed
+
+    Event:FireServer()
+end)
