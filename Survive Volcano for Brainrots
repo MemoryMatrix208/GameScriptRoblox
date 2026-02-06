@@ -1,0 +1,233 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Survive Volcano for Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Pick Up Brainrot")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local FINAL_POS = Vector3.new(-68.182, 2.197, 30.317)
+
+local function getHRP()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function findPrompt()
+    local spawned = workspace:WaitForChild("ItemSpawners")
+        :WaitForChild("Legendary")
+        :WaitForChild("SpawnedItem")
+
+    for _, v in ipairs(spawned:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            return v
+        end
+    end
+end
+
+Main:Button("Automatic Pick Up Once Brainrot Legendary", function()
+    local hrp = getHRP()
+    local prompt = findPrompt()
+    if not prompt then return end
+
+    local part = prompt.Parent
+    if not part:IsA("BasePart") then
+        part = part:FindFirstAncestorWhichIsA("BasePart")
+    end
+    if not part then return end
+
+    hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+    task.wait(0.5)
+
+    fireproximityprompt(prompt, 1)
+    task.wait(0.3)
+
+    hrp.CFrame = CFrame.new(FINAL_POS)
+end)
+
+Main:Button("Automatic Pick Up Once Brainrot OG", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    HRP().CFrame = CFrame.new(-3.464, 76.724, 3276.154)
+    task.wait(0.3)
+
+    local spawned = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("OG")
+        :WaitForChild("SpawnedItem")
+
+    local part = spawned:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    HRP().CFrame = part.CFrame
+    task.wait(0.3)
+
+    local prompt = spawned:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+
+    HRP().CFrame = CFrame.new(-68.182, 2.197, 30.317)
+end)
+
+Main:Button("Automatic Pick Up Once Brainrot Exclusive", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    HRP().CFrame = CFrame.new(-27.649, 79.854, 2847.144)
+    task.wait(0.3)
+
+    local spawned = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Exclusive")
+        :WaitForChild("SpawnedItem")
+
+    local part = spawned:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    HRP().CFrame = part.CFrame
+    task.wait(0.3)
+
+    local prompt = spawned:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+
+    HRP().CFrame = CFrame.new(-68.182, 2.197, 30.317)
+end)
+
+Main:Button("Automatic Pick Up Once Brainrot Secret", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    HRP().CFrame = CFrame.new(-15.180, 81.448, 2419.173)
+    task.wait(0.3)
+
+    local spawned = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Secret")
+        :WaitForChild("SpawnedItem")
+
+    local part = spawned:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    HRP().CFrame = part.CFrame
+    task.wait(0.3)
+
+    local prompt = spawned:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+
+    HRP().CFrame = CFrame.new(-68.182, 2.197, 30.317)
+end)
+
+Main:Button("Automatic Pick Up Once Brainrot Supreme", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    HRP().CFrame = CFrame.new(-36.126, 90.845, 2047.142)
+    task.wait(0.3)
+
+    local spawned = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Supreme")
+        :WaitForChild("SpawnedItem")
+
+    local part = spawned:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    HRP().CFrame = part.CFrame
+    task.wait(0.3)
+
+    local prompt = spawned:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.3)
+
+    HRP().CFrame = CFrame.new(-68.182, 2.197, 30.317)
+end)
+
+local Main = Window:Section("Speed Upgrade")
+
+Main:Button("Buy 10", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PurchaseSpeed
+    Event:FireServer(10)
+end)
+
+local Main = Window:Section("Sell Inventory")
+
+Main:Button("Sell All", function()
+    local Event = game:GetService("ReplicatedStorage").Events.RequestSell
+    Event:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("One Rebirth", function()
+    local Event = game:GetService("ReplicatedStorage").Events.RequestRebirth
+    Event:FireServer()
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Collect Money", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot or not plot:IsA("Model") then return end
+
+    for i = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. i)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in ipairs(slots:GetChildren()) do
+                    local collect = slot:FindFirstChild("CollectTouch", true)
+                    if collect then
+                        local part = collect:FindFirstChildWhichIsA("BasePart", true)
+                        if part then
+                            firetouchinterest(hrp, part, 0)
+                            firetouchinterest(hrp, part, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
