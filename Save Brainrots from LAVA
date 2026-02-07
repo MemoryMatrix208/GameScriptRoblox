@@ -1,0 +1,165 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Save Brainrots from LAVA | ArchiveXNova"
+})
+
+local Main = Window:Section("Present")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local BACK_CF = CFrame.new(-26.869, 23.305, 14.320)
+
+local Brainrots = workspace
+    :WaitForChild("Map")
+    :WaitForChild("Brainrots")
+
+local loops = {}
+
+local function HRP()
+    local c = player.Character or player.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function stopLoop(name)
+    if loops[name] then
+        loops[name]:Disconnect()
+        loops[name] = nil
+    end
+end
+
+local function runOnce(name)
+    local model = Brainrots:FindFirstChild(name)
+    if not model or not model:IsA("Model") then return end
+
+    if not model.PrimaryPart then
+        model.PrimaryPart = model:FindFirstChildWhichIsA("BasePart", true)
+    end
+    if not model.PrimaryPart then return end
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if not prompt then return end
+
+    HRP().CFrame = model.PrimaryPart.CFrame
+    task.wait(0.2)
+
+    fireproximityprompt(prompt)
+    task.wait(0.2)
+
+    HRP().CFrame = BACK_CF
+end
+
+local function startLoop(name)
+    stopLoop(name)
+    loops[name] = RunService.Heartbeat:Connect(function()
+        runOnce(name)
+        task.wait(1)
+    end)
+end
+
+local presents = {
+    "LegendaryPresent",
+    "MythicPresent",
+    "RainbowPresent",
+    "SecretPresent",
+    "GalaxyPresent",
+    "MoonPresent",
+    "EpicPresent",
+    "LavaPresent"
+}
+
+for _, name in ipairs(presents) do
+    Main:Button(name.." Once", function()
+        runOnce(name)
+    end)
+
+    Main:Button(name.." Loop", function()
+        startLoop(name)
+    end)
+
+    Main:Button(name.." Stop Loop", function()
+        stopLoop(name)
+    end)
+end
+
+local Main = Window:Section("Brainrot")
+
+Main:Button("Automatic Pick Up", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function HRP()
+        local c = player.Character or player.CharacterAdded:Wait()
+        return c:WaitForChild("HumanoidRootPart")
+    end
+
+    local BACK_CF = CFrame.new(-26.869, 23.305, 14.320)
+
+    local folder = workspace
+        :WaitForChild("Map")
+        :WaitForChild("SpawnedBrainrots")
+
+    for _, model in ipairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+
+            if part and prompt then
+                HRP().CFrame = part.CFrame
+                task.wait(0.25)
+                fireproximityprompt(prompt)
+                task.wait(0.25)
+                HRP().CFrame = BACK_CF
+                task.wait(0.25)
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Buy Speed 10x", function()
+    local Event = game:GetService("ReplicatedStorage").Events.SpeedEvent
+    Event:FireServer("Speed10")
+end)
+
+Main:Button("Buy Carry Once", function()
+    game:GetService("ReplicatedStorage").Events.CarryEvent:FireServer()
+end)
+
+local Main = Window:Section("Sell All")
+
+Main:Button("Sell All", function()
+    game:GetService("ReplicatedStorage").Events.Sell:FireServer("SellAll")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.Rebirth:FireServer()
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect", function()
+    local Event = game:GetService("ReplicatedStorage").Events.Collect
+    for i = 1, 10 do
+        Event:FireServer("Platform"..i)
+    end
+end)
+
+local Main = Window:Section("Base Upgrade")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.Events.UpgradeBase
+
+local Levels = {}
+for i = 1, 20 do
+    table.insert(Levels, i)
+end
+
+Main:Dropdown("One Click Base Upgrade", Levels, 1, function(value)
+    Event:FireServer(value)
+end)
