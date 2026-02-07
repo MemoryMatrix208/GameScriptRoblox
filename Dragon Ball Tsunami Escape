@@ -1,0 +1,104 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Dragon Ball Tsunami Escape | ArchiveXNova"
+})
+
+local Main = Window:Section("Zone")
+
+Main:Button("Automatic Divine Pick Up", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function getHRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = getHRP()
+
+    local POS_A = Vector3.new(5721.346, 83.135, -370.143)
+    local POS_B = Vector3.new(148.850, 3.225, -341.641)
+
+    
+    hrp.CFrame = CFrame.new(POS_A)
+    task.wait(0.4)
+
+    
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Divine")
+        :WaitForChild("SpawnedItem")
+
+    local part = spawnedItem.PrimaryPart
+        or spawnedItem:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    
+    local prompt = spawnedItem:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_B)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local workspace = game:GetService("Workspace")
+
+    -- cari plot berdasarkan username
+    local plotName = "Plot_" .. player.Name
+    local plot = workspace:FindFirstChild(plotName)
+    if not plot then return end
+
+    for floorIndex = 1, 6 do
+        local floor = plot:FindFirstChild("Floor" .. floorIndex)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for slotIndex = 1, 10 do
+                    local slot = slots:FindFirstChild("Slot" .. slotIndex)
+                    if slot then
+                        local touchPart = slot:FindFirstChild("CollectTouch")
+                        if touchPart and touchPart:IsA("BasePart") then
+                            firetouchinterest(player.Character.HumanoidRootPart, touchPart, 0)
+                            task.wait()
+                            firetouchinterest(player.Character.HumanoidRootPart, touchPart, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Speed Shop")
+
+Main:Button("Buy 10", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PurchaseSpeed
+    Event:FireServer(10)
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell All", function()
+    local Event = game:GetService("ReplicatedStorage").Events.RequestSell
+    Event:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Carry Shop")
+
+Main:Button("Click", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PurchaseCarry
+    Event:FireServer()
+end)
