@@ -1,0 +1,185 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami For Phones | ArchiveXNova"
+})
+
+local Main = Window:Section("Phone")
+
+Main:Button("Automatic Pick Up", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(152.777, 3.245, 20.051)
+
+    local folder = workspace:WaitForChild("ActiveThings")
+    local part = folder:FindFirstChildWhichIsA("BasePart", true)
+
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+
+        local prompt = folder:FindFirstChildWhichIsA("ProximityPrompt", true)
+        if prompt then
+            fireproximityprompt(prompt)
+        end
+
+        task.wait(0.3)
+        hrp.CFrame = CFrame.new(backPos)
+    end
+end)
+
+local Main = Window:Section("Tsunami")
+
+do
+    local running = false
+    local targets = {
+        "Fast",
+        "Medium",
+        "SuperFast",
+        "SuperSlow",
+        "Lightning",
+        "Slow"
+    }
+
+    Main:Button("Remove Tsunami (Spam)", function()
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                for _, name in ipairs(targets) do
+                    local obj = workspace:FindFirstChild(name)
+                    if obj then
+                        obj:Destroy()
+                    end
+                end
+                task.wait(0.2)
+            end
+        end)
+    end)
+
+    Main:Button("Stop Remove Tsunami (Spam)", function()
+        running = false
+    end)
+end
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local folder = workspace:FindFirstChild("VIPWalls")
+    if folder then
+        folder:Destroy()
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local Event = game:GetService("ReplicatedStorage").RemoteEvents.SpeedPurchaseEvent
+
+Main:Button("Buy +1 Speed", function()
+    Event:FireServer(1)
+end)
+
+Main:Button("Buy +5 Speed", function()
+    Event:FireServer(5)
+end)
+
+Main:Button("Buy +10 Speed", function()
+    Event:FireServer(10)
+end)
+
+local Event = game:GetService("ReplicatedStorage").RemoteEvents.CarryPurchaseEvent
+
+Main:Button("Buy Carry", function()
+    Event:FireServer("Money")
+end)
+
+Main:Button("Click Base Upgrade!", function()
+    local Event = game:GetService("ReplicatedStorage").RemoteEvents.BaseUpgradeEvent
+    Event:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    local Event = game:GetService("ReplicatedStorage").RemoteEvents.SellInventory
+    Event:InvokeServer()
+end)
+
+local Main = Window:Section("Map")
+
+local function sd(p)
+    local o = game
+    local r = p
+    while r ~= '' do
+        local d = r:find('.',1,true)
+        local n
+        if d then
+            n = r:sub(1,d-1)
+            r = r:sub(d+1)
+        else
+            n = r
+            r = ''
+        end
+        o = o:FindFirstChild(n)
+        if not o then return end
+    end
+    if o then
+        o:Destroy()
+    end
+end
+
+Main:Button("Delete Roof First", function()
+    sd("Workspace.Map.Roof1")
+end)
+
+local player = game.Players.LocalPlayer
+
+Main:Button("Home", function()
+    player.Character:MoveTo(Vector3.new(152.777, 3.245, 20.051))
+end)
+
+Main:Button("Divine", function()
+    player.Character:MoveTo(Vector3.new(1914.079, 3.225, -0.080))
+end)
+
+Main:Button("Mythical", function()
+    player.Character:MoveTo(Vector3.new(1310.000, 3.225, -0.000))
+end)
+
+Main:Button("Legendary", function()
+    player.Character:MoveTo(Vector3.new(913.000, 3.225, 0.000))
+end)
+
+Main:Button("Secret", function()
+    player.Character:MoveTo(Vector3.new(2430.000, 3.225, -0.000))
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    local Event = game:GetService("ReplicatedStorage").RemoteEvents.RebirthEvent
+    Event:FireServer()
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    for b = 1, 5 do
+        local base = workspace.Bases:FindFirstChild("Base"..b)
+        if base and base:FindFirstChild("Slots") then
+            for s = 1, 10 do
+                local slot = base.Slots:FindFirstChild("Slot"..s)
+                if slot and slot:FindFirstChild("Collect") then
+                    local part = slot.Collect
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, part, 0)
+                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, part, 1)
+                end
+            end
+        end
+    end
+end)
