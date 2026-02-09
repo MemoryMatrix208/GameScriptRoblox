@@ -1,0 +1,145 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami Football Clubs | ArchiveXNova"
+})
+
+local Main = Window:Section("Football")
+
+Main:Button("Automatic Pick Up Mythical", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local startPos = Vector3.new(457.946, 71.225, 714.980)
+    local endPos = Vector3.new(371.328, 19.225, -528.634)
+
+    hrp.CFrame = CFrame.new(startPos)
+    task.wait(0.25)
+
+    local model = workspace.ItemSpawners.Mythical:FindFirstChild("SpawnedItem")
+    if not model then return end
+
+    local base = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not base then return end
+
+    hrp.CFrame = base.CFrame
+    task.wait(0.25)
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+    hrp.CFrame = CFrame.new(endPos)
+end)
+
+Main:Button("Automatic Pick Up Legendary", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local startPos = Vector3.new(315.457, 71.225, 247.846)
+    local endPos = Vector3.new(371.328, 19.225, -528.634)
+
+    hrp.CFrame = CFrame.new(startPos)
+    task.wait(0.25)
+
+    local model = workspace.ItemSpawners.Legendary:FindFirstChild("SpawnedItem")
+    if not model then return end
+
+    local base = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not base then return end
+
+    hrp.CFrame = base.CFrame
+    task.wait(0.25)
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+    hrp.CFrame = CFrame.new(endPos)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot then return end
+
+    for floorIndex = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. floorIndex)
+        if floor and floor:FindFirstChild("Slots") then
+            for slotIndex = 1, 10 do
+                local slot = floor.Slots:FindFirstChild("Slot" .. slotIndex)
+                if slot then
+                    local touch = slot:FindFirstChild("CollectTouch")
+                    if touch and touch:IsA("BasePart") then
+                        firetouchinterest(hrp, touch, 0)
+                        firetouchinterest(hrp, touch, 1)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Buy Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Buy Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Buy Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Upgrade Base", function()
+    game:GetService("ReplicatedStorage").Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis", function()
+    local t = workspace:FindFirstChild("Tsunamis")
+    if t then
+        t:Destroy()
+    end
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local v = workspace:FindFirstChild("VIP")
+    if v then
+        v:Destroy()
+    end
+end)
