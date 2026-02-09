@@ -1,0 +1,97 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Lava For Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Npc")
+
+Main:Button("Interact", function()
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+
+    local function getHRP()
+        local char = player.Character or player.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local hrp = getHRP()
+    local returnPos = Vector3.new(-39.950, -8.665, -34.648)
+
+    local npcFolder = workspace
+        :WaitForChild("Map")
+        :WaitForChild("Zones")
+        :WaitForChild("Field")
+        :WaitForChild("NPC")
+
+    for _, npc in ipairs(npcFolder:GetChildren()) do
+        if npc:IsA("Model") then
+            local part = npc.PrimaryPart or npc:FindFirstChildWhichIsA("BasePart", true)
+            local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+
+            if part and prompt then
+                hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+                task.wait(0.25)
+                fireproximityprompt(prompt)
+                break
+            end
+        end
+    end
+
+    task.wait(0.3)
+    hrp.CFrame = CFrame.new(returnPos)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Cash", function()
+    local Event = game:GetService("ReplicatedStorage").Remotes.Plot.CollectCash
+    for i = 1, 8 do
+        Event:FireServer(i)
+        task.wait(0.1)
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Buy Carry", function()
+    game:GetService("ReplicatedStorage").Remotes.Carry:FireServer()
+end)
+
+Main:Button("Buy Speed +1", function()
+    game:GetService("ReplicatedStorage").Remotes.Speed:FireServer("1")
+end)
+
+Main:Button("Buy Speed +5", function()
+    game:GetService("ReplicatedStorage").Remotes.Speed:FireServer("5")
+end)
+
+Main:Button("Buy Speed +10", function()
+    game:GetService("ReplicatedStorage").Remotes.Speed:FireServer("10")
+end)
+
+Main:Button("Upgrade Plot", function()
+    game:GetService("ReplicatedStorage").Remotes.Plot.Upgrade:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove VIP", function()
+    local vip = workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("VIP")
+    if vip then
+        vip:Destroy()
+    end
+end)
+
+local Main = Window:Section("Lava")
+
+Main:Button("Remove Lava", function()
+    local lava = workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("Zones")
+        and workspace.Map.Zones:FindFirstChild("Field")
+        and workspace.Map.Zones.Field:FindFirstChild("Lava")
+
+    if lava then
+        lava:Destroy()
+    end
+end)
