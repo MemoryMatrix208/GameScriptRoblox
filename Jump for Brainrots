@@ -1,0 +1,125 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Jump for Brainrots"
+})
+
+local Main = Window:Section("Brainrots")
+
+Main:Button("Automatic Pick Up", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local endPos = Vector3.new(61.726, 3.225, -101.126)
+
+    local folder = workspace:FindFirstChild("Brainrots")
+    if not folder then return end
+
+    local model = folder:FindFirstChildWhichIsA("Model")
+    if not model then return end
+
+    local base = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not base then return end
+
+    hrp.CFrame = base.CFrame
+    task.wait(0.25)
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+    hrp.CFrame = CFrame.new(endPos)
+end)
+
+local Main = Window:Section("Traps")
+
+Main:Button("Remove Traps", function()
+    local traps = workspace:FindFirstChild("Traps")
+    if traps then
+        traps:Destroy()
+    end
+end)
+
+local Main = Window:Section("Jump Upgrade")
+
+Main:Button("Upgrade Jump 1", function()
+    game:GetService("ReplicatedStorage").Remotes.UpgradeJump:FireServer()
+end)
+
+Main:Button("Upgrade Jump 2", function()
+    game:GetService("ReplicatedStorage").Remotes.UpgradeJump2:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Remotes.SellInventory:FireServer()
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Collect All Money", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for p = 1, 5 do
+        local plot = plots:FindFirstChild("Plot" .. p)
+        if plot then
+            local buttons = plot:FindFirstChild("CollectButtons")
+            if buttons then
+                for i = 1, 10 do
+                    local part = buttons:FindFirstChild(tostring(i))
+                    if part and part:IsA("BasePart") then
+                        firetouchinterest(hrp, part, 0)
+                        firetouchinterest(hrp, part, 1)
+                        task.wait(0.05)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("TP Home", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame =
+        CFrame.new(51.040, 3.221, -107.258)
+end)
+
+Main:Button("TP Celestial", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame =
+        CFrame.new(37.575, 714.456, 362.468)
+end)
+
+Main:Button("TP Secret", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame =
+        CFrame.new(35.167, 511.909, 293.178)
+end)
+
+Main:Button("TP Mythic", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame =
+        CFrame.new(36.556, 349.151, 217.669)
+end)
+
+Main:Button("TP Legendary", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame =
+        CFrame.new(32.794, 209.166, 137.634)
+end)
