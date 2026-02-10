@@ -1,0 +1,141 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Stages For Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrots")
+
+Main:Button("Automatic Pick Up Secret And Godly", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local POS_1 = Vector3.new(646.500, 180.425, 4098.995)
+    local POS_2 = Vector3.new(549.513, 112.620, -91.440)
+
+    hrp.CFrame = CFrame.new(POS_1)
+    task.wait(0.4)
+
+    local model = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Secret")
+        :WaitForChild("SpawnedItem")
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if part then
+        hrp.CFrame = part.CFrame * CFrame.new(0, 0, -2)
+        task.wait(0.25)
+    end
+
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.4)
+    hrp.CFrame = CFrame.new(POS_2)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot then return end
+
+    for f = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. f)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for s = 1, 10 do
+                    local slot = slots:FindFirstChild("Slot" .. s)
+                    if slot then
+                        local touch = slot:FindFirstChild("CollectTouch", true)
+                        if touch and touch:IsA("BasePart") then
+                            firetouchinterest(hrp, touch, 0)
+                            firetouchinterest(hrp, touch, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Upgrade Base", function()
+    game:GetService("ReplicatedStorage").Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis But not completely remove", function()
+    if workspace:FindFirstChild("Tsunamis") then
+        workspace.Tsunamis:Destroy()
+    end
+end)
+
+local Main = Window:Section("Map")
+
+local Players = game:GetService("Players")
+local lp = Players.LocalPlayer
+
+local function tp(pos)
+    local char = lp.Character or lp.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+Main:Button("TP Home", function()
+    tp(Vector3.new(549.513, 112.620, -91.440))
+end)
+
+Main:Button("TP Secret", function()
+    tp(Vector3.new(648.235, 180.425, 4042.069))
+end)
+
+Main:Button("TP Godly", function()
+    tp(Vector3.new(649.313, 180.425, 2707.360))
+end)
+
+Main:Button("TP Mythical", function()
+    tp(Vector3.new(648.121, 180.425, 2168.974))
+end)
+
+Main:Button("TP Legendary", function()
+    tp(Vector3.new(646.207, 180.425, 1680.894))
+end)
