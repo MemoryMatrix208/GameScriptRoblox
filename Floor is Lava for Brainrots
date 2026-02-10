@@ -1,0 +1,300 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Floor is Lava for Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrots")
+
+Main:Button("Automatic Pick Up Secret", function()
+    local Players = game:GetService("Players")
+    local p = Players.LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(814.096, 3.995, -556.721)
+
+    local model = workspace
+        :WaitForChild("Tunnel")
+        :WaitForChild("Zone")
+        :WaitForChild("Secret")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    
+    hrp.CFrame = part.CFrame * CFrame.new(0, 7, 0)
+    task.wait()
+
+    
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(8, 1, 8)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 1
+    platform.Name = "TempPlatform"
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3.5, 0)
+    platform.Parent = workspace
+
+    task.wait(0.15)
+
+    
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+
+    
+    platform:Destroy()
+
+    
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+Main:Button("Automatic Pick Up Godly", function()
+    local Players = game:GetService("Players")
+    local p = Players.LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(814.096, 3.995, -556.721)
+
+    local model = workspace
+        :WaitForChild("Tunnel")
+        :WaitForChild("Zone")
+        :WaitForChild("Godly")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    
+    hrp.CFrame = part.CFrame * CFrame.new(0, 7, 0)
+    task.wait()
+
+    
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(8, 1, 8)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 1
+    platform.Name = "TempPlatform"
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3.5, 0)
+    platform.Parent = workspace
+
+    task.wait(0.15)
+
+    
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+
+    
+    platform:Destroy()
+
+    
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+Main:Button("Automatic Pick Up Legendary", function()
+    local Players = game:GetService("Players")
+    local p = Players.LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(814.096, 3.995, -556.721)
+
+    local model = workspace
+        :WaitForChild("Tunnel")
+        :WaitForChild("Zone")
+        :WaitForChild("Legendary")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    
+    hrp.CFrame = part.CFrame * CFrame.new(0, 7, 0)
+    task.wait()
+
+    
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(8, 1, 8)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 1
+    platform.Name = "TempPlatform"
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3.5, 0)
+    platform.Parent = workspace
+
+    task.wait(0.15)
+
+    
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+
+    
+    platform:Destroy()
+
+    
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+Main:Button("Automatic Pick Up Mythical", function()
+    local Players = game:GetService("Players")
+    local p = Players.LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(814.096, 3.995, -556.721)
+
+    local model = workspace
+        :WaitForChild("Tunnel")
+        :WaitForChild("Zone")
+        :WaitForChild("Mythical")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    
+    hrp.CFrame = part.CFrame * CFrame.new(0, 7, 0)
+    task.wait()
+
+    
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(8, 1, 8)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 1
+    platform.Name = "TempPlatform"
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3.5, 0)
+    platform.Parent = workspace
+
+    task.wait(0.15)
+
+    
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+
+    
+    platform:Destroy()
+
+    
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+Main:Button("Automatic Pick Up Divine", function()
+    local Players = game:GetService("Players")
+    local p = Players.LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    local backPos = Vector3.new(814.096, 3.995, -556.721)
+
+    local model = workspace
+        :WaitForChild("Tunnel")
+        :WaitForChild("Zone")
+        :WaitForChild("Divine")
+        :FindFirstChildWhichIsA("Model")
+
+    if not model then return end
+
+    local part = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    
+    hrp.CFrame = part.CFrame * CFrame.new(0, 7, 0)
+    task.wait()
+
+    
+    local platform = Instance.new("Part")
+    platform.Size = Vector3.new(8, 1, 8)
+    platform.Anchored = true
+    platform.CanCollide = true
+    platform.Transparency = 1
+    platform.Name = "TempPlatform"
+    platform.CFrame = hrp.CFrame * CFrame.new(0, -3.5, 0)
+    platform.Parent = workspace
+
+    task.wait(0.15)
+
+    
+    local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait(0.25)
+
+    
+    platform:Destroy()
+
+    
+    hrp.CFrame = CFrame.new(backPos)
+end)
+
+local Main = Window:Section("Money")
+
+Main:Button("Auto Collect Money", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+
+    for i = 1, 5 do
+        local plot = workspace.Plots:FindFirstChild(tostring(i))
+        if plot and plot:FindFirstChild("Slots") then
+            for j = 1, 10 do
+                local slot = plot.Slots:FindFirstChild(tostring(j))
+                if slot and slot:FindFirstChild("Collect") then
+                    local collect = slot.Collect
+
+                    local hitbox = collect:FindFirstChild("Hitbox")
+                    if hitbox and hitbox:IsA("BasePart") then
+                        firetouchinterest(hrp, hitbox, 0)
+                        firetouchinterest(hrp, hitbox, 1)
+                    else
+                        local part = collect:FindFirstChildWhichIsA("BasePart", true)
+                        if part then
+                            firetouchinterest(hrp, part, 0)
+                            firetouchinterest(hrp, part, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Walls", function()
+    local walls = workspace:FindFirstChild("Map")
+        and workspace.Map:FindFirstChild("Walls")
+
+    if walls then
+        walls:Destroy()
+    end
+end)
