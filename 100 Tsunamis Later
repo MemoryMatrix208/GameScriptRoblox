@@ -1,0 +1,299 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "100 Tsunamis Later | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrots")
+
+local running=false
+
+Main:Button("Auto Pick Up | Once", function()
+    local player=game:GetService("Players").LocalPlayer
+    local char=player.Character or player.CharacterAdded:Wait()
+    local hrp=char:WaitForChild("HumanoidRootPart")
+    for _,m in ipairs(workspace.SpawnedBrainrots:GetChildren()) do
+        local p=m:FindFirstChildWhichIsA("BasePart",true)
+        if p then
+            hrp.CFrame=p.CFrame
+            task.wait(0.1)
+            for _,v in ipairs(m:GetDescendants()) do
+                if v:IsA("ProximityPrompt") then
+                    fireproximityprompt(v)
+                end
+            end
+        end
+    end
+    hrp.CFrame=CFrame.new(-1099.853,61.842,-1189.843)
+end)
+
+Main:Button("Auto Pick Up | Loop", function()
+    running=true
+    local player=game:GetService("Players").LocalPlayer
+    local char=player.Character or player.CharacterAdded:Wait()
+    local hrp=char:WaitForChild("HumanoidRootPart")
+    while running do
+        for _,m in ipairs(workspace.SpawnedBrainrots:GetChildren()) do
+            if not running then break end
+            local p=m:FindFirstChildWhichIsA("BasePart",true)
+            if p then
+                hrp.CFrame=p.CFrame
+                task.wait(0.2)
+                for _,v in ipairs(m:GetDescendants()) do
+                    if v:IsA("ProximityPrompt") then
+                        fireproximityprompt(v)
+                    end
+                end
+            end
+        end
+        hrp.CFrame=CFrame.new(-1099.853,61.842,-1189.843)
+        task.wait(0.5)
+    end
+end)
+
+Main:Button("Stop Loop", function()
+    running=false
+end)
+
+local Main = Window:Section("Money")
+
+local podLoop = false
+
+Main:Button("Auto Collect Money | Once", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local bases = workspace:FindFirstChild("GameMap")
+    if not bases then return end
+    bases = bases:FindFirstChild("Bases")
+    if not bases then return end
+
+    for _, base in ipairs(bases:GetChildren()) do
+        local floors = base:FindFirstChild("Floors")
+        if floors then
+            local defaultFloor = floors:FindFirstChild("DefaultFloor")
+            if defaultFloor then
+                local podsFolder = defaultFloor:FindFirstChild("Pods")
+                if podsFolder then
+                    for _, pod in ipairs(podsFolder:GetChildren()) do
+                        for _, obj in ipairs(pod:GetDescendants()) do
+                            if obj:IsA("BasePart") then
+                                firetouchinterest(hrp, obj, 0)
+                                firetouchinterest(hrp, obj, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+Main:Button("Auto Collect Money | Loop", function()
+    podLoop = true
+    task.spawn(function()
+        while podLoop do
+            local player = game:GetService("Players").LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local bases = workspace:FindFirstChild("GameMap")
+            if bases then
+                bases = bases:FindFirstChild("Bases")
+                if bases then
+                    for _, base in ipairs(bases:GetChildren()) do
+                        local floors = base:FindFirstChild("Floors")
+                        if floors then
+                            local defaultFloor = floors:FindFirstChild("DefaultFloor")
+                            if defaultFloor then
+                                local podsFolder = defaultFloor:FindFirstChild("Pods")
+                                if podsFolder then
+                                    for _, pod in ipairs(podsFolder:GetChildren()) do
+                                        for _, obj in ipairs(pod:GetDescendants()) do
+                                            if obj:IsA("BasePart") then
+                                                firetouchinterest(hrp, obj, 0)
+                                                firetouchinterest(hrp, obj, 1)
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            task.wait(0.5)
+        end
+    end)
+end)
+
+Main:Button("Stop Loop", function()
+    podLoop = false
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.SpeedEvent:FireServer("Buy",1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.SpeedEvent:FireServer("Buy",5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.SpeedEvent:FireServer("Buy",10)
+end)
+
+Main:Button("Purchase Carry Upgrade", function()
+    game:GetService("ReplicatedStorage").Events.CarryUpgrade:FireServer("Buy")
+end)
+
+local Main = Window:Section("Sell")
+
+Main:Button("Sell All", function()
+    game:GetService("ReplicatedStorage").Events.SellShop_SellAll:InvokeServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.Rebirth:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local folder = workspace:FindFirstChild("GameMap")
+    if not folder then return end
+    
+    local structure = folder:FindFirstChild("Structure")
+    if not structure then return end
+    
+    local vip = structure:FindFirstChild("VIPDoors")
+    if vip then
+        vip:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunami")
+
+local tsunamiLoop = false
+
+Main:Button("Remove Tsunami", function()
+    tsunamiLoop = true
+    while tsunamiLoop do
+        local zones = workspace:FindFirstChild("Zones")
+        if zones then
+            local tsunamiPoints = zones:FindFirstChild("TsunamiPoints")
+            if tsunamiPoints then
+                tsunamiPoints:Destroy()
+            end
+        end
+
+        local targets = {
+            "Tsunami_Medium",
+            "Tsunami_SuperSlow",
+            "Tsunami_Slow",
+            "Tsunami_Fast",
+            "Tsunami_Extreme"
+        }
+
+        for _, name in ipairs(targets) do
+            local obj = workspace:FindFirstChild(name)
+            if obj then
+                obj:Destroy()
+            end
+        end
+
+        task.wait(0.5)
+    end
+end)
+
+Main:Button("Stop Loop", function()
+    tsunamiLoop = false
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("TP Home", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-1099.853, 61.842, -1189.843)
+end)
+
+Main:Button("TP BrainrotGod", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(1525.407, 33.203, -174.160)
+end)
+
+Main:Button("TP Celestial", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(2310.000, 33.203, -207.324)
+end)
+
+Main:Button("TP Legendary", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(458.180, 33.203, -195.929)
+end)
+
+Main:Button("TP Mythic", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(905.186, 33.203, -196.787)
+end)
+
+Main:Button("TP Secret", function()
+    local p = game:GetService("Players").LocalPlayer
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(1943.720, 33.203, -195.162)
+end)
+
+local Main = Window:Section("Player")
+
+Main:Button("Speed 100%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 1
+end)
+
+Main:Button("Speed 200%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 2
+end)
+
+Main:Button("Speed 300%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 3
+end)
+
+Main:Button("Speed 400%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 4
+end)
+
+Main:Button("Speed 500%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 5
+end)
+
+Main:Button("Speed 600%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 6
+end)
+
+Main:Button("Speed 700%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 7
+end)
+
+Main:Button("Speed 800%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 8
+end)
+
+Main:Button("Speed 900%", function()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16 * 9
+end)
