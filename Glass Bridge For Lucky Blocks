@@ -1,0 +1,184 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Glass Bridge For Lucky Blocks | ArchiveXNova"
+})
+
+local Main = Window:Section("Pickaxe")
+
+local pickaxeLoop = false
+
+Main:Button("Auto Swing | Once", function()
+    local Event = game:GetService("ReplicatedStorage").Events.PickaxeAction
+    Event:FireServer("Swing")
+end)
+
+Main:Button("Auto Swing | Loop", function()
+    if pickaxeLoop then return end
+    pickaxeLoop = true
+    local Event = game:GetService("ReplicatedStorage").Events.PickaxeAction
+    task.spawn(function()
+        while pickaxeLoop do
+            Event:FireServer("Swing")
+            task.wait(0.2)
+        end
+    end)
+end)
+
+Main:Button("Stop Loop", function()
+    pickaxeLoop = false
+end)
+
+local Main = Window:Section("Money")
+
+local CollectLoop = false
+
+Main:Button("Auto Collect | Once", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name) or workspace:FindFirstChild("Plot_fadhilzayyani")
+    if not plot then return end
+
+    for f = 1, 5 do
+        local floor = plot:FindFirstChild("Floor" .. f)
+        if floor and floor:FindFirstChild("Slots") then
+            for s = 1, 10 do
+                local slot = floor.Slots:FindFirstChild("Slot" .. s)
+                if slot then
+                    local part = slot:FindFirstChild("CollectTouch")
+                    if part and part:IsA("BasePart") then
+                        firetouchinterest(hrp, part, 0)
+                        firetouchinterest(hrp, part, 1)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+Main:Button("Auto Collect | Loop", function()
+    CollectLoop = true
+    task.spawn(function()
+        while CollectLoop do
+            local player = game:GetService("Players").LocalPlayer
+            local char = player.Character or player.CharacterAdded:Wait()
+            local hrp = char:WaitForChild("HumanoidRootPart")
+
+            local plot = workspace:FindFirstChild("Plot_" .. player.Name) or workspace:FindFirstChild("Plot_fadhilzayyani")
+            if plot then
+                for f = 1, 5 do
+                    local floor = plot:FindFirstChild("Floor" .. f)
+                    if floor and floor:FindFirstChild("Slots") then
+                        for s = 1, 10 do
+                            local slot = floor.Slots:FindFirstChild("Slot" .. s)
+                            if slot then
+                                local part = slot:FindFirstChild("CollectTouch")
+                                if part and part:IsA("BasePart") then
+                                    firetouchinterest(hrp, part, 0)
+                                    firetouchinterest(hrp, part, 1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            task.wait(0.5)
+        end
+    end)
+end)
+
+Main:Button("Auto Collect | Stop Loop", function()
+    CollectLoop = false
+end)
+
+local Main = Window:Section("Take")
+
+local promptLoop = false
+
+local function fireNearest()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local nearestPrompt = nil
+    local shortestDistance = math.huge
+
+    for _, v in ipairs(workspace:GetDescendants()) do
+        if v:IsA("ProximityPrompt") and v.Enabled then
+            local parent = v.Parent
+            if parent and parent:IsA("BasePart") then
+                local dist = (hrp.Position - parent.Position).Magnitude
+                if dist < shortestDistance then
+                    shortestDistance = dist
+                    nearestPrompt = v
+                end
+            end
+        end
+    end
+
+    if nearestPrompt then
+        fireproximityprompt(nearestPrompt)
+    end
+end
+
+Main:Button("Auto Take Brainrot | Once", function()
+    fireNearest()
+end)
+
+Main:Button("Auto Take Brainrot | Loop", function()
+    promptLoop = true
+    while promptLoop do
+        fireNearest()
+        task.wait(0.2)
+    end
+end)
+
+Main:Button("Auto Take Brainrot | Stop Loop", function()
+    promptLoop = false
+end)
+
+local Main = Window:Section("Lucky Block And Home")
+
+Main:Button("TP Lucky Block", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(Vector3.new(-2.635, 3.225, 29.390))
+end)
+
+Main:Button("TP Home", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(Vector3.new(-3.833, 3.225, 346.616))
+end)
+
+local Main = Window:Section("Pickaxe And Gears")
+
+Main:Button("TP Pickaxe", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(Vector3.new(-77.584, 3.225, 332.093))
+end)
+
+Main:Button("TP Gears", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(Vector3.new(-58.275, 3.225, 331.718))
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.RequestRebirth:FireServer()
+end)
