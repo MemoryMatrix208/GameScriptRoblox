@@ -1,0 +1,328 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tung Tung For Brainrots | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrot")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local START_POS = Vector3.new(44.516, 21.633, 1376.368)
+local END_POS = Vector3.new(-1.378, 3.225, 41.969)
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+Main:Button("Auto Pick Up OG | Once", function()
+    local root = getRoot()
+
+    
+    root.CFrame = CFrame.new(START_POS)
+    task.wait(0.8)
+
+    
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("OG")
+        :WaitForChild("SpawnedItem")
+
+    
+    root.CFrame = spawnedItem:GetPivot()
+    task.wait(0.8)
+
+    
+    for _, obj in ipairs(spawnedItem:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            fireproximityprompt(obj)
+            task.wait(0.5)
+        end
+    end
+
+    task.wait(0.8)
+
+    
+    root.CFrame = CFrame.new(END_POS)
+end)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local START_POS = Vector3.new(44.516, 21.633, 1376.368)
+local END_POS = Vector3.new(-1.378, 3.225, 41.969)
+
+local running = false
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function execute()
+    local root = getRoot()
+
+    root.CFrame = CFrame.new(START_POS)
+    task.wait(0.8)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("OG")
+        :WaitForChild("SpawnedItem")
+
+    root.CFrame = spawnedItem:GetPivot()
+    task.wait(0.8)
+
+    for _, obj in ipairs(spawnedItem:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            fireproximityprompt(obj)
+            task.wait(0.5)
+        end
+    end
+
+    task.wait(0.8)
+    root.CFrame = CFrame.new(END_POS)
+end
+
+Main:Button("Auto Pickup OG | Loop", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            execute()
+            task.wait(3)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local START_POS = Vector3.new(44.516, 21.633, 1376.368)
+local END_POS = Vector3.new(-1.378, 3.225, 41.969)
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+Main:Button("Auto Pick Up Secret | Once", function()
+    local root = getRoot()
+
+    
+    root.CFrame = CFrame.new(START_POS)
+    task.wait(0.8)
+
+    
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Secret")
+        :WaitForChild("SpawnedItem")
+
+    
+    root.CFrame = spawnedItem:GetPivot()
+    task.wait(0.8)
+
+    
+    for _, obj in ipairs(spawnedItem:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            fireproximityprompt(obj)
+            task.wait(0.5)
+        end
+    end
+
+    task.wait(0.8)
+
+    
+    root.CFrame = CFrame.new(END_POS)
+end)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local START_POS = Vector3.new(44.516, 21.633, 1376.368)
+local END_POS = Vector3.new(-1.378, 3.225, 41.969)
+
+local running = false
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function execute()
+    local root = getRoot()
+
+    root.CFrame = CFrame.new(START_POS)
+    task.wait(0.8)
+
+    local spawnedItem = workspace
+        :WaitForChild("ItemSpawners")
+        :WaitForChild("Secret")
+        :WaitForChild("SpawnedItem")
+
+    root.CFrame = spawnedItem:GetPivot()
+    task.wait(0.8)
+
+    for _, obj in ipairs(spawnedItem:GetDescendants()) do
+        if obj:IsA("ProximityPrompt") then
+            fireproximityprompt(obj)
+            task.wait(0.5)
+        end
+    end
+
+    task.wait(0.8)
+    root.CFrame = CFrame.new(END_POS)
+end
+
+Main:Button("Auto Pickup Secret | Loop", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            execute()
+            task.wait(3)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function execute()
+    local root = getRoot()
+
+    local plotName = "Plot_" .. LocalPlayer.Name
+    local plot = workspace:FindFirstChild(plotName)
+    if not plot then return end
+
+    for f = 1, 3 do
+        local floor = plot:FindFirstChild("Floor" .. f)
+        if floor then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for s = 1, 10 do
+                    local slot = slots:FindFirstChild("Slot" .. s)
+                    if slot then
+                        local touch = slot:FindFirstChild("CollectTouch")
+                        if touch then
+                            firetouchinterest(root, touch, 0)
+                            task.wait(0.1)
+                            firetouchinterest(root, touch, 1)
+                            task.wait(0.3)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+Main:Button("Auto Collect Money | Once", function()
+    execute()
+end)
+
+Main:Button("Auto Collect Money | Loop", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            execute()
+            task.wait(2)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local Event = game:GetService("ReplicatedStorage")
+    .Events.PurchaseSpeed
+
+Main:Button("Purchase Speed +1", function()
+    Event:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    Event:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    Event:FireServer(10)
+end)
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Events")
+    :WaitForChild("PurchaseCarry")
+
+Main:Button("Purchase Carry", function()
+    Event:FireServer()
+end)
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Events")
+    :WaitForChild("RequestBaseUpgrade")
+
+Main:Button("Purchase Base Upgrade", function()
+    Event:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Events")
+    :WaitForChild("RequestSell")
+
+Main:Button("Sell Inventory", function()
+    Event:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Events")
+    :WaitForChild("RequestRebirth")
+
+Main:Button("Click", function()
+    Event:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local vip = workspace:FindFirstChild("VIP")
+    if vip then
+        vip:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis", function()
+    local tsunami = workspace:FindFirstChild("Tsunamis")
+    if tsunami then
+        tsunami:Destroy()
+    end
+end)
