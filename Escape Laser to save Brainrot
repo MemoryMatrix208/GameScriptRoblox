@@ -1,0 +1,209 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Laser to save Brainrot | ArchiveXNova"
+})
+
+local Main = Window:Section("Brainrot")
+
+Main:Button("Auto Celestial", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local endPos = Vector3.new(-63.370, 3.495, -84.610)
+
+    local folder = workspace:FindFirstChild("SpawnedFolder")
+    if not folder then return end
+
+    local list = {
+        "Esok Sekolah",
+        "Los Mateositos",
+        "Las Karkerkitos",
+        "Chicleteira Bicicleteira"
+    }
+
+    for _, name in ipairs(list) do
+        local model = folder:FindFirstChild(name)
+        if model then
+            hrp.CFrame = model:GetPivot()
+            task.wait(1)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                local oldHold = prompt.HoldDuration
+                prompt.HoldDuration = 0
+                fireproximityprompt(prompt)
+                prompt.HoldDuration = oldHold
+                task.wait(1)
+            end
+        end
+    end
+
+    hrp.CFrame = CFrame.new(endPos)
+
+end)
+
+Main:Button("Auto Pickup Brainrot Random", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local endPos = Vector3.new(-63.370, 3.495, -84.610)
+
+    local folder = workspace:FindFirstChild("SpawnedFolder")
+    if not folder then return end
+
+    for _, model in ipairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+
+            hrp.CFrame = model:GetPivot()
+            task.wait(1)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                local oldHold = prompt.HoldDuration
+                prompt.HoldDuration = 0
+                fireproximityprompt(prompt)
+                prompt.HoldDuration = oldHold
+                task.wait(1)
+            end
+        end
+    end
+
+    hrp.CFrame = CFrame.new(endPos)
+
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local Event = game:GetService("ReplicatedStorage")
+    :WaitForChild("Remotes")
+    :WaitForChild("Functions")
+    :WaitForChild("UpgradeFunc")
+
+Main:Button("Purchase Speed", function()
+    Event:InvokeServer("Speed")
+end)
+
+Main:Button("Purchase Base", function()
+    Event:InvokeServer("Base")
+end)
+
+Main:Button("Purchase Carry", function()
+    Event:InvokeServer("Carry")
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local obj = workspace:FindFirstChild("VIP")
+    if obj then
+        obj:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunami")
+
+local running = false
+
+Main:Button("Remove Tsunami", function()
+    if running then return end
+    running = true
+
+    task.spawn(function()
+        while running do
+            local names = {"Fast", "Medium", "Veryslow", "Slow", "Hard", "Lightspeed"}
+
+            for _, name in ipairs(names) do
+                local obj = workspace:FindFirstChild(name)
+                if obj then
+                    obj:Destroy()
+                end
+            end
+
+            task.wait(1)
+        end
+    end)
+end)
+
+Main:Button("Stop Remove", function()
+    running = false
+end)
+
+local Main = Window:Section("Wall")
+
+Main:Button("Remove Wall", function()
+    local lobby = workspace:FindFirstChild("Lobby")
+    if lobby then
+        local part = lobby:FindFirstChild("Part")
+        if part then
+            part:Destroy()
+        end
+    end
+end)
+
+local Main = Window:Section("Player")
+
+Main:Slider("Speed", 16, 1000, 50, 1, function(value)
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid.WalkSpeed = value
+    end
+end)
+
+local infJump = false
+local UIS = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+
+Main:Button("Inf Jump", function()
+    infJump = not infJump
+
+    if infJump then
+        UIS.JumpRequest:Connect(function()
+            if infJump and player.Character and player.Character:FindFirstChild("Humanoid") then
+                player.Character:FindFirstChild("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+    end
+end)
+
+local Main = Window:Section("Map")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function tp(pos)
+    getRoot().CFrame = CFrame.new(pos)
+end
+
+Main:Button("Home", function()
+    tp(Vector3.new(-63.370, 3.495, -84.610))
+end)
+
+Main:Button("Celestial", function()
+    tp(Vector3.new(29.866, 3.795, 2434.633))
+end)
+
+Main:Button("Secret", function()
+    tp(Vector3.new(52.104, 3.795, 2140.622))
+end)
+
+Main:Button("Divine", function()
+    tp(Vector3.new(-89.480, 3.795, 2042.380))
+end)
+
+Main:Button("Mythical", function()
+    tp(Vector3.new(-24.813, 3.795, 1517.659))
+end)
+
+Main:Button("Legendary", function()
+    tp(Vector3.new(-65.131, 3.795, 1063.970))
+end)
