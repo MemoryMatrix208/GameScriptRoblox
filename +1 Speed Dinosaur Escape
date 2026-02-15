@@ -1,0 +1,111 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHome/refs/heads/main/Made%20By%20Me%20Part%202%20Open%20And%20Close"))()
+
+local Window = Library:CreateWindow({
+    Title = "+1 Speed Dinosaur Escape | ArchiveXNova"
+})
+
+local Main = Window:Section("Win")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+local mode = 1
+
+local function getRoot()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function tp()
+    getRoot().CFrame = CFrame.new(-233.492, 443.948, -30339.992)
+end
+
+Main:Button("Auto Win", function()
+    if mode == 1 then
+        tp()
+        mode = 2
+
+    elseif mode == 2 then
+        running = true
+        mode = 3
+        task.spawn(function()
+            while running do
+                tp()
+                task.wait(0.5)
+            end
+        end)
+
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Step")
+
+local running = false
+local mode = 1
+
+local function fireStep()
+    game:GetService("ReplicatedStorage")
+        :WaitForChild("Packages", 9e9)
+        :WaitForChild("EventBus", 9e9)
+        :WaitForChild("RemoteEvent", 9e9)
+        :FireServer("PlayerStepAdd")
+end
+
+Main:Button("Auto Step", function()
+    if mode == 1 then
+        fireStep()
+        mode = 2
+
+    elseif mode == 2 then
+        running = true
+        mode = 3
+        task.spawn(function()
+            while running do
+                fireStep()
+                task.wait(0.2)
+            end
+        end)
+
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local running = false
+local mode = 1
+
+local function fireReborn()
+    game:GetService("ReplicatedStorage")
+        :WaitForChild("Packages", 9e9)
+        :WaitForChild("EventBus", 9e9)
+        :WaitForChild("RemoteEvent", 9e9)
+        :FireServer("PlayerReborn")
+end
+
+Main:Button("Auto Rebirth", function()
+    if mode == 1 then
+        fireReborn()
+        mode = 2
+
+    elseif mode == 2 then
+        running = true
+        mode = 3
+        task.spawn(function()
+            while running do
+                fireReborn()
+                task.wait(0.5)
+            end
+        end)
+
+    else
+        running = false
+        mode = 1
+    end
+end)
