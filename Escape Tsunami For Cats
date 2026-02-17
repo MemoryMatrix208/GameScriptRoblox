@@ -1,0 +1,246 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami For Cats | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Cats")
+
+Main:Button("Auto OG", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local oldPos = hrp.CFrame
+
+    hrp.CFrame = CFrame.new(-20.646, 3.225, 34.869)
+
+    task.wait(1)
+
+    local og = workspace:WaitForChild("ItemSpawners"):WaitForChild("OG")
+    local item = og:FindFirstChild("SpawnedItem")
+
+    if item then
+        for _,v in pairs(item:GetDescendants()) do
+            if v:IsA("ProximityPrompt") then
+                fireproximityprompt(v)
+                break
+            end
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = oldPos
+
+end)
+
+Main:Button("Auto Mythical", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local oldPos = hrp.CFrame
+
+    hrp.CFrame = CFrame.new(-20.646, 3.225, 34.869)
+
+    task.wait(1)
+
+    local og = workspace:WaitForChild("ItemSpawners"):WaitForChild("Mythical")
+    local item = og:FindFirstChild("SpawnedItem")
+
+    if item then
+        for _,v in pairs(item:GetDescendants()) do
+            if v:IsA("ProximityPrompt") then
+                fireproximityprompt(v)
+                break
+            end
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = oldPos
+
+end)
+
+Main:Button("Auto Legendary", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local oldPos = hrp.CFrame
+
+    hrp.CFrame = CFrame.new(-20.646, 3.225, 34.869)
+
+    task.wait(1)
+
+    local og = workspace:WaitForChild("ItemSpawners"):WaitForChild("Legendary")
+    local item = og:FindFirstChild("SpawnedItem")
+
+    if item then
+        for _,v in pairs(item:GetDescendants()) do
+            if v:IsA("ProximityPrompt") then
+                fireproximityprompt(v)
+                break
+            end
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = oldPos
+
+end)
+
+local Main = Window:Section("Money")
+
+local mode = 1
+local collecting = false
+
+local function collectSlots()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("Floor") then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    local collect = slot:FindFirstChild("CollectTouch", true)
+                    if collect and collect:IsA("BasePart") then
+                        firetouchinterest(hrp, collect, 0)
+                        firetouchinterest(hrp, collect, 1)
+                        task.wait()
+                    end
+                end
+            end
+        end
+    end
+end
+
+Main:Button("Auto Collect", function()
+
+    if mode == 1 then
+        collectSlots()
+        mode = 2
+
+    elseif mode == 2 then
+        if collecting then return end
+        collecting = true
+
+        task.spawn(function()
+            while collecting do
+                collectSlots()
+                task.wait(0.5)
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        collecting = false
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase Speed +1", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    game:GetService("ReplicatedStorage").Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    game:GetService("ReplicatedStorage").Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    game:GetService("ReplicatedStorage").Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage").Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove VIP", function()
+    local vip = workspace:FindFirstChild("VIP")
+    if vip then
+        vip:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis", function()
+    local tsu = workspace:FindFirstChild("Tsunamis")
+    if tsu then
+        tsu:Destroy()
+    end
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("TP Home", function()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-20.646, 3.225, 34.869)
+end)
+
+Main:Button("TP OG", function()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(8.386, 3.225, 2299.547)
+end)
+
+Main:Button("TP Mythical", function()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-31.746, 3.225, 2116.184)
+end)
+
+Main:Button("TP Legendary", function()
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-7.033, 3.225, 1476.567)
+end)
+
+local Main = Window:Section("Player")
+
+Main:Slider("Speed", 100, 1000, 100, 1, function(value)
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+
+    hum.WalkSpeed = 16 * (value / 100)
+end)
