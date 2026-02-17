@@ -1,0 +1,146 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "+1 Speed Backrooms Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win In Worlds 1", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if mode == 1 then
+        hrp.CFrame = CFrame.new(13.304, 588.368, -3909.847)
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                hrp.CFrame = CFrame.new(13.304, 588.368, -3909.847)
+                task.wait()
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win In Worlds 2", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if mode == 1 then
+        hrp.CFrame = CFrame.new(-442.411, 1.722, 6193.624)
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                hrp.CFrame = CFrame.new(-442.411, 1.722, 6193.624)
+                task.wait()
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Rebirth")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Rebirth", function()
+
+    local event = game:GetService("ReplicatedStorage"):WaitForChild("miscLSL")
+
+    if mode == 1 then
+        event:InvokeServer("Rebirth")
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                event:InvokeServer("Rebirth")
+                task.wait(0.5)
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Speed")
+
+local mode = 1
+local running = false
+
+Main:Button("Speed 1B", function()
+
+    local event = game:GetService("ReplicatedStorage"):WaitForChild("StepLS")
+
+    if mode == 1 then
+        event:FireServer(
+            { Name = "Speed" },
+            9999999
+        )
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                event:FireServer(
+                    { Name = "Speed" },
+                    9999999
+                )
+                task.wait()
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
