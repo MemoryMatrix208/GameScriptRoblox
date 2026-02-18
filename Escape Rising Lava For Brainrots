@@ -1,0 +1,342 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Rising Lava For Brainrots | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Brainrots")
+
+Main:Button("Auto HellFire", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone9")
+        :WaitForChild("B33")
+
+    hrp.CFrame = zone:GetModelCFrame()
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+Main:Button("Auto Ethereal", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone8")
+
+    if zone:IsA("Model") then
+        hrp.CFrame = zone:GetModelCFrame()
+    else
+        local part = zone:FindFirstChildWhichIsA("BasePart", true)
+        if part then
+            hrp.CFrame = part.CFrame
+        end
+    end
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+            break
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+Main:Button("Auto Cosmic", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone7")
+
+    if zone:IsA("Model") then
+        hrp.CFrame = zone:GetModelCFrame()
+    else
+        local part = zone:FindFirstChildWhichIsA("BasePart", true)
+        if part then
+            hrp.CFrame = part.CFrame
+        end
+    end
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+            break
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+Main:Button("Auto Divine", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone6")
+
+    if zone:IsA("Model") then
+        hrp.CFrame = zone:GetModelCFrame()
+    else
+        local part = zone:FindFirstChildWhichIsA("BasePart", true)
+        if part then
+            hrp.CFrame = part.CFrame
+        end
+    end
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+            break
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+Main:Button("Auto Exotic", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone5")
+
+    if zone:IsA("Model") then
+        hrp.CFrame = zone:GetModelCFrame()
+    else
+        local part = zone:FindFirstChildWhichIsA("BasePart", true)
+        if part then
+            hrp.CFrame = part.CFrame
+        end
+    end
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+            break
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+Main:Button("Auto Legendary", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local zone = workspace:WaitForChild("Brainrots")
+        :WaitForChild("Zone4")
+
+    if zone:IsA("Model") then
+        hrp.CFrame = zone:GetModelCFrame()
+    else
+        local part = zone:FindFirstChildWhichIsA("BasePart", true)
+        if part then
+            hrp.CFrame = part.CFrame
+        end
+    end
+
+    task.wait(1)
+
+    for _, v in ipairs(zone:GetDescendants()) do
+        if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+            break
+        end
+    end
+
+    task.wait(1)
+
+    hrp.CFrame = CFrame.new(69.462, -4.155, -196.224)
+
+end)
+
+local Main = Window:Section("Money")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Collect Money", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    local plots = workspace:WaitForChild("Plots")
+
+    local function collect()
+        for i = 1, 5 do
+            local plot = plots:FindFirstChild(tostring(i))
+            if plot then
+                local collectFolder = plot:FindFirstChild("Collect")
+                if collectFolder then
+                    for j = 1, 10 do
+                        local collectModel = collectFolder:FindFirstChild(tostring(j))
+                        if collectModel then
+                            local button = collectModel:FindFirstChild("Button", true)
+                            if button and button:IsA("BasePart") then
+                                firetouchinterest(hrp, button, 0)
+                                firetouchinterest(hrp, button, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    if mode == 1 then
+        collect()
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                collect()
+                task.wait(0.5)
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+Main:Button("Purchase +1 Speed", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Events:GetChildren()[15]
+        :FireServer("First")
+end)
+
+Main:Button("Purchase +5 Speed", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Events:GetChildren()[15]
+        :FireServer("Second")
+end)
+
+Main:Button("Purchase +10 Speed", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Events:GetChildren()[15]
+        :FireServer("Third")
+end)
+
+Main:Button("Purchase Holding", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Events:GetChildren()[19]
+        :FireServer("First")
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Functions:GetChildren()[9]
+        :InvokeServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    game:GetService("ReplicatedStorage")
+        .Communication.Events:GetChildren()[10]
+        :FireServer()
+end)
+
+local Main = Window:Section("Lava")
+
+Main:Button("Remove Lava", function()
+    local lava = workspace:FindFirstChild("GameLava")
+    if lava then
+        lava:Destroy()
+    end
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("TP Home", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(69.462, -4.155, -196.224)
+end)
+
+Main:Button("TP Hellfire", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(81.137, -2645.524, -129.676)
+end)
+
+Main:Button("TP Ethereal", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(69.732, -2217.524, -153.044)
+end)
+
+Main:Button("TP Cosmic", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(71.043, -1782.524, -151.594)
+end)
+
+Main:Button("TP Divine", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(70.843, -1365.524, -130.874)
+end)
+
+Main:Button("TP Exotic", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(85.067, -1035.524, -132.625)
+end)
+
+Main:Button("TP Legendary", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+        CFrame.new(100.106, -682.524, -138.366)
+end)
