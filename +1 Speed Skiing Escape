@@ -1,0 +1,78 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Skiing Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win", function()
+
+    local player = game.Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if mode == 1 then
+        hrp.CFrame = CFrame.new(-5351.493, 1102.249, -37.032)
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                hrp.CFrame = CFrame.new(-5351.493, 1102.249, -37.032)
+                task.wait()
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Rebirth")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Rebirth", function()
+
+    local event = game:GetService("ReplicatedStorage")
+        :WaitForChild("Remote")
+        :WaitForChild("Function")
+        :WaitForChild("Rebirth")
+        :WaitForChild("[C-S]TryRebirth")
+
+    if mode == 1 then
+        event:InvokeServer()
+        mode = 2
+
+    elseif mode == 2 then
+        if running then return end
+        running = true
+
+        task.spawn(function()
+            while running do
+                event:InvokeServer()
+                task.wait(0.5)
+            end
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+
+end)
