@@ -1,0 +1,85 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Facility Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local Player = Players.LocalPlayer
+local TARGET = CFrame.new(-2110.008, 341.765, -3152.606)
+
+local loopConn
+local mode = 1
+
+local function tp()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = TARGET
+end
+
+Main:Button("Auto Win", function()
+
+    if mode == 1 then
+        tp()
+        mode = 2
+
+    elseif mode == 2 then
+        if loopConn then
+            loopConn:Disconnect()
+        end
+
+        loopConn = RunService.Heartbeat:Connect(function()
+            tp()
+        end)
+
+        mode = 3
+
+    elseif mode == 3 then
+        if loopConn then
+            loopConn:Disconnect()
+            loopConn = nil
+        end
+
+        mode = 1
+    end
+
+end)
+
+local Main = Window:Section("Rebirth")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local Event = ReplicatedStorage.Rebirth
+
+local loopConn
+local mode = 1
+
+Main:Button("Auto Rebirth", function()
+
+    if mode == 1 then
+        if loopConn then
+            loopConn:Disconnect()
+        end
+
+        loopConn = RunService.Heartbeat:Connect(function()
+            Event:FireServer()
+        end)
+
+        mode = 2
+
+    elseif mode == 2 then
+        if loopConn then
+            loopConn:Disconnect()
+            loopConn = nil
+        end
+
+        mode = 1
+    end
+
+end)
