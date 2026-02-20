@@ -1,0 +1,98 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Muscle Per Step | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local pos = Vector3.new(-3096.671, 53.955, -24.387)
+
+local mode = 0
+local looping = false
+
+Main:Button("Auto Win", function()
+    mode = mode + 1
+    if mode > 3 then mode = 1 end
+
+    if mode == 1 then
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(pos))
+
+    elseif mode == 2 then
+        looping = true
+
+        task.spawn(function()
+            while looping do
+                game:GetService("VirtualUser"):CaptureController()
+                game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+                task.wait(60)
+            end
+        end)
+
+        task.spawn(function()
+            while looping do
+                game.Players.LocalPlayer.Character:PivotTo(CFrame.new(pos))
+                task.wait()
+            end
+        end)
+
+    elseif mode == 3 then
+        looping = false
+    end
+end)
+
+local Main = Window:Section("Train")
+
+local Event = game:GetService("ReplicatedStorage")["1. Remotes"].GetMaxWalkspeed
+
+local mode = 0
+local looping = false
+
+Main:Button("Auto Train", function()
+    mode = mode + 1
+    if mode > 3 then mode = 1 end
+
+    if mode == 1 then
+        Event:InvokeServer()
+
+    elseif mode == 2 then
+        looping = true
+
+        task.spawn(function()
+            while looping do
+                game:GetService("VirtualUser"):CaptureController()
+                game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+                task.wait(60)
+            end
+        end)
+
+        task.spawn(function()
+            while looping do
+                Event:InvokeServer()
+                task.wait()
+            end
+        end)
+
+    elseif mode == 3 then
+        looping = false
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local rebirthLoop = false
+
+Main:Button("Auto Rebirth", function()
+    if not rebirthLoop then
+        rebirthLoop = true
+        task.spawn(function()
+            while rebirthLoop do
+                game:GetService("ReplicatedStorage")["1. Remotes"].Rebirth:FireServer()
+                task.wait()
+            end
+        end)
+    else
+        rebirthLoop = false
+    end
+end)
