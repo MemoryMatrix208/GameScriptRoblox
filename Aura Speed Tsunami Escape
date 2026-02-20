@@ -1,0 +1,124 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Aura Speed Tsunami Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local player = game.Players.LocalPlayer
+
+local function tp(pos)
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        hrp.CFrame = CFrame.new(pos)
+    end
+end
+
+
+local pos1 = Vector3.new(10893.905, 10.744, -87.028)
+local mode1 = 0
+local running1 = false
+
+Main:Button("Auto Win In World 1", function()
+    mode1 = (mode1 + 1) % 3
+
+    if mode1 == 1 then
+        tp(pos1)
+
+    elseif mode1 == 2 then
+        running1 = true
+        task.spawn(function()
+            while running1 do
+                tp(pos1)
+                task.wait()
+            end
+        end)
+
+    elseif mode1 == 0 then
+        running1 = false
+    end
+end)
+
+
+
+local pos2 = Vector3.new(10881.562, 10.545, 1702.380)
+local mode2 = 0
+local running2 = false
+
+Main:Button("Auto Win In World 2", function()
+    mode2 = (mode2 + 1) % 3
+
+    if mode2 == 1 then
+        tp(pos2)
+
+    elseif mode2 == 2 then
+        running2 = true
+        task.spawn(function()
+            while running2 do
+                tp(pos2)
+                task.wait()
+            end
+        end)
+
+    elseif mode2 == 0 then
+        running2 = false
+    end
+end)
+
+local Main = Window:Section("Give Speed")
+
+Main:Button("Speed 1Q", function()
+local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+Event:FireServer(1e15)
+end)
+
+local Main = Window:Section("Rebirth")
+
+local Event = game:GetService("ReplicatedStorage").Events.RequestRebirth
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    if not running then
+        running = true
+        
+        Event:InvokeServer()
+        
+        task.spawn(function()
+            while running do
+                Event:InvokeServer()
+                task.wait()
+            end
+        end)
+        
+    else
+        running = false
+    end
+end)
+
+local Main = Window:Section("Tsunamis")
+
+Main:Button("Remove Tsunamis In Worlds 1", function()
+    local tsu = workspace:FindFirstChild("Tsunamis")
+    if tsu then
+        tsu:Destroy()
+    end
+end)
+
+Main:Button("Remove Tsunamis Worlds 2", function()
+    local tsu2 = workspace:FindFirstChild("Tsunamis2")
+    if tsu2 then
+        tsu2:Destroy()
+    end
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Remove Door", function()
+    local vip = workspace:FindFirstChild("vipDoors")
+    if vip then
+        vip:Destroy()
+    end
+end)
