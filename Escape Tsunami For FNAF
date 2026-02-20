@@ -1,0 +1,302 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami For FNAF | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Brainrot")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Secret", function()
+
+    tp(CFrame.new(20.047, 3.225, 2836.468))
+
+    task.wait(0.1)
+
+    local secret = workspace:FindFirstChild("ItemSpawners")
+        and workspace.ItemSpawners:FindFirstChild("Secret")
+
+    if secret then
+        local item = secret:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.1)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+            end
+        end
+    end
+
+    task.wait(0.1)
+
+    tp(CFrame.new(-29.614, 3.225, 41.489))
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Exclusive", function()
+
+    tp(CFrame.new(37.158, -63.775, 2738.182))
+
+    task.wait(0.1)
+
+    local Exclusive = workspace:FindFirstChild("ItemSpawners")
+        and workspace.ItemSpawners:FindFirstChild("Exclusive")
+
+    if Exclusive then
+        local item = secret:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.1)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+            end
+        end
+    end
+
+    task.wait(0.1)
+
+    tp(CFrame.new(-29.614, 3.225, 41.489))
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Mythical", function()
+
+    tp(CFrame.new(-4.373, 3.225, 2396.823))
+
+    task.wait(0.1)
+
+    local Mythical = workspace:FindFirstChild("ItemSpawners")
+        and workspace.ItemSpawners:FindFirstChild("Mythical")
+
+    if Mythical then
+        local item = secret:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.1)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+            end
+        end
+    end
+
+    task.wait(0.1)
+
+    tp(CFrame.new(-29.614, 3.225, 41.489))
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Legendary", function()
+
+    tp(CFrame.new(20.047, 3.225, 2836.468))
+
+    task.wait(0.1)
+
+    local Legendary = workspace:FindFirstChild("ItemSpawners")
+        and workspace.ItemSpawners:FindFirstChild("Legendary")
+
+    if Legendary then
+        local item = secret:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.1)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+            end
+        end
+    end
+
+    task.wait(0.1)
+
+    tp(CFrame.new(-29.614, 3.225, 41.489))
+
+end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local collect = slot:FindFirstChild("CollectTouch")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            firetouchinterest(hrp, collect, 1)
+                        end
+                    end
+                end
+            end
+
+        end
+    end
+end
+
+Main:Button("Auto Collect Money", function()
+    collectAll()
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Main:Button("Purchase Speed +1", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(pos)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    char:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(pos)
+end
+
+Main:Button("TP Home", function()
+    tp(Vector3.new(-29.614, 3.225, 41.489))
+end)
+
+Main:Button("TP Secret", function()
+    tp(Vector3.new(20.047, 3.225, 2836.468))
+end)
+
+Main:Button("TP Mythical", function()
+    tp(Vector3.new(-4.373, 3.225, 2396.823))
+end)
+
+Main:Button("TP Legendary", function()
+    tp(Vector3.new(13.094, 3.225, 2150.442))
+end)
+
+Main:Button("TP Exclusive", function()
+    tp(Vector3.new(37.158, -63.775, 2738.182))
+end)
