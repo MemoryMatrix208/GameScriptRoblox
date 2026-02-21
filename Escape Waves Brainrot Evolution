@@ -1,0 +1,218 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Waves Brainrot Evolution | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(pos)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    char:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(pos)
+end
+
+
+local baseLoop = false
+
+Main:Button("Auto Base Once", function()
+    tp(Vector3.new(10.112, 85.607, -1088.293))
+end)
+
+Main:Button("Auto Base Loop", function()
+    baseLoop = true
+    task.spawn(function()
+        while baseLoop do
+            tp(Vector3.new(10.112, 85.607, -1088.293))
+            task.wait()
+        end
+    end)
+end)
+
+Main:Button("Auto Base Stop", function()
+    baseLoop = false
+end)
+
+
+local skyLoop = false
+
+Main:Button("Auto Sky Once", function()
+    tp(Vector3.new(411.460, 82.587, -1085.286))
+end)
+
+Main:Button("Auto Sky Loop", function()
+    skyLoop = true
+    task.spawn(function()
+        while skyLoop do
+            tp(Vector3.new(411.460, 82.587, -1085.286))
+            task.wait()
+        end
+    end)
+end)
+
+Main:Button("Auto Sky Stop", function()
+    skyLoop = false
+end)
+
+
+local twLoop = false
+
+Main:Button("Auto Twilight Once", function()
+    tp(Vector3.new(824.886, 87.449, -1088.657))
+end)
+
+Main:Button("Auto Twilight Loop", function()
+    twLoop = true
+    task.spawn(function()
+        while twLoop do
+            tp(Vector3.new(824.886, 87.449, -1088.657))
+            task.wait()
+        end
+    end)
+end)
+
+Main:Button("Auto Twilight Stop", function()
+    twLoop = false
+end)
+
+
+local frLoop = false
+
+Main:Button("Auto Frozen Once", function()
+    tp(Vector3.new(1227.397, 91.953, -1087.337))
+end)
+
+Main:Button("Auto Frozen Loop", function()
+    frLoop = true
+    task.spawn(function()
+        while frLoop do
+            tp(Vector3.new(1227.397, 91.953, -1087.337))
+            task.wait()
+        end
+    end)
+end)
+
+Main:Button("Auto Frozen Stop", function()
+    frLoop = false
+end)
+
+local Main = Window:Section("Race")
+
+local extraLoop = false
+
+Main:Button("Auto Race Once", function()
+    tp(Vector3.new(1840.534, 2.878, 546.753))
+end)
+
+Main:Button("Auto Race Loop", function()
+    extraLoop = true
+    task.spawn(function()
+        while extraLoop do
+            tp(Vector3.new(1840.534, 2.878, 546.753))
+            task.wait()
+        end
+    end)
+end)
+
+Main:Button("Auto Race Stop", function()
+    extraLoop = false
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("Base", function()
+    tp(Vector3.new(2.219, 8.198, 107.364))
+end)
+
+Main:Button("Sky", function()
+    tp(Vector3.new(400.500, 8.198, 122.933))
+end)
+
+Main:Button("Twilight", function()
+    tp(Vector3.new(805.638, 8.198, 125.440))
+end)
+
+Main:Button("Frozen", function()
+    tp(Vector3.new(1203.493, 8.198, 125.277))
+end)
+
+local RunService = game:GetService("RunService")
+
+local hatchConn
+
+local function handleHatch(egg)
+    if hatchConn then
+        hatchConn:Disconnect()
+        hatchConn = nil
+    end
+
+    local mode = 1
+
+    if _G.HatchMode == "Once" then
+        game:GetService("ReplicatedStorage").Packages._Index["acecateer_knit@1.7.2"].knit.Services.EggsService.RF.Hatch:InvokeServer(egg, 1)
+
+    elseif _G.HatchMode == "Loop" then
+        hatchConn = RunService.Heartbeat:Connect(function()
+            game:GetService("ReplicatedStorage").Packages._Index["acecateer_knit@1.7.2"].knit.Services.EggsService.RF.Hatch:InvokeServer(egg, 1)
+        end)
+
+    elseif _G.HatchMode == "Stop" then
+        if hatchConn then
+            hatchConn:Disconnect()
+            hatchConn = nil
+        end
+    end
+end
+
+Main:Button("Auto Buy Eggs Basic In Base Worlds (Win 1)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("Basic")
+end)
+
+Main:Button("Auto Buy Eggs Troll In Base Worlds (Win 2)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("Troll")
+end)
+
+Main:Button("Auto Buy Eggs Crystal In Base Worlds (Win 3)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("Crystal")
+end)
+
+Main:Button("Auto Buy Eggs GreenBlue In Sky Worlds (Win 4)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("GreenBlue")
+end)
+
+Main:Button("Auto Buy Eggs Cactus In Sky Worlds (Win 5)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("Cactus")
+end)
+
+Main:Button("Auto Buy Eggs DarkKraken In Sky Worlds (Win 6)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("DarkKraken")
+end)
+
+Main:Button("Auto Buy Eggs Purple In Twillight Worlds (Win 7)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("PurpleEgg")
+end)
+
+Main:Button("Auto Buy Eggs DesertThorns In Twillight Worlds (Win 8)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("DesertThorns")
+end)
+
+Main:Button("Auto Buy Eggs GreenOrange In Frozen Worlds (Win 9)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("GreenOrange")
+end)
+
+Main:Button("Auto Buy Eggs WhitePurpleBlue In Frozen Worlds (Win 10)", function()
+    _G.HatchMode = _G.HatchMode == "Once" and "Loop" or _G.HatchMode == "Loop" and "Stop" or "Once"
+    handleHatch("WhitePurpleBlue")
+end)
