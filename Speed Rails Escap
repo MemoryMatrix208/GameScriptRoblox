@@ -1,0 +1,60 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Rails Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local loopingCustom = false
+
+Main:Button("Auto Win", function()
+    if not loopingCustom then
+        loopingCustom = true
+        
+        
+        teleport("Custom", Vector3.new(2045.667, 757.403, 169.045))
+        
+        
+        task.spawn(function()
+            while loopingCustom do
+                teleport("Custom", Vector3.new(2045.667, 757.403, 169.045))
+                task.wait(1)
+            end
+        end)
+    else
+        
+        loopingCustom = false
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+Main:Button("Give 100B Speed", function()
+    local Event = game:GetService("ReplicatedStorage").Remotes.Casual.GiveSpeed
+    Event:FireServer(1000000000000)
+end)
+
+local Main = Window:Section("Rebirth")
+
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    local Event = game:GetService("ReplicatedStorage").Remotes.Casual.AddRebirth
+
+    if not running then
+        running = true
+
+        Event:FireServer(1)
+
+        task.spawn(function()
+            while running do
+                Event:FireServer(1)
+                task.wait(0.1)
+            end
+        end)
+    else
+        running = false
+    end
+end)
