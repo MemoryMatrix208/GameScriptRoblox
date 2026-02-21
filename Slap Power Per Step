@@ -1,0 +1,91 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Slap Power Per Step | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local running = false
+
+local positions = {
+    Vector3.new(-1595.881, 607.217, -365.269),
+    Vector3.new(-974.352, 553.592, -409.794),
+    Vector3.new(226.640, 553.467, -406.422),
+    Vector3.new(491.920, 416.389, -400.893),
+    Vector3.new(494.116, 418.032, 289.754),
+    Vector3.new(-8.195, 394.917, 299.894),
+}
+
+Main:Button("Auto Farm Win", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if not running then
+        running = true
+
+        task.spawn(function()
+            repeat
+                for _, pos in ipairs(positions) do
+                    if not running then break end
+                    hrp.CFrame = CFrame.new(pos)
+                    task.wait(1)
+                end
+            until not running
+        end)
+    else
+        running = false
+    end
+end)
+
+local Main = Window:Section("Slap")
+
+local slapEvent = game:GetService("ReplicatedStorage").Slap
+local mode = "Once"
+local running = false
+
+Main:Button("Auto Slap", function()
+    if mode == "Once" then
+        slapEvent:FireServer()
+        mode = "Loop"
+    elseif mode == "Loop" then
+        running = true
+        task.spawn(function()
+            while running do
+                slapEvent:FireServer()
+                task.wait(0.1)
+            end
+        end)
+        mode = "Stop"
+    elseif mode == "Stop" then
+        running = false
+        mode = "Once"
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local rebirthEvent = game:GetService("ReplicatedStorage").Events.Rebirth
+local mode = "Once"
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    if mode == "Once" then
+        rebirthEvent:FireServer("Rebirth")
+        mode = "Loop"
+    elseif mode == "Loop" then
+        running = true
+        task.spawn(function()
+            while running do
+                rebirthEvent:FireServer("Rebirth")
+                task.wait(0.1)
+            end
+        end)
+        mode = "Stop"
+    elseif mode == "Stop" then
+        running = false
+        mode = "Once"
+    end
+end)
