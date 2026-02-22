@@ -1,0 +1,85 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Shopping Cart Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = "Once"
+local running = false
+local pos = Vector3.new(-7125.371, 195.464, -3962.070)
+
+Main:Button("Auto Win", function()
+    local player = game:GetService("Players").LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    if mode == "Once" then
+        hrp.CFrame = CFrame.new(pos)
+        mode = "Loop"
+    elseif mode == "Loop" then
+        running = true
+        task.spawn(function()
+            while running do
+                hrp.CFrame = CFrame.new(pos)
+                task.wait(0.2)
+            end
+        end)
+        mode = "Stop"
+    elseif mode == "Stop" then
+        running = false
+        mode = "Once"
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+local speedEvent = game:GetService("ReplicatedStorage").Events.AddSpeed
+local mode = "Once"
+local running = false
+
+Main:Button("Auto Speed", function()
+    if mode == "Once" then
+        speedEvent:FireServer()
+        mode = "Loop"
+    elseif mode == "Loop" then
+        running = true
+        task.spawn(function()
+            while running do
+                speedEvent:FireServer()
+                task.wait(0.1)
+            end
+        end)
+        mode = "Stop"
+    elseif mode == "Stop" then
+        running = false
+        mode = "Once"
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local rebirthEvent = game:GetService("ReplicatedStorage").Events.RequestRebirth
+local mode = "Once"
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    if mode == "Once" then
+        rebirthEvent:InvokeServer()
+        mode = "Loop"
+    elseif mode == "Loop" then
+        running = true
+        task.spawn(function()
+            while running do
+                rebirthEvent:InvokeServer()
+                task.wait(0.1)
+            end
+        end)
+        mode = "Stop"
+    elseif mode == "Stop" then
+        running = false
+        mode = "Once"
+    end
+end)p
