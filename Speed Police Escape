@@ -1,0 +1,56 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Police Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win", function()
+    if mode == 1 then
+        game.Players.LocalPlayer.Character:MoveTo(Vector3.new(2542.958, 23.742, -763.839))
+        mode = 2
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                game.Players.LocalPlayer.Character:MoveTo(Vector3.new(2542.958, 23.742, -763.839))
+                task.wait(1)
+            end
+        end)
+        mode = 3
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    local Event = game:GetService("ReplicatedStorage").Rebirth
+
+    if mode == 1 then
+        Event:FireServer()
+        mode = 2
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                Event:FireServer()
+                task.wait(1)
+            end
+        end)
+        mode = 3
+    else
+        running = false
+        mode = 1
+    end
+end)
