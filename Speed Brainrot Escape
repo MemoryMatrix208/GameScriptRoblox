@@ -1,0 +1,149 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Brainrot Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Worlds")
+
+-- Rainbow
+local mode1 = 1
+local running1 = false
+
+Main:Button("Auto Win - Rainbow", function()
+    local char = game.Players.LocalPlayer.Character
+    if mode1 == 1 then
+        char:MoveTo(Vector3.new(-9.641, 87.969, -269.810))
+        task.wait(0.5)
+        char:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+        mode1 = 2
+    elseif mode1 == 2 then
+        running1 = true
+        task.spawn(function()
+            while running1 do
+                local c = game.Players.LocalPlayer.Character
+                c:MoveTo(Vector3.new(-9.641, 87.969, -269.810))
+                task.wait(0.5)
+                c:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+                task.wait(1)
+            end
+        end)
+        mode1 = 3
+    else
+        running1 = false
+        mode1 = 1
+    end
+end)
+
+-- Ocean
+local mode2 = 1
+local running2 = false
+
+Main:Button("Auto Win - Ocean", function()
+    local char = game.Players.LocalPlayer.Character
+    if mode2 == 1 then
+        char:MoveTo(Vector3.new(377.027, 92.007, -263.024))
+        task.wait(0.5)
+        char:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+        mode2 = 2
+    elseif mode2 == 2 then
+        running2 = true
+        task.spawn(function()
+            while running2 do
+                local c = game.Players.LocalPlayer.Character
+                c:MoveTo(Vector3.new(377.027, 92.007, -263.024))
+                task.wait(0.5)
+                c:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+                task.wait(1)
+            end
+        end)
+        mode2 = 3
+    else
+        running2 = false
+        mode2 = 1
+    end
+end)
+
+-- Desert
+local mode3 = 1
+local running3 = false
+
+Main:Button("Auto Win - Desert", function()
+    local char = game.Players.LocalPlayer.Character
+    if mode3 == 1 then
+        char:MoveTo(Vector3.new(767.581, 90.763, -262.756))
+        task.wait(0.5)
+        char:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+        mode3 = 2
+    elseif mode3 == 2 then
+        running3 = true
+        task.spawn(function()
+            while running3 do
+                local c = game.Players.LocalPlayer.Character
+                c:MoveTo(Vector3.new(767.581, 90.763, -262.756))
+                task.wait(0.5)
+                c:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+                task.wait(1)
+            end
+        end)
+        mode3 = 3
+    else
+        running3 = false
+        mode3 = 1
+    end
+end)
+
+-- Paradox
+local mode4 = 1
+local running4 = false
+
+Main:Button("Auto Win - Paradox", function()
+    local char = game.Players.LocalPlayer.Character
+    if mode4 == 1 then
+        char:MoveTo(Vector3.new(1142.509, 89.665, -263.579))
+        task.wait(0.5)
+        char:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+        mode4 = 2
+    elseif mode4 == 2 then
+        running4 = true
+        task.spawn(function()
+            while running4 do
+                local c = game.Players.LocalPlayer.Character
+                c:MoveTo(Vector3.new(1142.509, 89.665, -263.579))
+                task.wait(0.5)
+                c:MoveTo(Vector3.new(953.660, 85.746, 2752.348))
+                task.wait(1)
+            end
+        end)
+        mode4 = 3
+    else
+        running4 = false
+        mode4 = 1
+    end
+end)
+
+local Main = Window:Section("Map")
+
+Main:Button("TP - Rainbow", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(3.034, 14.747, 1072.742))
+end)
+
+Main:Button("TP - Ocean", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(381.758, 13.747, 1062.411))
+end)
+
+Main:Button("TP - Desert", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(735.460, 13.495, 1050.279))
+end)
+
+Main:Button("TP - Paradox", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(1171.899, 13.495, 1035.619))
+end)
+
+local Main = Window:Section("Treadmill")
+
+Main:Button("Use Treadmill", function()
+    local Event = game:GetService("ReplicatedStorage").Remotes.TreadmillSpawnRequest
+    Event:FireServer("toggle")
+end)
