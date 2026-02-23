@@ -1,0 +1,94 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Poppy Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win", function()
+    if mode == 1 then
+        game.Players.LocalPlayer.Character:MoveTo(Vector3.new(1117.906, 852.467, 4882.170))
+        mode = 2
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                game.Players.LocalPlayer.Character:MoveTo(Vector3.new(1117.906, 852.467, 4882.170))
+                task.wait()
+            end
+        end)
+        mode = 3
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.Events.Rebirth.Rebirth
+
+local running = false
+
+Main:Button("Auto Rebirth", function()
+    running = not running
+
+    if running then
+        task.spawn(function()
+            while running do
+                pcall(function()
+                    Event:FireServer()
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.Events.Upgrade.Speed
+
+local running = false
+
+Main:Button("Auto Upgrade Speed", function()
+    running = not running
+
+    if running then
+        task.spawn(function()
+            while running do
+                pcall(function()
+                    Event:FireServer()
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Event = ReplicatedStorage.Events.Upgrade.Stamina
+
+local running = false
+
+Main:Button("Auto Upgrade Stamina", function()
+    running = not running
+
+    if running then
+        task.spawn(function()
+            while running do
+                pcall(function()
+                    Event:FireServer()
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+end)
