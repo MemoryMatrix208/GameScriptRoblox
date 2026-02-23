@@ -1,0 +1,53 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Skibidi Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win", function()
+    if mode == 1 then
+        game.Players.LocalPlayer.Character:MoveTo(Vector3.new(-237.964, 445.825, -27297.926))
+        mode = 2
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                game.Players.LocalPlayer.Character:MoveTo(Vector3.new(-237.964, 445.825, -27297.926))
+                task.wait()
+            end
+        end)
+        mode = 3
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+local running = false
+local loopThread = nil
+
+Main:Button("Auto Speed", function()
+    running = not running
+
+    if running then
+        loopThread = task.spawn(function()
+            while running do
+                game:GetService("ReplicatedStorage").Packages.EventBus.RemoteEvent:FireServer("PlayerStepAdd")
+                task.wait()
+            end
+        end)
+    else
+        if loopThread then
+            task.cancel(loopThread)
+            loopThread = nil
+        end
+    end
+end)
