@@ -1,0 +1,49 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Scary Tower Go Up | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Win", function()
+    if mode == 1 then
+        game.Players.LocalPlayer.Character:MoveTo(Vector3.new(30.976, 424.038, -47.146))
+        mode = 2
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                game.Players.LocalPlayer.Character:MoveTo(Vector3.new(30.976, 424.038, -47.146))
+                task.wait()
+            end
+        end)
+        mode = 3
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+Main:Button("Add Speed", function()
+    local Event = game:GetService("ReplicatedStorage").RemoteEvents.DataStore.FunctionedEvents.ChangeValue
+    Event:FireServer("Speed", "Add", 2147483647)
+end)
+
+local Main = Window:Section("Slap")
+
+Main:Button("TP Flame Slap", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(18.539, 5.340, 15.595))
+end)
+
+local Main = Window:Section("Coil")
+
+Main:Button("TP Gravity Coil", function()
+    game.Players.LocalPlayer.Character:MoveTo(Vector3.new(45.944, 6.447, 7.759))
+end)
