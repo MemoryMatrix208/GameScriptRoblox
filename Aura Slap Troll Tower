@@ -1,0 +1,194 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Aura Slap Troll Tower | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+Main:Button("Auto Win", function()
+
+    local Players = game:GetService("Players")
+    local lp = Players.LocalPlayer
+
+    local target = Vector3.new(4102.625, 7.589, 374.015)
+    local delay = 0.1
+
+    _G.TeleportLoop = not _G.TeleportLoop
+
+    local function getHRP()
+        local char = lp.Character or lp.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local function go()
+        local hrp = getHRP()
+        if hrp then
+            hrp.CFrame = CFrame.new(target)
+        end
+    end
+
+    if _G.TeleportLoop then
+        task.spawn(function()
+            while _G.TeleportLoop do
+                pcall(go)
+                task.wait(delay)
+            end
+        end)
+    end
+
+end)
+
+local Main = Window:Section("Slap")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+local mode = 1
+
+local function getEvent()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local glove = char:FindFirstChild("NormalGlove")
+    return glove and glove:FindFirstChild("Event")
+end
+
+local function hitAll()
+    local event = getEvent()
+    if not event then return end
+
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer then
+            local char = plr.Character
+            if char then
+                local hrp = char:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    event:FireServer("slash", hrp, Vector3.new(0,0,0))
+                end
+            end
+        end
+    end
+end
+
+Main:Button("Auto Slap", function()
+    if mode == 1 then
+        hitAll()
+        mode = 2
+
+    elseif mode == 2 then
+        if not running then
+            running = true
+            task.spawn(function()
+                while running do
+                    hitAll()
+                    task.wait()
+                end
+            end)
+        end
+        mode = 3
+
+    elseif mode == 3 then
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("Rewards FreeItem")
+
+Main:Button("Click - Inf", function()
+    local Event = game:GetService("ReplicatedStorage").Rewards.FreeItem
+    local player = game:GetService("Players").LocalPlayer
+    
+    Event:FireServer(player)
+end)
+
+local Main = Window:Section("Coin")
+
+Main:Button("1.5k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-25.873, 119.846, 119.765)
+end)
+
+Main:Button("5k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-94.393, 9.317, 581.437)
+end)
+
+Main:Button("7.5k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(299.103, 8.136, 278.431)
+end)
+
+Main:Button("10k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-230.046, 6.318, 474.932)
+end)
+
+Main:Button("75k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(362.242, 119.623, -339.839)
+end)
+
+Main:Button("100k", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(4102.625, 7.589, 374.015)
+end)
+
+local Main = Window:Section("Playtime")
+
+Main:Button("Remove Playtime", function()
+    local part = workspace:FindFirstChild("PlaytimeRewardParts")
+    if part then
+        part:Destroy()
+    end
+end)
+
+local Main = Window:Section("Group")
+
+Main:Button("Remove Group", function()
+    local path = workspace:FindFirstChild("Game")
+    if path and path:FindFirstChild("NewTower") 
+        and path.NewTower:FindFirstChild("Group") 
+        and path.NewTower.Group:FindFirstChild("JoinGroup") then
+        
+        path.NewTower.Group.JoinGroup:Destroy()
+    end
+end)
+
+local Main = Window:Section("Item")
+
+Main:Button("TeddyBloxpin", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(298.701, 5.169, 249.395)
+end)
+
+Main:Button("White Slap", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(219.548, 5.442, 419.310)
+end)
+
+Main:Button("TachyonGlove", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-80.782, 5.442, 581.491)
+end)
+
+Main:Button("MidasGlove", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-212.178, 5.032, 491.955)
+end)
+
+Main:Button("FastPotion", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-244.167, 4.877, 324.457)
+end)
+
+Main:Button("Cupid Glove", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-36.892, 117.305, 121.500)
+end)
+
+Main:Button("WildcardGlove", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(360.012, 118.218, -326.103)
+end)
