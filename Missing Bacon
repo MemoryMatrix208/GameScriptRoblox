@@ -1,0 +1,72 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Missing Bacon | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Slap")
+
+local mode = 1
+local running = false
+
+Main:Button("Auto Slap All", function()
+    local Event = game:GetService("Players").LocalPlayer.Character.Slap.Event
+    local myPlayer = game.Players.LocalPlayer
+
+    if mode == 1 then
+        for _,v in pairs(workspace:GetChildren()) do
+            if game.Players:FindFirstChild(v.Name) and v ~= myPlayer.Character then
+                Event:FireServer("slash", v, Vector3.new(9999999, 9999999, 9999999))
+            end
+        end
+        mode = 2
+
+    elseif mode == 2 then
+        running = true
+        task.spawn(function()
+            while running do
+                for _,v in pairs(workspace:GetChildren()) do
+                    if game.Players:FindFirstChild(v.Name) and v ~= myPlayer.Character then
+                        Event:FireServer("slash", v, Vector3.new(9999999, 9999999, 9999999))
+                    end
+                end
+                task.wait()
+            end
+        end)
+        mode = 3
+
+    else
+        running = false
+        mode = 1
+    end
+end)
+
+local Main = Window:Section("SadBacon")
+
+Main:Button("Auto Find SadBacon", function()
+    local lp = game.Players.LocalPlayer
+    local char = lp.Character or lp.CharacterAdded:Wait()
+    local myHRP = char:WaitForChild("HumanoidRootPart")
+
+    local names = {
+        "SadBacon","SadBacon1","SadBacon2","SadBacon3","SadBacon4",
+        "SadBacon5","SadBacon6","SadBacon7","SadBacon8","SadBacon9","SadBacon10"
+    }
+
+    for _, name in ipairs(names) do
+        local model = workspace:FindFirstChild(name)
+
+        if model and model:IsA("Model") then
+            
+            local part = model.PrimaryPart 
+                or model:FindFirstChild("HumanoidRootPart")
+                or model:FindFirstChildWhichIsA("BasePart", true)
+
+            if part then
+                myHRP.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+                task.wait(0.15)
+            end
+        end
+    end
+end)
