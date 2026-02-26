@@ -1,0 +1,148 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami Tower | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+Main:Button("Auto Win + Coin", function()
+
+    local Players = game:GetService("Players")
+    local lp = Players.LocalPlayer
+    local target = Vector3.new(-188.867, 51.926, -154.740)
+
+    local delay = 0.2
+
+    _G.WinCoinLoop = not _G.WinCoinLoop
+
+    local function getHRP()
+        local char = lp.Character or lp.CharacterAdded:Wait()
+        return char:WaitForChild("HumanoidRootPart")
+    end
+
+    local function run()
+        local hrp = getHRP()
+        if hrp then
+            hrp.CFrame = CFrame.new(target)
+        end
+
+        task.wait(0.1)
+
+        local Event = game:GetService("ReplicatedStorage").Remotes:FindFirstChild("ClaimCoins")
+        if Event then
+            Event:FireServer()
+        end
+    end
+
+    if _G.WinCoinLoop then
+        task.spawn(function()
+            while _G.WinCoinLoop do
+                pcall(run)
+                task.wait(delay)
+            end
+        end)
+    end
+
+end)
+
+local Main = Window:Section("Coin")
+
+Main:Button("Auto Coins", function()
+
+    local Event = game:GetService("ReplicatedStorage").Remotes:FindFirstChild("Coins")
+    local delay = 0.2
+
+    _G.CoinsLoop = not _G.CoinsLoop
+
+    if _G.CoinsLoop then
+        task.spawn(function()
+            while _G.CoinsLoop do
+                if Event then
+                    pcall(function()
+                        Event:FireServer()
+                    end)
+                end
+                task.wait(delay)
+            end
+        end)
+    end
+
+end)
+
+local Main = Window:Section("TP Coin")
+
+Main:Button("500", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-13.441, -318.305, -387.098)
+end)
+
+Main:Button("1000", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(22.728, -315.617, 88.740)
+end)
+
+local Main = Window:Section("Item")
+
+Main:Button("Healcoil", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(9.169, -316.429, 87.968)
+end)
+
+Main:Button("ShieldPotion", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-2.426, -320.429, -383.690)
+end)
+
+Main:Button("Lightning Hand", function()
+    local function sd(p)
+        local o = game
+        local r = p
+        while r ~= '' do
+            local d = r:find('.',1,true)
+            local n
+            if d then
+                n = r:sub(1,d-1)
+                r = r:sub(d+1)
+            else
+                n = r
+                r = ''
+            end
+            o = o:FindFirstChild(n)
+            if not o then return end
+        end
+        if o then o:Destroy() end
+    end
+
+    sd("Workspace.Tower.Floor1.GroupDoor")
+end)
+
+Main:Button("Sun Hand", function()
+    local function sd(p)
+        local o = game
+        local r = p
+        while r ~= '' do
+            local d = r:find('.',1,true)
+            local n
+            if d then
+                n = r:sub(1,d-1)
+                r = r:sub(d+1)
+            else
+                n = r
+                r = ''
+            end
+            o = o:FindFirstChild(n)
+            if not o then return end
+        end
+        if o then o:Destroy() end
+    end
+
+    sd("Workspace.Tower.Floor1.TimeRewardDoor.ProxPromptPart")
+    sd("Workspace.Tower.Floor1.TimeRewardDoor")
+end)
+
+Main:Button("Galaxy Hand", function()
+    local hrp = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(-284.017, 61.180, -153.029)
+end)
