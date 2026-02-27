@@ -1,0 +1,89 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Hoverboard Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local running = false
+local mode = "once"
+
+Main:Button("Auto Win", function()
+    local char = game.Players.LocalPlayer.Character
+    if not char then return end
+
+    if not running then
+        if mode == "once" then
+            char:PivotTo(CFrame.new(-9234.365, -18.094, 3.784))
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    local c = game.Players.LocalPlayer.Character
+                    if c then
+                        c:PivotTo(CFrame.new(-9234.365, -18.094, 3.784))
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Events.AddSpeed
+
+Main:Button("Auto Speed", function()
+    if not running then
+        if mode == "once" then
+            Event:FireServer()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:FireServer()
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Events.RequestRebirth
+
+Main:Button("Auto Rebirth", function()
+    if not running then
+        if mode == "once" then
+            Event:InvokeServer()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:InvokeServer()
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
