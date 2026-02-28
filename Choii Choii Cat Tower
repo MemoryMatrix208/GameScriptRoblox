@@ -1,0 +1,155 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Choii Choii Cat Tower | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+Main:Button("Tp Win", function()
+    local c = game.Players.LocalPlayer.Character
+    if c then
+        c:PivotTo(CFrame.new(24.763, 796.033, 500.345))
+    end
+end)
+
+local Main = Window:Section("Slash")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+Main:Button("Auto Slap", function()
+    local char = LocalPlayer.Character
+    if not char then return end
+
+    local Event = char.Slap.Event
+
+    local vec = Vector3.new(9999, 9999, 9999)
+
+    if not running then
+        if mode == "once" then
+            for _,plr in ipairs(Players:GetPlayers()) do
+                if plr ~= LocalPlayer and plr.Character then
+                    for i = 1,10 do
+                        Event:FireServer("slash", plr.Character, vec)
+                    end
+                end
+            end
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    for _,plr in ipairs(Players:GetPlayers()) do
+                        if plr ~= LocalPlayer and plr.Character then
+                            for i = 1,10 do
+                                Event:FireServer("slash", plr.Character, vec)
+                            end
+                        end
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Item")
+
+local running = false
+
+Main:Button("Taser", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            local c = game.Players.LocalPlayer.Character
+            if c then
+                c:PivotTo(CFrame.new(130.213, 611.029, 800.754))
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
+
+Main:Button("Swap", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            local c = game.Players.LocalPlayer.Character
+            if c then
+                c:PivotTo(CFrame.new(171.081, 410.769, -69.034))
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
+
+Main:Button("Bomb", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            local c = game.Players.LocalPlayer.Character
+            if c then
+                c:PivotTo(CFrame.new(447.240, 408.929, 465.136))
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
+
+Main:Button("Jetpack", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            local c = game.Players.LocalPlayer.Character
+            if c then
+                c:PivotTo(CFrame.new(3.404, 801.641, -2110.191))
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
+
+Main:Button("Stop", function()
+    running = false
+end)
+
+local Main = Window:Section("VIP And Group")
+
+local function sd(p)
+    local o = game
+    local r = p
+    while r ~= '' do
+        local d = r:find('.',1,true)
+        local n
+        if d then
+            n = r:sub(1,d-1)
+            r = r:sub(d+1)
+        else
+            n = r
+            r = ''
+        end
+        o = o:FindFirstChild(n)
+        if not o then return end
+    end
+    if o then o:Destroy() end
+end
+
+Main:Button("Remove VIP", function()
+    sd("Workspace.Door")
+end)
+
+Main:Button("Remove Group", function()
+    sd("Workspace.GroupDoor")
+end)
