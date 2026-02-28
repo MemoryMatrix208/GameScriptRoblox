@@ -1,0 +1,70 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Sahur Laser Tower | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local player = game.Players.LocalPlayer
+local targetPos = Vector3.new(-1.898, 30.500, -1761.613)
+
+local running = false
+
+local function tp()
+    local char = player.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char:SetPrimaryPartCFrame(CFrame.new(targetPos))
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid.Health = 0
+        end
+    end
+end
+
+Main:Button("Auto Win", function()
+    running = not running
+    if running then
+        while running do
+            tp()
+            task.wait()
+        end
+    end
+end)
+
+local Main = Window:Section("VIP")
+
+local running = false
+
+local function sd(p)
+    local o = game
+    local r = p
+    while r ~= "" do
+        local d = r:find(".",1,true)
+        local n
+        if d then
+            n = r:sub(1,d-1)
+            r = r:sub(d+1)
+        else
+            n = r
+            r = ""
+        end
+        o = o:FindFirstChild(n)
+        if not o then return end
+    end
+    if o then
+        o:Destroy()
+    end
+end
+
+Main:Button("Remove VIP", function()
+    running = not running
+    if running then
+        while running do
+            sd("Workspace.LOBBY.VipAndMembers.VIP.Sign")
+            sd("Workspace.LOBBY.VipAndMembers.VIP.VipDoor")
+            task.wait()
+        end
+    end
+end)
