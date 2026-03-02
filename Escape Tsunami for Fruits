@@ -1,0 +1,158 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami for Fruits | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Fruits")
+
+local Player = game:GetService("Players").LocalPlayer
+
+local function tp(v)
+    local c = Player.Character
+    if c then
+        c:PivotTo(CFrame.new(v))
+    end
+end
+
+Main:Button("Home", function()
+    tp(Vector3.new(-522.253, 29.525, -134.846))
+end)
+
+Main:Button("Celestial", function()
+    tp(Vector3.new(935.182, 29.525, -98.141))
+end)
+
+Main:Button("Secret", function()
+    tp(Vector3.new(800.493, 29.525, -102.943))
+end)
+
+Main:Button("Cosmic", function()
+    tp(Vector3.new(514.730, 29.525, -121.135))
+end)
+
+Main:Button("Mythical", function()
+    tp(Vector3.new(115.664, 29.525, -94.168))
+end)
+
+Main:Button("Legendary", function()
+    tp(Vector3.new(-106.670, 29.525, -95.978))
+end)
+
+local Main = Window:Section("Player")
+
+local Player = game:GetService("Players").LocalPlayer
+
+local function setSpeed(v)
+    local c = Player.Character
+    if c then
+        local h = c:FindFirstChildOfClass("Humanoid")
+        if h then
+            h.WalkSpeed = v
+        end
+    end
+end
+
+Main:Button("Speed 100", function() setSpeed(100) end)
+Main:Button("Speed 200", function() setSpeed(200) end)
+Main:Button("Speed 300", function() setSpeed(300) end)
+Main:Button("Speed 400", function() setSpeed(400) end)
+Main:Button("Speed 500", function() setSpeed(500) end)
+Main:Button("Speed 600", function() setSpeed(600) end)
+Main:Button("Speed 700", function() setSpeed(700) end)
+Main:Button("Speed 800", function() setSpeed(800) end)
+Main:Button("Speed 900", function() setSpeed(900) end)
+
+local Main = Window:Section("Money")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Events.CollectMoney
+
+Main:Button("Auto Collect Money", function()
+    if not running then
+        if mode == "once" then
+            for i = 1,10 do
+                Event:FireServer(tostring(i))
+            end
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    for i = 1,10 do
+                        Event:FireServer(tostring(i))
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Main:Button("Purchase Speed +1", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("VIP")
+
+Main:Button("Delete VIP", function()
+    local v = workspace:FindFirstChild("VIP")
+    if v then
+        v:Destroy()
+    end
+end)
+
+local Main = Window:Section("Tsunamis")
+
+local running = false
+
+Main:Button("Auto Remove Tsunamis", function()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            local obj = workspace:FindFirstChild("Wave")
+            if obj then
+                obj:Destroy()
+            end
+            task.wait(0.1)
+        end
+    end)
+end)
