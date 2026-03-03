@@ -1,0 +1,436 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Escape Tsunami For Lucky Eggs | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Brainrot")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto OG", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("OG")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Brainrot God", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Brainrot God")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Divine", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Divine")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Exclusive", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Exclusive")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Mythic", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Mythic")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Secret", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Secret")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Legendary", function()
+
+    local posAkhir = CFrame.new(127.059, 5.175, -167.219)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    local god = storage and storage:FindFirstChild("Legendary")
+
+    if god then
+        local target = god:FindFirstChild("Gold") or god:FindFirstChild("Normal")
+        if target then
+
+            local targetCF
+
+            if target:IsA("Model") then
+                targetCF = target:GetPivot()
+            elseif target:IsA("BasePart") then
+                targetCF = target.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = target:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for i = 1, 6 do
+        local plot = plots:FindFirstChild("Plot" .. i)
+        if plot then
+            local pads = plot:FindFirstChild("Pads")
+            if pads then
+                for j = 1, 10 do
+                    local pad = pads:FindFirstChild(tostring(j))
+                    if pad then
+                        local collect = pad:FindFirstChild("Collect")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            firetouchinterest(hrp, collect, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+Main:Button("Auto Collect Money", function()
+    if mode == "once" then
+        collectAll()
+        mode = "loop"
+
+    elseif mode == "loop" then
+        running = true
+        mode = "stop"
+
+        task.spawn(function()
+            while running do
+                collectAll()
+                task.wait(0.5)
+            end
+        end)
+
+    elseif mode == "stop" then
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Main:Button("Purchase Speed +1", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local Main = Window:Section("VIP And Tsunamis")
+
+Main:Button("Remove VIP", function()
+    local vip = workspace:FindFirstChild("VIPFloor")
+    if vip then
+        for _, v in pairs(vip:GetChildren()) do
+            v:Destroy()
+        end
+    end
+end)
+
+Main:Button("Remove Wave", function()
+    local wave = workspace:FindFirstChild("WaveStorage")
+    if wave then
+        for _, v in pairs(wave:GetChildren()) do
+            v:Destroy()
+        end
+    end
+end)
