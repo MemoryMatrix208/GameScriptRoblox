@@ -1,0 +1,89 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Hyper Speed Runner | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local running = false
+local mode = "once"
+
+Main:Button("Auto Win", function()
+    local char = game.Players.LocalPlayer.Character
+    if not char then return end
+
+    if not running then
+        if mode == "once" then
+            char:PivotTo(CFrame.new(-0.163, 10.247, -9076.459))
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    local c = game.Players.LocalPlayer.Character
+                    if c then
+                        c:PivotTo(CFrame.new(-0.163, 10.247, -9076.459))
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Remotes.StepTaken
+
+Main:Button("Auto Speed", function()
+    if not running then
+        if mode == "once" then
+            Event:FireServer(1,false)
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:FireServer(1,false)
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Rebirth")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Remotes.RequestRebirth
+
+Main:Button("Auto Rebirth", function()
+    if not running then
+        if mode == "once" then
+            Event:FireServer()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:FireServer()
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
