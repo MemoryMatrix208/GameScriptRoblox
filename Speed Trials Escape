@@ -1,0 +1,153 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "Speed Trials Escape | ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Win")
+
+local running = false
+local mode = "once"
+
+Main:Button("Auto Win In Track 1", function()
+    local char = game.Players.LocalPlayer.Character
+    if not char then return end
+
+    if not running then
+        if mode == "once" then
+            char:PivotTo(CFrame.new(-26.681, 9.233, 6442.687))
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    local c = game.Players.LocalPlayer.Character
+                    if c then
+                        c:PivotTo(CFrame.new(-26.681, 9.233, 6442.687))
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local running2 = false
+local mode2 = "once"
+
+Main:Button("Auto Win In Track 2", function()
+    local char = game.Players.LocalPlayer.Character
+    if not char then return end
+
+    if not running2 then
+        if mode2 == "once" then
+            char:PivotTo(CFrame.new(-852.135, 11.220, 4718.328))
+            mode2 = "loop"
+        else
+            running2 = true
+            task.spawn(function()
+                while running2 do
+                    local c = game.Players.LocalPlayer.Character
+                    if c then
+                        c:PivotTo(CFrame.new(-852.135, 11.220, 4718.328))
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running2 = false
+        mode2 = "once"
+    end
+end)
+
+local running3 = false
+local mode3 = "once"
+
+Main:Button("Auto Win In Track 3", function()
+    local char = game.Players.LocalPlayer.Character
+    if not char then return end
+
+    if not running3 then
+        if mode3 == "once" then
+            char:PivotTo(CFrame.new(-1536.090, 9.197, 4995.077))
+            mode3 = "loop"
+        else
+            running3 = true
+            task.spawn(function()
+                while running3 do
+                    local c = game.Players.LocalPlayer.Character
+                    if c then
+                        c:PivotTo(CFrame.new(-1536.090, 9.197, 4995.077))
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running3 = false
+        mode3 = "once"
+    end
+end)
+
+local Main = Window:Section("Speed")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Remotes.PlayerDataService.GiveSteps
+
+Main:Button("Auto Speed - inf", function()
+    if not running then
+        if mode == "once" then
+            Event:InvokeServer(math.huge)
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:InvokeServer(math.huge)
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Event = game:GetService("ReplicatedStorage").Remotes.PlayerDataService.GiveSteps
+
+Main:Button("Inf Speed", function()
+    Event:InvokeServer(math.huge)
+end)
+
+local Main = Window:Section("Rebirth")
+
+local running = false
+local mode = "once"
+local Event = game:GetService("ReplicatedStorage").Remotes.PlayerDataService.Rebirth
+
+Main:Button("Auto Rebirth", function()
+    if not running then
+        if mode == "once" then
+            Event:InvokeServer()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    Event:InvokeServer()
+                    task.wait()
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
