@@ -1,0 +1,145 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/MyHomeObf/refs/heads/main/Meow"))()
+
+local Window = Library:CreateWindow({
+    Title = "ArchiveXNova",
+    Accent = Color3.fromRGB(255, 100, 100)
+})
+
+local Main = Window:Section("Poppy Playtime")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Main:Button("Auto Experiments", function()
+
+    local posAkhir = CFrame.new(-15.444, 3.225, 42.160)
+
+    local Experiments = workspace:FindFirstChild("ItemSpawners")
+        and workspace.ItemSpawners:FindFirstChild("Experiments")
+
+    if Experiments then
+        local item = Experiments:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF
+
+            if item:IsA("Model") then
+                targetCF = item:GetPivot()
+            elseif item:IsA("BasePart") then
+                targetCF = item.CFrame
+            end
+
+            if targetCF then
+                tp(targetCF + Vector3.new(0, 3, 0))
+                task.wait(0.25)
+
+                local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait(0.25)
+                tp(posAkhir)
+            end
+        end
+    end
+
+end)
+
+local Main = Window:Section("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+local function pressAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local btn = slot:FindFirstChild("Button")
+                        if btn then
+                            local touch = btn:FindFirstChild("Touch")
+                            if touch and touch:IsA("BasePart") then
+                                firetouchinterest(hrp, touch, 0)
+                                firetouchinterest(hrp, touch, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+Main:Button("Auto Money", function()
+    if not running then
+        if mode == "once" then
+            pressAll()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    pressAll()
+                    task.wait(0.1)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local Main = Window:Section("Upgrade Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Main:Button("Purchase Speed +1", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Main:Button("Purchase Speed +5", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Main:Button("Purchase Speed +10", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Main:Button("Purchase Carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Main:Button("Purchase Base Upgrade", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local Main = Window:Section("Rebirth")
+
+Main:Button("Click", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local Main = Window:Section("Inventory")
+
+Main:Button("Sell Inventory", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
