@@ -1,0 +1,49 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Coin")
+
+local mode1="Once"
+local run1=false
+
+Azure:CreateButton(mainTab,"Auto Coin 1875","Automatic",function()
+    if mode1=="Once" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=CFrame.new(288.160,523.377,115.123)
+        mode1="Loop"
+    elseif mode1=="Loop" then
+        run1=true
+        task.spawn(function()
+            while run1 do
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=CFrame.new(288.160,523.377,115.123)
+                task.wait()
+            end
+        end)
+        mode1="Stop"
+    else
+        run1=false
+        mode1="Once"
+    end
+end)
+
+local mode2="Once"
+local run2=false
+
+Azure:CreateButton(mainTab,"Auto Coin 2125","Automatic",function()
+    if mode2=="Once" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=CFrame.new(-800.613,419.663,144.545)
+        mode2="Loop"
+    elseif mode2=="Loop" then
+        run2=true
+        task.spawn(function()
+            while run2 do
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame=CFrame.new(-800.613,419.663,144.545)
+                task.wait()
+            end
+        end)
+        mode2="Stop"
+    else
+        run2=false
+        mode2="Once"
+    end
+end)
