@@ -1,0 +1,473 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Fruits")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("1") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Common", "Collect Common", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("2") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Rare", "Collect Rare", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("3") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Epic", "Collect Epic", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("4") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Legendary", "Collect Legendary", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("5") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Mythical", "Collect Mythical", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("6") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.25)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.25)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Secret", "Collect Secret", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("7") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.10)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.10)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Celestial", "Collect Celestial", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-36.668, 3.225, 41.094)
+
+    local folder = workspace:FindFirstChild("ItemSpawns")
+    if not folder then return end
+
+    for _, f in pairs(folder:GetChildren()) do
+        if f.Name:find("8") then
+            local item = f:FindFirstChild("SpawnedItem")
+            if item then
+                local targetCF
+
+                if item:IsA("Model") then
+                    targetCF = item:GetPivot()
+                elseif item:IsA("BasePart") then
+                    targetCF = item.CFrame
+                end
+
+                if targetCF then
+                    tp(targetCF + Vector3.new(0,3,0))
+                    task.wait(0.10)
+
+                    local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+                    if prompt then
+                        fireproximityprompt(prompt)
+                    end
+
+                    task.wait(0.10)
+                    tp(posAkhir)
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto OG", "Collect OG", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local collect = slot:FindFirstChild("CollectTouch")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            firetouchinterest(hrp, collect, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local mainTab = gui:Tab("Money")
+Azure:CreateButton(mainTab, "Auto Collect Money", "Collect all money", function()
+    collectAll()
+end)
+
+local mainTab = gui:Tab("Upgrade Shop")
+
+Azure:CreateButton(mainTab, "Purchase Speed +1", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(1)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +5", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(5)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +10", "Buy speed", function()
+    ReplicatedStorage.Events.PurchaseSpeed:FireServer(10)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Carry", "Upgrade carry", function()
+    ReplicatedStorage.Events.PurchaseCarry:FireServer()
+end)
+
+Azure:CreateButton(mainTab, "Purchase Base Upgrade", "Upgrade base", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Auto Rebirth", "Rebirth", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
+
+local mainTab = gui:Tab("Sell Inventory")
+
+Azure:CreateButton(mainTab, "Sell Inventory", "Sell items", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local function del(obj)
+    if obj then
+        obj:Destroy()
+    end
+end
+
+local mainTab = gui:Tab("Remove")
+
+Azure:CreateButton(mainTab, "Remove VIP", "Delete VIP", function()
+    del(workspace:FindFirstChild("VIPPart"))
+end)
+
+Azure:CreateButton(mainTab, "Remove Lava", "Delete Lava", function()
+    del(workspace:FindFirstChild("Lava"))
+end)
