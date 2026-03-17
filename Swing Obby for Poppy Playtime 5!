@@ -1,0 +1,250 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Poppy Playtime")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPos = CFrame.new(-1.787, 3.000, 2785.850)
+    local posAkhir = CFrame.new(41.386, 3.000, 27.928)
+
+    tp(startPos)
+    task.wait(0.25)
+
+    local spawn = workspace:FindFirstChild("ItemSpawns")
+        and workspace.ItemSpawns:FindFirstChild("6")
+
+    if spawn then
+        local item = spawn:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF = item:GetPivot()
+            tp(targetCF + Vector3.new(0,3,0))
+            task.wait(0.25)
+
+            local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.25)
+            tp(posAkhir)
+
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Secret, Mythical, Legendary, Epic", "Collect Secret, Mythical, Legendary, Epic", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPos = CFrame.new(25.960, 3.000, 1816.362)
+    local posAkhir = CFrame.new(41.386, 3.000, 27.928)
+
+    tp(startPos)
+    task.wait(0.25)
+
+    local spawn = workspace:FindFirstChild("ItemSpawns")
+        and workspace.ItemSpawns:FindFirstChild("5")
+
+    if spawn then
+        local item = spawn:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF = item:GetPivot()
+            tp(targetCF + Vector3.new(0,3,0))
+            task.wait(0.25)
+
+            local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.25)
+            tp(posAkhir)
+
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Mythical, Secret, Mythical, Legendary, Epic", "Collect Secret, Mythical, Legendary, Epic", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPos = CFrame.new(0.000, 3.000, 1095.647)
+    local posAkhir = CFrame.new(41.386, 3.000, 27.928)
+
+    tp(startPos)
+    task.wait(0.25)
+
+    local spawn = workspace:FindFirstChild("ItemSpawns")
+        and workspace.ItemSpawns:FindFirstChild("4")
+
+    if spawn then
+        local item = spawn:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF = item:GetPivot()
+            tp(targetCF + Vector3.new(0,3,0))
+            task.wait(0.25)
+
+            local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.25)
+            tp(posAkhir)
+
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Legendary, Secret, Mythical, Legendary, Epic", "Collect Secret, Mythical, Legendary, Epic", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPos = CFrame.new(-3.442, 3.000, 557.287)
+    local posAkhir = CFrame.new(41.386, 3.000, 27.928)
+
+    tp(startPos)
+    task.wait(0.25)
+
+    local spawn = workspace:FindFirstChild("ItemSpawns")
+        and workspace.ItemSpawns:FindFirstChild("3")
+
+    if spawn then
+        local item = spawn:FindFirstChild("SpawnedItem")
+        if item then
+
+            local targetCF = item:GetPivot()
+            tp(targetCF + Vector3.new(0,3,0))
+            task.wait(0.25)
+
+            local prompt = item:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.25)
+            tp(posAkhir)
+
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Epic, Secret, Mythical, Legendary, Epic", "Collect Secret, Mythical, Legendary, Epic", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local function collectAll()
+    local character = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+
+    local plot = workspace:FindFirstChild("Plot_" .. Player.Name)
+    if not plot then return end
+
+    for _, floor in pairs(plot:GetChildren()) do
+        if floor:IsA("Model") and floor.Name:match("^Floor") then
+            local slots = floor:FindFirstChild("Slots")
+            if slots then
+                for _, slot in pairs(slots:GetChildren()) do
+                    if slot:IsA("Model") then
+                        local collect = slot:FindFirstChild("CollectTouch")
+                        if collect and collect:IsA("BasePart") then
+                            firetouchinterest(hrp, collect, 0)
+                            firetouchinterest(hrp, collect, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local mainTab = gui:Tab("Auto Collect Money")
+Azure:CreateButton(mainTab, "Auto Collect Money", "Collect all money", function()
+    collectAll()
+end)
+
+local mainTab = gui:Tab("Shop")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Carry Capacity +1", "Upgrade carry capacity", function()
+    ReplicatedStorage.Events.PurchaseUpgrade:FireServer("CarryCapacity", 1)
+end)
+
+Azure:CreateButton(mainTab, "Swing Power +1", "Upgrade swing power", function()
+    ReplicatedStorage.Events.PurchaseUpgrade:FireServer("SwingPower", 1)
+end)
+
+Azure:CreateButton(mainTab, "Swing Power +5", "Upgrade swing power", function()
+    ReplicatedStorage.Events.PurchaseUpgrade:FireServer("SwingPower", 5)
+end)
+
+Azure:CreateButton(mainTab, "Swing Distance +1", "Upgrade swing distance", function()
+    ReplicatedStorage.Events.PurchaseUpgrade:FireServer("SwingDistance", 1)
+end)
+
+Azure:CreateButton(mainTab, "Swing Distance +5", "Upgrade swing distance", function()
+    ReplicatedStorage.Events.PurchaseUpgrade:FireServer("SwingDistance", 5)
+end)
+
+local mainTab = gui:Tab("Sell Inventory")
+Azure:CreateButton(mainTab, "Sell Inventory", "Sell items", function()
+    ReplicatedStorage.Events.RequestSell:FireServer("Inventory")
+end)
+
+local mainTab = gui:Tab("Base Upgrade")
+Azure:CreateButton(mainTab, "Purchase Base Upgrade", "Upgrade base", function()
+    ReplicatedStorage.Events.RequestBaseUpgrade:FireServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+Azure:CreateButton(mainTab, "Rebirth", "Rebirth player", function()
+    ReplicatedStorage.Events.RequestRebirth:FireServer()
+end)
