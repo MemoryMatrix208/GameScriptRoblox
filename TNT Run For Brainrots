@@ -1,0 +1,278 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Brainrot")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local TARGET_POS = CFrame.new(29.014, -1.347, -48.658)
+
+local NPC_NAMES = {
+    "Tralalero Tralala",
+    "Esok Sekolah",
+    "Te Te Te Sahuro",
+    "67",
+    "Los Bros",
+    "La Vacca Saturno Saturnita",
+    "LosTralaleritos",
+    "LosMateos",
+    "Dragon Cannelloni",
+}
+
+local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+local mode = "once"
+local running = false
+
+local function HRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function runOnce()
+    for _, npcName in ipairs(NPC_NAMES) do
+        if not running and mode == "loop" then return end
+
+        local npc = npcFolder:FindFirstChild(npcName)
+        if npc then
+            local part = npc:FindFirstChildWhichIsA("BasePart", true)
+            if part then
+                HRP().CFrame = part.CFrame
+                task.wait(0.4)
+
+                local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                end
+
+                task.wait()
+                HRP().CFrame = TARGET_POS
+                task.wait(0.4)
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Pick Up Secret", "Once / Loop / Stop", function()
+    if mode == "once" then
+        runOnce()
+        mode = "loop"
+
+    elseif mode == "loop" then
+        running = true
+        mode = "stop"
+
+        task.spawn(function()
+            while running do
+                runOnce()
+                task.wait(0.5)
+            end
+        end)
+
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local mainTab = gui:Tab("Brainrot V2")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local TARGET_POS = CFrame.new(29.014, -1.347, -48.658)
+
+local NPC_NAMES = {
+    ["Tralalero Tralala"] = true,
+    ["Esok Sekolah"] = true,
+    ["Te Te Te Sahuro"] = true,
+    ["67"] = true,
+    ["Los Bros"] = true,
+    ["La Vacca Saturno Saturnita"] = true,
+    ["LosTralaleritos"] = true,
+    ["LosMateos"] = true,
+    ["Dragon Cannelloni"] = true,
+}
+
+local npcFolder = workspace:WaitForChild("NPCSpawned")
+
+local mode = "instant"
+local running = false
+local spawnConn
+
+local function HRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function handleNPC(npc)
+    if not NPC_NAMES[npc.Name] then return end
+
+    local part = npc:FindFirstChildWhichIsA("BasePart", true)
+    if not part then return end
+
+    HRP().CFrame = part.CFrame
+    task.wait(0.25)
+
+    local prompt = npc:FindFirstChildWhichIsA("ProximityPrompt", true)
+    if prompt then
+        fireproximityprompt(prompt)
+    end
+
+    task.wait()
+    HRP().CFrame = TARGET_POS
+end
+
+Azure:CreateButton(mainTab, "Auto Pick Up Secret", "Instant / AFK / Stop", function()
+    if mode == "instant" then
+        running = true
+
+        for _, npc in ipairs(npcFolder:GetChildren()) do
+            task.spawn(function()
+                handleNPC(npc)
+            end)
+        end
+
+        spawnConn = npcFolder.ChildAdded:Connect(function(npc)
+            if not running then return end
+            task.wait()
+            handleNPC(npc)
+        end)
+
+        mode = "afk"
+
+    elseif mode == "afk" then
+        running = true
+        mode = "stop"
+
+        task.spawn(function()
+            while running do
+                for _, npc in ipairs(npcFolder:GetChildren()) do
+                    if not running then break end
+                    handleNPC(npc)
+                end
+                task.wait(1)
+            end
+        end)
+
+    else
+        running = false
+
+        if spawnConn then
+            spawnConn:Disconnect()
+            spawnConn = nil
+        end
+
+        mode = "instant"
+    end
+end)
+
+local mainTab = gui:Tab("Money")
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local mode = "once"
+local running = false
+
+local function HRP()
+    local char = player.Character or player.CharacterAdded:Wait()
+    return char:WaitForChild("HumanoidRootPart")
+end
+
+local function collectOnce()
+    local world = workspace:WaitForChild("World")
+    local bases = world:WaitForChild("Bases")
+
+    for _, base in ipairs(bases:GetChildren()) do
+        if not running and mode == "loop" then return end
+
+        local npcFolder = base:FindFirstChild("NPC")
+        if npcFolder then
+            for _, npc in ipairs(npcFolder:GetChildren()) do
+                if not running and mode == "loop" then return end
+
+                local collectButton = npc:FindFirstChild("CollectButton")
+                if collectButton then
+                    local collectPart = collectButton:FindFirstChild("Collect")
+                    if collectPart and collectPart:IsA("BasePart") then
+                        firetouchinterest(HRP(), collectPart, 0)
+                        task.wait()
+                        firetouchinterest(HRP(), collectPart, 1)
+                        task.wait(0.2)
+                    end
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Once / Loop / Stop", function()
+    if mode == "once" then
+        collectOnce()
+        mode = "loop"
+
+    elseif mode == "loop" then
+        running = true
+        mode = "stop"
+
+        task.spawn(function()
+            while running do
+                collectOnce()
+                task.wait(0.5)
+            end
+        end)
+
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local mainTab = gui:Tab("Sell All Brainrot")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Sell All", "Sell Brainrot", function()
+    ReplicatedStorage
+        .Packages
+        .Knit
+        .Services
+        .SellService
+        .RE
+        .SellAllBrainrot
+        :FireServer()
+end)
+
+local mainTab = gui:Tab("Speed")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Buy Speed +1", "Upgrade speed", function()
+    ReplicatedStorage.Packages.Knit.Services.SpeedService.RE.BuySpeed:FireServer()
+end)
+
+Azure:CreateButton(mainTab, "Buy Speed +5", "Upgrade speed", function()
+    ReplicatedStorage.Packages.Knit.Services.SpeedService.RE.BuySpeed5:FireServer()
+end)
+
+Azure:CreateButton(mainTab, "Buy Speed +10", "Upgrade speed", function()
+    ReplicatedStorage.Packages.Knit.Services.SpeedService.RE.BuySpeed10:FireServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Rebirth", "Rebirth Once", function()
+    ReplicatedStorage
+        .Packages
+        .Knit
+        .Services
+        .RebirthService
+        .RE
+        .Rebirth
+        :FireServer()
+end)
