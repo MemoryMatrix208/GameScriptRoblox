@@ -1,0 +1,213 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Take And Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Azure:CreateButton(mainTab, "Secret And Celestial", "Teleport", function()
+    tp(CFrame.new(-8065.527, 14.225, -61.087))
+end)
+
+Azure:CreateButton(mainTab, "Home", "Teleport", function()
+    tp(CFrame.new(-50.385, 14.625, -57.120))
+end)
+
+Azure:CreateButton(mainTab, "Take Manual", "Nearest", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local nearest, dist = nil, math.huge
+
+    for _, v in pairs(workspace.EntitiesFolder:GetDescendants()) do
+        if v:IsA("ProximityPrompt") and v.Parent and v.Parent:IsA("BasePart") then
+            local d = (hrp.Position - v.Parent.Position).Magnitude
+            if d < dist then
+                dist = d
+                nearest = v
+            end
+        end
+    end
+
+    if nearest then
+        fireproximityprompt(nearest)
+    end
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+local function collectAll()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for _, plot in pairs(plots:GetChildren()) do
+        if plot:IsA("Model") then
+            local floors = plot:FindFirstChild("Floors")
+            if floors then
+
+                for _, floor in pairs(floors:GetChildren()) do
+                    if floor:IsA("Folder") or floor:IsA("Model") then
+
+                        local stands = floor:FindFirstChild("Stands")
+                        if stands then
+                            for _, stand in pairs(stands:GetChildren()) do
+                                local cash = stand:FindFirstChild("CashModel")
+                                if cash then
+                                    local part = cash:FindFirstChild("TouchPart")
+                                    if part and part:IsA("BasePart") then
+                                        firetouchinterest(hrp, part, 0)
+                                        task.wait()
+                                        firetouchinterest(hrp, part, 1)
+                                    end
+                                end
+                            end
+                        end
+
+                    end
+                end
+
+            end
+        end
+    end
+end
+
+local mainTab = gui:Tab("Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Azure:CreateButton(mainTab, "X400", "Teleport", function()
+    tp(CFrame.new(-5552.961, 14.225, -60.252))
+end)
+
+Azure:CreateButton(mainTab, "X300", "Teleport", function()
+    tp(CFrame.new(-4609.224, 14.225, -59.868))
+end)
+
+Azure:CreateButton(mainTab, "X200", "Teleport", function()
+    tp(CFrame.new(-3738.141, 14.225, -61.310))
+end)
+
+Azure:CreateButton(mainTab, "X100", "Teleport", function()
+    tp(CFrame.new(-2936.196, 14.225, -60.545))
+end)
+
+Azure:CreateButton(mainTab, "X500", "Teleport", function()
+    tp(CFrame.new(-6585.290, 14.225, -50.159))
+end)
+
+Azure:CreateButton(mainTab, "Home", "Teleport", function()
+    tp(CFrame.new(-50.385, 14.625, -57.120))
+end)
+
+local mainTab = gui:Tab("Money")
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Once / Loop / Stop", function()
+    if not running then
+        if mode == "once" then
+            collectAll()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    collectAll()
+                    task.wait(0.2)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local mainTab = gui:Tab("Upgrade")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Stand Upgrade", "Upgrade stand", function()
+    ReplicatedStorage.Utilities.TypedRemote.PurchaseUpgrade:FireServer("StandUpgrade")
+end)
+
+Azure:CreateButton(mainTab, "Speed +1", "Buy Speed 1", function()
+    ReplicatedStorage.Utilities.TypedRemote.PurchaseUpgrade:FireServer("1")
+end)
+
+Azure:CreateButton(mainTab, "Speed +5", "Buy Speed 5", function()
+    ReplicatedStorage.Utilities.TypedRemote.PurchaseUpgrade:FireServer("5")
+end)
+
+Azure:CreateButton(mainTab, "Speed +10", "Buy Speed 10", function()
+    ReplicatedStorage.Utilities.TypedRemote.PurchaseUpgrade:FireServer("10")
+end)
+
+local mainTab = gui:Tab("Sell")
+
+Azure:CreateButton(mainTab, "Sell All", "Sell Everything", function()
+    ReplicatedStorage.Utilities.TypedRemote.SellRemote:InvokeServer("SellAll")
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Rebirth", "Once Rebirth", function()
+    ReplicatedStorage.Utilities.TypedRemote.Rebirth:InvokeServer()
+end)
+
+local mainTab = gui:Tab("Speed")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+Azure:CreateButton(mainTab, "Speed 100%", "Set speed", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 100
+end)
+
+Azure:CreateButton(mainTab, "Speed 200%", "Set speed", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 200
+end)
+
+Azure:CreateButton(mainTab, "Speed 300%", "Set speed", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 300
+end)
+
+Azure:CreateButton(mainTab, "Speed 400%", "Set speed", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 400
+end)
+
+Azure:CreateButton(mainTab, "Speed 500%", "Set speed", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hum = char:WaitForChild("Humanoid")
+    hum.WalkSpeed = 500
+end)
