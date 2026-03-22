@@ -1,0 +1,216 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Take And Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Azure:CreateButton(mainTab, "Secret", "Teleport", function()
+    tp(CFrame.new(-8.462, 13.225, -2221.227))
+end)
+
+Azure:CreateButton(mainTab, "Secret", "Teleport", function()
+    tp(CFrame.new(2.630, 12.603, -2523.794))
+end)
+
+Azure:CreateButton(mainTab, "Transcendent", "Teleport", function()
+    tp(CFrame.new(8.007, 13.225, -2869.480))
+end)
+
+Azure:CreateButton(mainTab, "Home", "Teleport", function()
+    tp(CFrame.new(-46.271, 13.225, 848.483))
+end)
+
+Azure:CreateButton(mainTab, "Take Manual", "Nearest", function()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local nearest, dist = nil, math.huge
+
+    for _, v in pairs(workspace.ItemSpawnZones:GetDescendants()) do
+        if v:IsA("ProximityPrompt") and v.Parent and v.Parent:IsA("BasePart") then
+            local d = (hrp.Position - v.Parent.Position).Magnitude
+            if d < dist then
+                dist = d
+                nearest = v
+            end
+        end
+    end
+
+    if nearest then
+        fireproximityprompt(nearest)
+    end
+end)
+
+local mainTab = gui:Tab("Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(pos)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = CFrame.new(pos)
+end
+
+Azure:CreateButton(mainTab, "Legendary 1", "", function()
+    tp(Vector3.new(-6.863, 13.225, -607.381))
+end)
+
+Azure:CreateButton(mainTab, "Legendary 2", "", function()
+    tp(Vector3.new(-5.772, 13.225, -371.428))
+end)
+
+Azure:CreateButton(mainTab, "Mythic 1", "", function()
+    tp(Vector3.new(-30.635, 13.225, -1195.413))
+end)
+
+Azure:CreateButton(mainTab, "Mythic 2", "", function()
+    tp(Vector3.new(11.874, 13.225, -844.996))
+end)
+
+Azure:CreateButton(mainTab, "Cosmic 1", "", function()
+    tp(Vector3.new(-6.517, 13.225, -1854.921))
+end)
+
+Azure:CreateButton(mainTab, "Cosmic 2", "", function()
+    tp(Vector3.new(33.440, 13.225, -1525.569))
+end)
+
+Azure:CreateButton(mainTab, "Secret 1", "", function()
+    tp(Vector3.new(2.630, 12.603, -2523.794))
+end)
+
+Azure:CreateButton(mainTab, "Secret 2", "", function()
+    tp(Vector3.new(-8.462, 13.225, -2221.227))
+end)
+
+Azure:CreateButton(mainTab, "Transcendent", "", function()
+    tp(Vector3.new(8.007, 13.225, -2869.480))
+end)
+
+Azure:CreateButton(mainTab, "Home", "Teleport", function()
+    tp(CFrame.new(-46.271, 13.225, 848.483))
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+local function collectAll()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for _, plot in pairs(plots:GetChildren()) do
+        if plot:IsA("Model") then
+            local pedestals = plot:FindFirstChild("Pedestals")
+            if pedestals then
+                for _, pedestal in pairs(pedestals:GetChildren()) do
+                    local part = pedestal:FindFirstChild("Claimpart")
+                    if part and part:IsA("BasePart") then
+                        firetouchinterest(hrp, part, 0)
+                        task.wait()
+                        firetouchinterest(hrp, part, 1)
+                    end
+                end
+            end
+        end
+    end
+end
+
+local mainTab = gui:Tab("Money")
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Once / Loop / Stop", function()
+    if not running then
+        if mode == "once" then
+            collectAll()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    collectAll()
+                    task.wait(0.2)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
+
+local mainTab = gui:Tab("Upgrade Without Money")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Azure:CreateButton(mainTab, "Carry +1", "Upgrade carry", function()
+    ReplicatedStorage.REMOTES.RequestCarryChange:FireServer(1, 0)
+end)
+
+Azure:CreateButton(mainTab, "Speed +1", "Upgrade speed", function()
+    ReplicatedStorage.REMOTES.RequestSpeedChange:FireServer(1, 0)
+end)
+
+Azure:CreateButton(mainTab, "Speed +5", "Upgrade speed", function()
+    ReplicatedStorage.REMOTES.RequestSpeedChange:FireServer(5, 0)
+end)
+
+Azure:CreateButton(mainTab, "Speed +10", "Upgrade speed", function()
+    ReplicatedStorage.REMOTES.RequestSpeedChange:FireServer(10, 0)
+end)
+
+local mainTab = gui:Tab("Sell")
+
+Azure:CreateButton(mainTab, "Sell All", "Sell", function()
+    ReplicatedStorage.REMOTES.SellItemEvent:FireServer("SellAll")
+end)
+
+local mainTab = gui:Tab("Base")
+
+Azure:CreateButton(mainTab, "Base", "Upgrade base", function()
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for i = 1, 5 do
+        local plot = plots:FindFirstChild("Plot"..i)
+        if plot then
+            ReplicatedStorage.REMOTES.ExpandBase:FireServer(0, plot)
+        end
+    end
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Click", "Rebirth", function()
+    ReplicatedStorage.REMOTES.Rebirth:FireServer(1)
+end)
+
+local mainTab = gui:Tab("Tsunamis")
+
+local function del(obj)
+    if obj then
+        obj:Destroy()
+    end
+end
+
+Azure:CreateButton(mainTab, "Remove Tsunamis", "Delete Tsunamis", function()
+    del(workspace:FindFirstChild("ActiveWaves"))
+end)
+
+Azure:CreateButton(mainTab, "Remove VIP", "Delete doors", function()
+    del(workspace:FindFirstChild("VIPDoors"))
+end)
