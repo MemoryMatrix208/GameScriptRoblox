@@ -1,0 +1,381 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("Block")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "RareBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                for i = 1, 2 do
+                    fireproximityprompt(prompt)
+                    task.wait(0.1)
+                end
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Rare (TP)", "Collect All", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "EpicBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                for i = 1, 2 do
+                    fireproximityprompt(prompt)
+                    task.wait(0.1)
+                end
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Epic (TP)", "Collect All", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "LegendaryBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                for i = 1, 2 do
+                    fireproximityprompt(prompt)
+                    task.wait(0.1)
+                end
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Legendary (TP)", "Collect All", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPositions = {
+        CFrame.new(-13.358, 2.848, 5827.400),
+        CFrame.new(-20.795, 2.848, 5846.600),
+        CFrame.new(-10.160, 2.848, 3467.479)
+    }
+
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    
+    for _, pos in pairs(startPositions) do
+        tp(pos)
+        task.wait(0.2)
+    end
+
+    
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "MythicBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+                task.wait(0.2)
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Mythic (TP)", "Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPositions = {
+        CFrame.new(-13.358, 2.848, 5827.400),
+        CFrame.new(-20.795, 2.848, 5846.600),
+        CFrame.new(-10.160, 2.848, 3467.479)
+    }
+
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    
+    for _, pos in pairs(startPositions) do
+        tp(pos)
+        task.wait(0.2)
+    end
+
+    
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "CosmicBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+                task.wait(0.2)
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Cosmic (TP)", "Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPositions = {
+        CFrame.new(-13.358, 2.848, 5827.400),
+        CFrame.new(-20.795, 2.848, 5846.600),
+        CFrame.new(-10.160, 2.848, 3467.479)
+    }
+
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    
+    for _, pos in pairs(startPositions) do
+        tp(pos)
+        task.wait(0.2)
+    end
+
+    
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "SecretBlock" and part:IsA("BasePart") then
+
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+                task.wait(0.2)
+            end
+
+        end
+    end
+
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Secret (TP)", "Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+local function collect()
+    local startPos = CFrame.new(-46.288, 2.848, 10032.073)
+    local posAkhir = CFrame.new(-87.734, 2.948, -33.611)
+
+    local blocks = workspace:FindFirstChild("Blocks")
+    if not blocks then return end
+
+    tp(startPos)
+    task.wait(0.3)
+
+    for _, part in pairs(blocks:GetChildren()) do
+        if part.Name == "CelestialBlock" and part:IsA("BasePart") then
+
+            
+            tp(part.CFrame + Vector3.new(0,2,0))
+            task.wait(0.2)
+
+            local prompt = part:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                
+                for i = 1, 2 do
+                    fireproximityprompt(prompt)
+                    task.wait(0.1)
+                end
+            end
+
+        end
+    end
+
+    task.wait(0.2)
+    tp(posAkhir)
+end
+
+Azure:CreateButton(mainTab, "Auto Celestial (TP)", "Collect", function()
+    collect()
+end)
+
+local mainTab = gui:Tab("Map")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function tp(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Azure:CreateButton(mainTab, "Mythic And Etc", "Teleport", function()
+    tp(CFrame.new(-6.655, 2.848, 3458.044))
+end)
+
+Azure:CreateButton(mainTab, "Cosmic And Etc", "Teleport", function()
+    tp(CFrame.new(-3.629, 2.848, 5838.476))
+end)
+
+Azure:CreateButton(mainTab, "Celestial", "Teleport", function()
+    tp(CFrame.new(-18.460, 2.848, 9988.581))
+end)
+
+Azure:CreateButton(mainTab, "Home", "Teleport", function()
+    tp(CFrame.new(-87.734, 2.948, -33.611))
+end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local mainTab = gui:Tab("Upgrade Shop")
+
+Azure:CreateButton(mainTab, "Speed +1", "Buy speed", function()
+    ReplicatedStorage.Packages.Net["RE/BuySpeed"]:FireServer(1)
+end)
+
+Azure:CreateButton(mainTab, "Speed +2", "Buy speed", function()
+    ReplicatedStorage.Packages.Net["RE/BuySpeed"]:FireServer(2)
+end)
+
+Azure:CreateButton(mainTab, "Speed +3", "Buy speed", function()
+    ReplicatedStorage.Packages.Net["RE/BuySpeed"]:FireServer(3)
+end)
+
+Azure:CreateButton(mainTab, "Carry +1", "Upgrade carry", function()
+    ReplicatedStorage.Packages.Net["RE/BuyCarry"]:FireServer(1)
+end)
+
+Azure:CreateButton(mainTab, "Upgrade Base", "Upgrade base", function()
+    ReplicatedStorage.Packages.Net["RE/UpgradeButton"]:FireServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Rebirth", "Rebirth character", function()
+    ReplicatedStorage.Packages.Net["RE/Rebirth"]:FireServer()
+end)
+
+local mainTab = gui:Tab("Sell")
+
+Azure:CreateButton(mainTab, "Sell All", "Sell inventory", function()
+    ReplicatedStorage.Packages.Net["RE/SellAllBrainrots"]:FireServer()
+end)
