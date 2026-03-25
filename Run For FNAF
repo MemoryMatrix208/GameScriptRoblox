@@ -1,0 +1,367 @@
+local Azure = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/TT"))()
+
+local gui = Azure:Create("AXN")
+
+local mainTab = gui:Tab("FNAF")
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Player = Players.LocalPlayer
+
+local function tweenTo(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local time = dist / 1000
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
+
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-1221.889, 10.495, 194.482)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    if not storage then return end
+
+    local folder = storage:FindFirstChild("Legendary")
+    if not folder then return end
+
+    for _, model in pairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local targetCF = model:GetPivot()
+
+            tweenTo(targetCF + Vector3.new(0,3,0))
+            task.wait(0.2)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.2)
+            tweenTo(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Legendary (Tween)", "Smooth Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Player = Players.LocalPlayer
+
+local function tweenTo(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local time = dist / 1000
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
+
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-1221.889, 10.495, 194.482)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    if not storage then return end
+
+    local folder = storage:FindFirstChild("Mythic")
+    if not folder then return end
+
+    for _, model in pairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local targetCF = model:GetPivot()
+
+            tweenTo(targetCF + Vector3.new(0,3,0))
+            task.wait(0.2)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.2)
+            tweenTo(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Mythic (Tween)", "Smooth Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Player = Players.LocalPlayer
+
+local function tweenTo(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local time = dist / 1000
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
+
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-1221.889, 10.495, 194.482)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    if not storage then return end
+
+    local folder = storage:FindFirstChild("Secret")
+    if not folder then return end
+
+    for _, model in pairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local targetCF = model:GetPivot()
+
+            tweenTo(targetCF + Vector3.new(0,3,0))
+            task.wait(0.2)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.2)
+            tweenTo(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Secret (Tween)", "Smooth Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Player = Players.LocalPlayer
+
+local function tweenTo(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local time = dist / 1000
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
+
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-1221.889, 10.495, 194.482)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    if not storage then return end
+
+    local folder = storage:FindFirstChild("Cosmic")
+    if not folder then return end
+
+    for _, model in pairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local targetCF = model:GetPivot()
+
+            tweenTo(targetCF + Vector3.new(0,3,0))
+            task.wait(0.2)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.2)
+            tweenTo(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Cosmic (Tween)", "Smooth Collect", function()
+    collect()
+end)
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Player = Players.LocalPlayer
+
+local function tweenTo(cf)
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local dist = (hrp.Position - cf.Position).Magnitude
+    local time = dist / 1000
+
+    local tween = TweenService:Create(
+        hrp,
+        TweenInfo.new(time, Enum.EasingStyle.Linear),
+        {CFrame = cf}
+    )
+
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function collect()
+    local posAkhir = CFrame.new(-1221.889, 10.495, 194.482)
+
+    local storage = workspace:FindFirstChild("CharacterStorage")
+    if not storage then return end
+
+    local folder = storage:FindFirstChild("Celestial")
+    if not folder then return end
+
+    for _, model in pairs(folder:GetChildren()) do
+        if model:IsA("Model") then
+            local targetCF = model:GetPivot()
+
+            tweenTo(targetCF + Vector3.new(0,3,0))
+            task.wait(0.2)
+
+            local prompt = model:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+            end
+
+            task.wait(0.2)
+            tweenTo(posAkhir)
+
+            break
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Celestial (Tween)", "Smooth Collect", function()
+    collect()
+end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local mainTab = gui:Tab("Upgrade Shop")
+
+Azure:CreateButton(mainTab, "Purchase Speed +1", "Buy speed", function()
+    ReplicatedStorage.Remotes.client:FireServer("PurchaseSpeedUpgrade", 1)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +5", "Buy speed", function()
+    ReplicatedStorage.Remotes.client:FireServer("PurchaseSpeedUpgrade", 5)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Speed +10", "Buy speed", function()
+    ReplicatedStorage.Remotes.client:FireServer("PurchaseSpeedUpgrade", 10)
+end)
+
+Azure:CreateButton(mainTab, "Purchase Carry", "Upgrade carry", function()
+    ReplicatedStorage.Remotes.client:FireServer("PurchaseCarryUpgrade", 1)
+end)
+
+Azure:CreateButton(mainTab, "Upgrade Base", "Upgrade base", function()
+    ReplicatedStorage.Remotes.RequestBaseUpgrade:InvokeServer()
+end)
+
+local mainTab = gui:Tab("Rebirth")
+
+Azure:CreateButton(mainTab, "Rebirth", "Rebirth character", function()
+    ReplicatedStorage.Remotes.Rebirth:FireServer()
+end)
+
+local mainTab = gui:Tab("Sell")
+
+Azure:CreateButton(mainTab, "Sell Inventory", "Sell inventory", function()
+    ReplicatedStorage.Remotes.RequestSell:InvokeServer("SellInventory")
+end)
+
+local mainTab = gui:Tab("Money")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local running = false
+local mode = "once"
+
+local function collect()
+    local char = Player.Character or Player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+
+    local plots = workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for i = 1, 8 do
+        local plot = plots:FindFirstChild(tostring(i))
+        if plot then
+            local pads = plot:FindFirstChild("Pads")
+            if pads then
+                for j = 1, 10 do
+                    local pad = pads:FindFirstChild(tostring(j))
+                    if pad then
+                        local collectPart = pad:FindFirstChild("Collect")
+                        if collectPart and collectPart:IsA("BasePart") then
+                            firetouchinterest(hrp, collectPart, 0)
+                            task.wait()
+                            firetouchinterest(hrp, collectPart, 1)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+Azure:CreateButton(mainTab, "Auto Collect Money", "Once / Loop / Stop", function()
+    if not running then
+        if mode == "once" then
+            collect()
+            mode = "loop"
+        else
+            running = true
+            task.spawn(function()
+                while running do
+                    collect()
+                    task.wait(0.2)
+                end
+            end)
+        end
+    else
+        running = false
+        mode = "once"
+    end
+end)
