@@ -1,0 +1,182 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(500, 500),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Survive Falling for Brainrots"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Brainrots", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function getNearestPrompt()
+    local c=p.Character
+    if not c then return end
+    local hrp=c:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+
+    local nearest,dist=nil,math.huge
+
+    for _,v in pairs(workspace:GetDescendants())do
+        if v:IsA("ProximityPrompt") and v.Enabled then
+            local part=v.Parent
+            if part and part:IsA("BasePart") then
+                local d=(part.Position-hrp.Position).Magnitude
+                if d<dist then
+                    dist=d
+                    nearest=v
+                end
+            end
+        end
+    end
+
+    return nearest
+end
+
+Window:AddButton(MainTab,"Take Manual","Click","rbxassetid://125367160504472",function()
+    local pr=getNearestPrompt()
+    if pr then
+        fireproximityprompt(pr)
+
+        Window:Notify({
+            Title="Click",
+            Description="Success",
+            Content="Used Click",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+    else
+        Window:Notify({
+            Title="Click",
+            Description="Failed",
+            Content="No Click found",
+            Color=Color3.fromRGB(0, 255, 255),
+            Delay=2
+        })
+    end
+end)
+
+local p=game:GetService("Players").LocalPlayer
+
+local function tp(cf)
+    local c=p.Character or p.CharacterAdded:Wait()
+    c:WaitForChild("HumanoidRootPart").CFrame=cf
+end
+
+Window:AddButton(MainTab,"Home","Teleport","rbxassetid://125367160504472",function()
+    tp(CFrame.new(36.298,127.700,-30.001))
+end)
+
+Window:AddButton(MainTab,"Admin Zone","Teleport","rbxassetid://125367160504472",function()
+    tp(CFrame.new(23.189,127.778,-4705.149))
+end)
+
+Window:AddButton(MainTab,"OG Zone","Teleport","rbxassetid://125367160504472",function()
+    tp(CFrame.new(13.173,127.778,-3814.081))
+end)
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function collect()
+    local c=p.Character or p.CharacterAdded:Wait()
+    local hrp=c:WaitForChild("HumanoidRootPart")
+
+    local bases=workspace:FindFirstChild("Bases")
+    if not bases then return end
+
+    for _,base in pairs(bases:GetChildren()) do
+        local slots=base:FindFirstChild("Slots")
+        if slots then
+            for _,slot in pairs(slots:GetChildren()) do
+                local hit=slot:FindFirstChild("Hitbox")
+                if hit and hit:IsA("BasePart") then
+                    firetouchinterest(hrp,hit,0)
+                    firetouchinterest(hrp,hit,1)
+                end
+            end
+        end
+    end
+end
+
+Window:AddButton(MainTab,"Auto Collect Money","","rbxassetid://125367160504472",function()
+    collect()
+    Window:Notify({
+        Title="Money",
+        Description="Hi",
+        Content="Collected",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=2
+    })
+end)
+
+local rs = game:GetService("ReplicatedStorage")
+local net = rs:WaitForChild("Packages"):WaitForChild("Net")
+
+local UpgradeTab = Window:CreateTab("Upgrade", "rbxassetid://125367160504472")
+local InventoryTab = Window:CreateTab("Inventory", "rbxassetid://125367160504472")
+local RebirthTab = Window:CreateTab("Rebirth", "rbxassetid://125367160504472")
+
+Window:AddButton(UpgradeTab, "Speed x1", "Buy", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/RequestStatsUpgrade"]:FireServer("Stats1", 1)
+    end)
+end)
+
+Window:AddButton(UpgradeTab, "Speed x5", "Buy", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/RequestStatsUpgrade"]:FireServer("Stats1", 5)
+    end)
+end)
+
+Window:AddButton(UpgradeTab, "Speed x10", "Buy", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/RequestStatsUpgrade"]:FireServer("Stats1", 10)
+    end)
+end)
+
+Window:AddButton(UpgradeTab, "Carry +1", "Upgrade", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/RequestStatsUpgrade"]:FireServer("CarryMax", 1)
+    end)
+end)
+
+Window:AddButton(InventoryTab, "Sell All", "Sell Inventory", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RF/BrainrotShopAction"]:InvokeServer(2)
+    end)
+end)
+
+Window:AddButton(UpgradeTab, "Upgrade Base", "Upgrade", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/UpgradeBase"]:FireServer()
+    end)
+end)
+
+Window:AddButton(RebirthTab, "Rebirth", "Click", "rbxassetid://125367160504472", function()
+    pcall(function()
+        net["RE/RequestRebirth"]:FireServer()
+    end)
+
+    Window:Notify({
+        Title = "Rebirth",
+        Description = "Success",
+        Content = "Rebirth Success",
+        Color = Color3.fromRGB(0, 255, 255),
+        Delay = 3
+    })
+end)
