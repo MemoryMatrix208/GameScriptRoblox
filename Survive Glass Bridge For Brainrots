@@ -1,0 +1,290 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(400, 400),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Survive Glass Bridge For Brainrots"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Brainrots", "rbxassetid://125367160504472")
+
+Window:AddParagraph(MainTab, "Tween", "")
+
+local p=game:GetService("Players").LocalPlayer
+local ts=game:GetService("TweenService")
+
+local speedValue=1000
+
+Window:AddSlider(MainTab,"Speed","Tween Speed",0,1000,1000,function(value)
+    speedValue=value
+end,"SpeedSlider")
+
+local function tweenTo(cf)
+    local c=p.Character or p.CharacterAdded:Wait()
+    local hrp=c:WaitForChild("HumanoidRootPart")
+    local dist=(hrp.Position-cf.Position).Magnitude
+    local time=dist/math.max(speedValue,1)
+    local tween=ts:Create(hrp,TweenInfo.new(time,Enum.EasingStyle.Linear),{CFrame=cf})
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function forcePrompt(pr,part)
+    if not pr or not part then return end
+    pcall(function()
+        pr.Enabled=true
+        pr.HoldDuration=0
+        pr.RequiresLineOfSight=false
+        pr.MaxActivationDistance=math.huge
+    end)
+    local hrp=p.Character and p.Character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        hrp.CFrame=part.CFrame+Vector3.new(0,1.5,0)
+    end
+    for i=1,3 do
+        pcall(function() fireproximityprompt(pr) end)
+        pcall(function() pr:InputHoldBegin() end)
+        pcall(function() pr:InputHoldEnd() end)
+        task.wait(0.05)
+    end
+end
+
+local function collect(name)
+    local startPos=CFrame.new(0.521,4.224,-75.295)
+    local endPos=CFrame.new(0.521,4.224,-75.295)
+
+    tweenTo(startPos)
+    task.wait(0.5)
+
+    local map=workspace:FindFirstChild("Map")
+    if not map then return end
+
+    local bridge=map:FindFirstChild("Bridge")
+    if not bridge then return end
+
+    local platforms=bridge:FindFirstChild("Platforms")
+    if not platforms then return end
+
+    local rarityFolder=platforms:FindFirstChild(name)
+    if not rarityFolder then return end
+
+    local brainrots=rarityFolder:FindFirstChild("Brainrots")
+    if not brainrots then return end
+
+    local found=false
+
+    for _,item in pairs(brainrots:GetChildren())do
+        local part=item:IsA("Model") and item:FindFirstChildWhichIsA("BasePart") or item
+        if part and part:IsA("BasePart") then
+            found=true
+            tweenTo(part.CFrame+Vector3.new(0,2,0))
+            task.wait(0.1)
+            local pr=item:FindFirstChildWhichIsA("ProximityPrompt",true)
+            if pr then
+                forcePrompt(pr,part)
+                task.wait(0.2)
+            end
+        end
+    end
+
+    if found then
+        task.wait(0.3)
+    end
+
+    tweenTo(endPos)
+
+    Window:Notify({
+        Title=name,
+        Description=found and "Spawn" or "Not Spawn",
+        Content=found and "Collected" or "No Brainrots found",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end
+
+local rarities={
+    {"Divine"},
+    {"Cosmic"},
+    {"Secret"},
+    {"Mythic"},
+    {"Legendary"}
+}
+
+for _,v in pairs(rarities)do
+    Window:AddButton(MainTab,"Auto "..v[1],"Collect","rbxassetid://125367160504472",function()
+        collect(v[1])
+    end)
+end
+
+local MainTab = Window:CreateTab("Map", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function tp(v3)
+    local c=p.Character or p.CharacterAdded:Wait()
+    local hrp=c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame=CFrame.new(v3)
+end
+
+local positions={
+    {"Home",Vector3.new(2.363,4.224,-75.877)},
+    {"Divine",Vector3.new(52.175,4.945,-2300.084)},
+    {"Cosmic",Vector3.new(-59.842,5.063,-1857.737)},
+    {"Secret",Vector3.new(47.393,4.945,-1448.916)},
+    {"Mythic",Vector3.new(-46.128,5.406,-1052.377)},
+    {"Legendary",Vector3.new(57.346,4.945,-789.039)}
+}
+
+for _,v in pairs(positions) do
+    Window:AddButton(MainTab,v[1],"Teleport","rbxassetid://125367160504472",function()
+        tp(v[2])
+        Window:Notify({
+            Title=v[1],
+            Description="Teleport",
+            Content="Moved to "..v[1],
+            Color=Color3.fromRGB(0,255,255),
+            Delay=3
+        })
+    end)
+end
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+local rs=game:GetService("RunService")
+
+local mode=0
+local conn
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+    local plots=workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Plots")
+    if not plots then return end
+
+    for _,plot in pairs(plots:GetChildren())do
+        if plot:IsA("Model") and plot.Name:find("Plot") then
+            for _,floor in pairs(plot:GetChildren())do
+                if floor:IsA("Model") and floor.Name:find("Floor") then
+                    for _,pad in pairs(floor:GetChildren())do
+                        if pad:IsA("Model") and pad.Name:find("Pad") then
+                            local btn=pad:FindFirstChild("Button")
+                            if btn and btn:IsA("BasePart") then
+                                firetouchinterest(r,btn,0)
+                                firetouchinterest(r,btn,1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function startLoop()
+    if conn then conn:Disconnect() end
+    conn=rs.Heartbeat:Connect(function()
+        collect()
+        task.wait(.1)
+    end)
+end
+
+local function stopLoop()
+    if conn then conn:Disconnect() conn=nil end
+end
+
+Window:AddButton(MainTab,"Auto Collect Money","Mode","rbxassetid://125367160504472",function()
+    mode=(mode+1)%3
+
+    if mode==0 then
+        stopLoop()
+        collect()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Once",
+            Content="Collected once",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    elseif mode==1 then
+        startLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Loop",
+            Content="Auto farming...",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    else
+        stopLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Stop",
+            Content="Stopped",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+    end
+end)
+
+local MainTab = Window:CreateTab("Upgrade", "rbxassetid://125367160504472")
+
+local rs=game:GetService("ReplicatedStorage")
+local rem=rs:WaitForChild("Remotes")
+
+Window:AddButton(MainTab,"Speed x1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestStatIncrement:FireServer("Speed",1) end)
+end)
+
+Window:AddButton(MainTab,"Speed x5","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestStatIncrement:FireServer("Speed",5) end)
+end)
+
+Window:AddButton(MainTab,"Speed x10","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestStatIncrement:FireServer("Speed",10) end)
+end)
+
+Window:AddButton(MainTab,"Carry x1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestStatIncrement:FireServer("Carry",1) end)
+end)
+
+Window:AddButton(MainTab,"Upgrade Plot","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestPlotUpgrade:FireServer() end)
+end)
+
+local InventoryTab=Window:CreateTab("Inventory","rbxassetid://125367160504472")
+
+Window:AddButton(InventoryTab,"Sell All","Sell","rbxassetid://125367160504472",function()
+    pcall(function() rem.SellAll:FireServer() end)
+end)
+
+local RebirthTab=Window:CreateTab("Rebirth","rbxassetid://125367160504472")
+
+Window:AddButton(RebirthTab,"Rebirth","Rebirth","rbxassetid://125367160504472",function()
+    pcall(function() rem.RequestRebirth:FireServer() end)
+    Window:Notify({
+        Title="Rebirth",
+        Description="Success",
+        Content="Rebirth",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
