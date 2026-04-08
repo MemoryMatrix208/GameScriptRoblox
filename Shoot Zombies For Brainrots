@@ -1,0 +1,370 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(500, 500),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Shoot Zombies For Brainrots"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Brainrots", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local mode="Stop"
+local selectedArea=nil
+local speedDelay=0.7
+local running=false
+
+local function tp(cf)
+    local c=p.Character or p.CharacterAdded:Wait()
+    local hrp=c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame=cf
+end
+
+local function jump()
+    local c=p.Character
+    if c then
+        local h=c:FindFirstChildOfClass("Humanoid")
+        if h then
+            h:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end
+
+local function collect(areaName)
+    if not areaName then return end
+
+    local endPos=CFrame.new(-60.483,18.106,-157.398)
+
+    local map=workspace:FindFirstChild("Map")
+    if not map then return end
+
+    local areas=map:FindFirstChild("Areas")
+    if not areas then return end
+
+    local area=areas:FindFirstChild(areaName)
+    if not area then return end
+
+    local spawns=area:FindFirstChild("Spawns")
+    if not spawns then return end
+
+    local part=spawns:FindFirstChild("Part")
+    if not part then return end
+
+    local item=part:FindFirstChildWhichIsA("Model")
+    if not item then return end
+
+    local base=item:FindFirstChildWhichIsA("BasePart")
+    if not base then return end
+
+    tp(base.CFrame+Vector3.new(0,2,0))
+    task.wait(speedDelay)
+
+    local pr=item:FindFirstChildWhichIsA("ProximityPrompt",true)
+    if pr then
+        pcall(function()
+            pr.Enabled=true
+            pr.HoldDuration=0
+            pr.RequiresLineOfSight=false
+            pr.MaxActivationDistance=math.huge
+            fireproximityprompt(pr)
+        end)
+    end
+
+    task.wait(speedDelay)
+    tp(endPos)
+    task.wait(speedDelay)
+    jump()
+end
+
+local function loop()
+    if running then return end
+    running=true
+    task.spawn(function()
+        while running do
+            if selectedArea then
+                collect(selectedArea)
+            end
+            task.wait(speedDelay)
+        end
+    end)
+end
+
+local function stop()
+    running=false
+end
+
+Window:AddDropdown(MainTab,"Area","Select Area",{
+    "Blood","Bubblegum","Desert","Flesh","Plains","Rocky","Sahara","Volcano","Water"
+},false,"Blood",function(value)
+    selectedArea=value
+end,"AreaDropdown")
+
+Window:AddDropdown(MainTab,"Mode","Select Mode",{
+    "Once","Loop","Stop"
+},false,"Stop",function(value)
+    mode=value
+
+    if mode=="Once" then
+        stop()
+        collect(selectedArea)
+    elseif mode=="Loop" then
+        loop()
+    else
+        stop()
+    end
+end,"ModeDropdown")
+
+Window:AddDropdown(MainTab,"Speed","Select Speed",{
+    "Ultra Very Slow","Ultra Slow","Glacial","Snail Pace","Very Slow","Slow","Normal","Moderate","Steady","Brisk","Fast","Quick","Very Fast","Super Fast","Ultra Fast","Hyper Speed","Lightning Fast"
+},false,"Normal",function(value)
+    if value=="Ultra Very Slow" then speedDelay=2
+    elseif value=="Ultra Slow" then speedDelay=1.7
+    elseif value=="Glacial" then speedDelay=1.5
+    elseif value=="Snail Pace" then speedDelay=1.3
+    elseif value=="Very Slow" then speedDelay=1.1
+    elseif value=="Slow" then speedDelay=0.9
+    elseif value=="Normal" then speedDelay=0.7
+    elseif value=="Moderate" then speedDelay=0.6
+    elseif value=="Steady" then speedDelay=0.5
+    elseif value=="Brisk" then speedDelay=0.4
+    elseif value=="Fast" then speedDelay=0.3
+    elseif value=="Quick" then speedDelay=0.25
+    elseif value=="Very Fast" then speedDelay=0.2
+    elseif value=="Super Fast" then speedDelay=0.15
+    elseif value=="Ultra Fast" then speedDelay=0.1
+    elseif value=="Hyper Speed" then speedDelay=0.07
+    elseif value=="Lightning Fast" then speedDelay=0.05 end
+end,"SpeedDropdown")
+
+local MainTab = Window:CreateTab("Zombies", "rbxassetid://125367160504472")
+
+local rs=game:GetService("RunService")
+
+local enabled=false
+local conn
+
+Window:AddButton(MainTab,"Remove All Zombies","","rbxassetid://125367160504472",function()
+    enabled=not enabled
+
+    if enabled then
+        conn=rs.Heartbeat:Connect(function()
+            for _,v in pairs(workspace:GetChildren()) do
+                if v.Name=="AbnormalZombie"
+                or v.Name=="DemonZombie"
+                or v.Name=="FastZombie"
+                or v.Name=="HumanZombie"
+                or v.Name=="MoltenZombie"
+                or v.Name=="NormalZombie"
+                or v.Name=="FleshZombie"
+                or v.Name=="AggressiveZombie"
+                or v.Name=="SlowZombie" then
+                    pcall(function() v:Destroy() end)
+                end
+            end
+            task.wait(0.1)
+        end)
+    else
+        if conn then conn:Disconnect() conn=nil end
+    end
+end)
+
+local MainTab = Window:CreateTab("VIP", "rbxassetid://125367160504472")
+
+Window:AddButton(MainTab,"Remove Doors","","rbxassetid://125367160504472",function()
+    local map=workspace:FindFirstChild("Map")
+    if not map then return end
+
+    local vip=map:FindFirstChild("VIPDoors")
+    if vip then
+        pcall(function() vip:Destroy() end)
+    end
+end)
+
+local MainTab = Window:CreateTab("Map", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+
+local function tp(v3)
+    local c=p.Character or p.CharacterAdded:Wait()
+    local hrp=c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame=CFrame.new(v3)
+end
+
+local positions={
+    {"Home",Vector3.new(-63.110,18.106,-148.649)},
+    {"Common",Vector3.new(-65.959,18.106,-191.496)},
+    {"UnCommon",Vector3.new(-93.156,18.106,-474.072)},
+    {"Rare",Vector3.new(-126.628,18.106,-696.882)},
+    {"Epic",Vector3.new(-127.572,18.106,-927.310)},
+    {"Legendary",Vector3.new(-113.358,18.106,-1153.978)},
+    {"Mythical",Vector3.new(-70.384,18.106,-1236.081)},
+    {"Cosmic",Vector3.new(-123.108,18.106,-1594.208)},
+    {"Secret",Vector3.new(-112.849,18.106,-1660.556)},
+    {"Admin And Secret",Vector3.new(-95.783,18.106,-1885.635)}
+}
+
+for _,v in pairs(positions) do
+    Window:AddButton(MainTab,v[1],"Teleport","rbxassetid://125367160504472",function()
+        tp(v[2])
+        Window:Notify({
+            Title=v[1],
+            Description="Teleport",
+            Content="Moved to "..v[1],
+            Color=Color3.fromRGB(0,255,255),
+            Delay=3
+        })
+    end)
+end
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local p=game:GetService("Players").LocalPlayer
+local rs=game:GetService("RunService")
+
+local mode=0
+local conn
+
+local function hrp()
+    local c=p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("HumanoidRootPart")
+end
+
+local function collect()
+    local r=hrp()
+    local plots=workspace:FindFirstChild("Plots")
+    if not plots then return end
+
+    for _,plot in pairs(plots:GetChildren()) do
+        if plot:IsA("Model") then
+            local platforms=plot:FindFirstChild("Platforms")
+            if platforms then
+                for _,plat in pairs(platforms:GetChildren()) do
+                    if plat:IsA("BasePart") then
+                        local cash=plat:FindFirstChild("CashPickup")
+                        if cash then
+                            local hitbox=cash:FindFirstChild("Hitbox")
+                            if hitbox and hitbox:IsA("BasePart") then
+                                firetouchinterest(r,hitbox,0)
+                                firetouchinterest(r,hitbox,1)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function startLoop()
+    if conn then conn:Disconnect() end
+    conn=rs.Heartbeat:Connect(function()
+        collect()
+        task.wait(0.1)
+    end)
+end
+
+local function stopLoop()
+    if conn then conn:Disconnect() conn=nil end
+end
+
+Window:AddButton(MainTab,"Auto Collect Money","Mode","rbxassetid://125367160504472",function()
+    mode=(mode+1)%3
+
+    if mode==0 then
+        stopLoop()
+        collect()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Once",
+            Content="Collected once",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    elseif mode==1 then
+        startLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Loop",
+            Content="Auto farming...",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+
+    else
+        stopLoop()
+        Window:Notify({
+            Title="Auto Collect",
+            Description="Mode: Stop",
+            Content="Stopped",
+            Color=Color3.fromRGB(0,255,255),
+            Delay=2
+        })
+    end
+end)
+
+local rs=game:GetService("ReplicatedStorage")
+local net=rs:WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.2.0"):WaitForChild("net")
+
+local buyStat=net:WaitForChild("RE/BuyStatUpgrade")
+local buyBase=net:WaitForChild("RE/BuyBaseUpgrade")
+local rebirth=net:WaitForChild("RE/RequestRebirth")
+local sellAll=net:WaitForChild("RE/SellAll")
+
+local UpgradeTab=Window:CreateTab("Upgrade","rbxassetid://125367160504472")
+
+Window:AddButton(UpgradeTab,"Health +1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyStat:FireServer("Health") end)
+end)
+
+Window:AddButton(UpgradeTab,"Health +10","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyStat:FireServer("Health10") end)
+end)
+
+Window:AddButton(UpgradeTab,"Speed +1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyStat:FireServer("Speed1") end)
+end)
+
+Window:AddButton(UpgradeTab,"Carry +1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyStat:FireServer("Carry") end)
+end)
+
+Window:AddButton(UpgradeTab,"Firerate +0.1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyStat:FireServer("Firerate") end)
+end)
+
+Window:AddButton(UpgradeTab,"Upgrade Base","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() buyBase:FireServer() end)
+end)
+
+local InventoryTab=Window:CreateTab("Inventory","rbxassetid://125367160504472")
+
+Window:AddButton(InventoryTab,"Sell All","Sell","rbxassetid://125367160504472",function()
+    pcall(function() sellAll:FireServer() end)
+end)
+
+local RebirthTab=Window:CreateTab("Rebirth","rbxassetid://125367160504472")
+
+Window:AddButton(RebirthTab,"Rebirth","Rebirth","rbxassetid://125367160504472",function()
+    pcall(function() rebirth:FireServer() end)
+    Window:Notify({
+        Title="Rebirth",
+        Description="Success",
+        Content="Rebirth",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
