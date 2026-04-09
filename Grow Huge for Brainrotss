@@ -1,0 +1,315 @@
+local Kairo = loadstring(game:HttpGet("https://raw.githubusercontent.com/WhoGodsyoure/Home/refs/heads/main/KairoUI"))()
+
+local Window = Kairo:CreateWindow({
+    Title = "ArchiveXNova | hub",
+    Theme = "Cyan",
+    Size = UDim2.fromOffset(500, 500),
+    Center = true,
+    Draggable = true,
+    Resize = true,
+    Badges = {"Dev: Nova", "Grow Huge for Brainrots"},
+    MinimizeKey = Enum.KeyCode.RightShift,
+    MinimizeButton = true,
+    MinimizeButton_Image = "rbxassetid://136687982905395",
+    Config = {
+        Enabled = true,
+        Folder = "what_Config",
+        AutoLoad = true
+    }
+})
+
+local MainTab = Window:CreateTab("Brainrots", "rbxassetid://125367160504472")
+
+local p = game:GetService("Players").LocalPlayer
+
+local function fireAllWild()
+    local wild = workspace:FindFirstChild("Wild")
+    if not wild then return end
+
+    for _, v in ipairs(wild:GetDescendants()) do
+        if v:IsA("ProximityPrompt") and v.Enabled then
+            fireproximityprompt(v)
+            task.wait(0.1)
+        end
+    end
+end
+
+Window:AddButton(MainTab, "Take Manual", "", "rbxassetid://125367160504472", function()
+    fireAllWild()
+end)
+
+local p = game:GetService("Players").LocalPlayer
+
+local function tp(cf)
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Window:AddButton(MainTab, "TP Home", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(12.331, 7.634, -167.944))
+end)
+
+Window:AddButton(MainTab, "TP Mythical And Secret", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(173.291, 4475.173, 2910.394))
+end)
+
+Window:AddButton(MainTab, "TP Legendary", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(243.686, 2633.585, 2062.238))
+end)
+
+Window:AddButton(MainTab, "TP Epic", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(188.427, 1194.586, 1300.986))
+end)
+
+Window:AddButton(MainTab, "TP Rare", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(159.214, 725.586, 871.796))
+end)
+
+Window:AddButton(MainTab, "TP UnCommon", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(84.681, 338.586, 439.675))
+end)
+
+Window:AddButton(MainTab, "TP Common", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(81.357, 86.586, 51.848))
+end)
+
+local MainTab = Window:CreateTab("Map", "rbxassetid://125367160504472")
+
+local p = game:GetService("Players").LocalPlayer
+
+local function tp(cf)
+    local c = p.Character or p.CharacterAdded:Wait()
+    local hrp = c:WaitForChild("HumanoidRootPart")
+    hrp.CFrame = cf
+end
+
+Window:AddButton(MainTab, "TP Home", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(12.331, 7.634, -167.944))
+end)
+
+Window:AddButton(MainTab, "TP Mythical And Secret", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(173.291, 4475.173, 2910.394))
+end)
+
+Window:AddButton(MainTab, "TP Legendary", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(243.686, 2633.585, 2062.238))
+end)
+
+Window:AddButton(MainTab, "TP Epic", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(188.427, 1194.586, 1300.986))
+end)
+
+Window:AddButton(MainTab, "TP Rare", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(159.214, 725.586, 871.796))
+end)
+
+Window:AddButton(MainTab, "TP UnCommon", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(84.681, 338.586, 439.675))
+end)
+
+Window:AddButton(MainTab, "TP Common", "", "rbxassetid://125367160504472", function()
+    tp(CFrame.new(81.357, 86.586, 51.848))
+end)
+
+local MainTab = Window:CreateTab("Train", "rbxassetid://125367160504472")
+
+local Event = game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("BarbellClick")
+
+local mode = 0
+local running = false
+
+local function fireOnce()
+    pcall(function()
+        Event:FireServer()
+    end)
+end
+
+local function startLoop()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            fireOnce()
+            task.wait(0.1)
+        end
+    end)
+end
+
+local function stopLoop()
+    running = false
+end
+
+Window:AddButton(MainTab, "Auto Barbell", "", "rbxassetid://125367160504472", function()
+    mode = mode + 1
+    if mode > 2 then mode = 0 end
+
+    if mode == 0 then
+        stopLoop()
+        fireOnce()
+        Window:Notify({Title="Barbell",Description="ONCE",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    elseif mode == 1 then
+        startLoop()
+        Window:Notify({Title="Barbell",Description="LOOP",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    elseif mode == 2 then
+        stopLoop()
+        Window:Notify({Title="Barbell",Description="STOP",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    end
+end)
+
+local MainTab = Window:CreateTab("Players", "rbxassetid://125367160504472")
+
+local Players = game:GetService("Players")
+local p = Players.LocalPlayer
+
+local function getHum()
+    local c = p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("Humanoid")
+end
+
+Window:AddSlider(MainTab,"Speed","",16,900,16,function(v)
+    local hum = getHum()
+    if hum then
+        hum.WalkSpeed = v
+    end
+end,"PlayerSpeed")
+
+local Players = game:GetService("Players")
+local p = Players.LocalPlayer
+
+local function getHum()
+    local c = p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("Humanoid")
+end
+
+Window:AddSlider(MainTab,"JumpPower","",50,900,50,function(v)
+    local hum = getHum()
+    if hum then
+        hum.JumpPower = v
+    end
+end,"JumpPower")
+
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local p = Players.LocalPlayer
+
+local enabled = false
+local conn
+
+local function getHum()
+    local c = p.Character or p.CharacterAdded:Wait()
+    return c:WaitForChild("Humanoid")
+end
+
+local function start()
+    if conn then conn:Disconnect() end
+    conn = UIS.JumpRequest:Connect(function()
+        if enabled then
+            local hum = getHum()
+            if hum then
+                hum:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end
+    end)
+end
+
+Window:AddButton(MainTab, "Infinite Jump", "", "rbxassetid://125367160504472", function()
+    enabled = not enabled
+
+    if enabled then
+        start()
+    elseif conn then
+        conn:Disconnect()
+        conn = nil
+    end
+
+    Window:Notify({
+        Title = "Infinite Jump",
+        Description = enabled and "ENABLED" or "DISABLED",
+        Content = "",
+        Color = Color3.fromRGB(0,255,255),
+        Delay = 3
+    })
+end)
+
+local MainTab = Window:CreateTab("Money", "rbxassetid://125367160504472")
+
+local RS = game:GetService("ReplicatedStorage")
+local Event = RS:WaitForChild("Remotes"):WaitForChild("CollectCash")
+
+local mode = 0
+local running = false
+
+local function getValue()
+    local v = RS:FindFirstChild("CashValue", true)
+    if v and (v:IsA("IntValue") or v:IsA("NumberValue")) then
+        return v.Value
+    end
+    return math.random(1, 10)
+end
+
+local function fireOnce()
+    pcall(function()
+        Event:FireServer(getValue())
+    end)
+end
+
+local function startLoop()
+    if running then return end
+    running = true
+    task.spawn(function()
+        while running do
+            fireOnce()
+            task.wait(0.1)
+        end
+    end)
+end
+
+local function stopLoop()
+    running = false
+end
+
+Window:AddButton(MainTab, "Auto Collect Cash", "", "rbxassetid://125367160504472", function()
+    mode = mode + 1
+    if mode > 2 then mode = 0 end
+
+    if mode == 0 then
+        stopLoop()
+        fireOnce()
+        Window:Notify({Title="Cash",Description="ONCE",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    elseif mode == 1 then
+        startLoop()
+        Window:Notify({Title="Cash",Description="LOOP",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    elseif mode == 2 then
+        stopLoop()
+        Window:Notify({Title="Cash",Description="STOP",Content="",Color=Color3.fromRGB(0,255,255),Delay=3})
+    end
+end)
+
+local MainTab = Window:CreateTab("Upgrade", "rbxassetid://125367160504472")
+
+local rs = game:GetService("ReplicatedStorage")
+local rem = rs:WaitForChild("Remotes")
+
+Window:AddButton(MainTab,"Carry x1","Upgrade","rbxassetid://125367160504472",function()
+    pcall(function() rem.Upgrade:FireServer("Carry",1) end)
+end)
+
+local InventoryTab = Window:CreateTab("Inventory","rbxassetid://125367160504472")
+
+Window:AddButton(InventoryTab,"Sell All","Sell","rbxassetid://125367160504472",function()
+    pcall(function() rem.SellAllBrainrots:FireServer() end)
+end)
+
+local RebirthTab = Window:CreateTab("Rebirth","rbxassetid://125367160504472")
+
+Window:AddButton(RebirthTab,"Rebirth","Rebirth","rbxassetid://125367160504472",function()
+    pcall(function() rem.Rebirth:FireServer() end)
+    Window:Notify({
+        Title="Rebirth",
+        Description="Success",
+        Content="Rebirth",
+        Color=Color3.fromRGB(0,255,255),
+        Delay=3
+    })
+end)
